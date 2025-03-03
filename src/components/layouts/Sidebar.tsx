@@ -28,6 +28,11 @@ const menuItems: MenuItem[] = [
 		href: `/dashboard`
 	},
 	{
+		title: 'Blog',
+		icon: <Component className='w-5 h-5' />,
+		href: `/blogs`
+	},
+	{
 		title: 'Accounting',
 		icon: <Banknote className='w-5 h-5' />,
 		subMenu: [
@@ -105,7 +110,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 				/>
 				{isExpanded && (
 					<span className='text-3xl font-semibold text-gray-700 dark:text-text-primary'>
-						Finance
+						eFly
 					</span>
 				)}
 			</div>

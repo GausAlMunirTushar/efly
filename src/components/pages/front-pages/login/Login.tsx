@@ -21,10 +21,10 @@ const Login = () => {
 			<div className='w-full max-w-sm bg-white dark:text-text-primary dark:bg-bg_dark p-6 rounded-lg box-shadow'>
 				<div className='text-center'>
 					<h1 className='text-4xl font-bold text-primary-600 dark:text-text-primary flex items-center justify-center gap-2'>
-						Orbit Finance
+						eFly
 					</h1>
 					<p className='text-gray-600 dark:text-text-secondary'>
-						Welcome to Orbit! 👋
+						Welcome to eFly! 👋
 					</p>
 					<p className='text-sm text-gray-500 dark:text-text-secondary'>
 						Please sign-in to your account and start the adventure

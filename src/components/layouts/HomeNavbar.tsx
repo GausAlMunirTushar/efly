@@ -6,6 +6,7 @@ import { ChevronDown } from 'lucide-react'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
+	{ name: 'Blog', href: '/blog' },
 	{ name: 'Flight', href: '/flight' },
 	{ name: 'Hotel', href: '/hotel' },
 	{ name: 'Holiday', href: '/holiday' },
@@ -29,7 +30,7 @@ export default function HomeNavbar() {
 			<div className='flex items-center space-x-2'>
 				<img src='/logo.png' alt='Logo' className='h-8 w-auto' />
 				<span className='text-lg font-semibold text-blue-600'>
-					ITS HOLIDAYS LTD
+					efly
 				</span>
 			</div>
 

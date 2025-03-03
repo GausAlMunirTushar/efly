@@ -23,7 +23,7 @@ export default {
 					highlight: '#FFA07A'
 				},
 				primary: {
-					DEFAULT: '#1C2F96',
+					DEFAULT: '#137EFF',
 					50: '#F2F2FB',
 					100: '#E1E4FA',
 					200: '#BFC3F4',
@@ -37,7 +37,8 @@ export default {
 				},
 				success: '#1DD1A1',
 				warning: '#FFB900',
-				danger: '#FF4D4F'
+				danger: '#FF4D4F',
+				background: '#0F2454'
 			}
 		}
 	},

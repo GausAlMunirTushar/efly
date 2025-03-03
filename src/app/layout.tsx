@@ -4,8 +4,8 @@ import '@/styles/globals.scss'
 import { ToastContextProvider } from '@/contexts/ToastContextProvider'
 
 export const metadata = {
-	title: 'Orbit',
-	description: 'Orbit Finance'
+	title: 'efly',
+	description: 'efly '
 }
 
 interface LayoutProps {
@@ -15,15 +15,15 @@ interface LayoutProps {
 export default async function RootLayout({ children }: LayoutProps) {
 	return (
 		<html>
-		<body>
-		<ThemeProvider
-			attribute="class"
-			defaultTheme="system"
-			enableSystem={true}
-		>
-			<ToastContextProvider>{children}</ToastContextProvider>
-		</ThemeProvider>
-		</body>
+			<body>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='system'
+					enableSystem={true}
+				>
+					<ToastContextProvider>{children}</ToastContextProvider>
+				</ThemeProvider>
+			</body>
 		</html>
 	)
 }

@@ -82,10 +82,10 @@ export default function HomeNavbar() {
 					Contact Us
 				</Link>
 				<Link
-					href='/signin'
+					href='/login'
 					className='px-4 py-2 bg-blue-500 text-white rounded-md'
 				>
-					Sign In
+					Login
 				</Link>
 			</div>
 		</nav>

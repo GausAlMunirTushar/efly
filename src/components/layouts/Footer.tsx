@@ -16,7 +16,7 @@ import Image from 'next/image'
 export default function Footer() {
 	return (
 		<footer className='bg-background text-white py-8 px-6 md:px-16'>
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-8 border-b border-gray-600 pb-6'>
+			<div className='container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-6'>
 				{/* Contact Info */}
 				<div className='space-y-4'>
 					<h2 className='text-lg font-semibold'>
@@ -161,15 +161,14 @@ export default function Footer() {
 					</div>
 				</div>
 			</div>
-
 			{/* Payment Methods */}
-			<div className='mt-6 flex flex-wrap justify-center items-center space-x-4'>
+			<div className='container mx-auto mt-6 flex flex-wrap justify-center items-center space-x-4'>
 				<Image
 					src='/images/payment.webp'
 					alt='Mastercard'
 					width={1000}
 					height={80}
-					className='w-full'
+					className='w-full h-40'
 				/>
 			</div>
 		</footer>

@@ -1,27 +1,60 @@
 {
-  "name": "bousaj",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.0"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.0",
-    "@eslint/eslintrc": "^3"
-  }
+	"name": "orbit-finance",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"lint:fix": "next lint --fix",
+		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
+	},
+	"dependencies": {
+		"clsx": "^2.1.1",
+		"date-fns": "^4.1.0",
+		"framer-motion": "^12.4.4",
+		"lucide-react": "^0.475.0",
+		"next": "15.1.7",
+		"next-intl": "^3.26.5",
+		"next-themes": "^0.4.4",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"react-dropzone": "^14.3.5",
+		"react-quill": "^2.0.0",
+		"recharts": "^2.15.1",
+		"swr": "^2.3.2",
+		"tailwind-merge": "^3.0.1",
+		"tailwind-scrollbar-hide": "^2.0.0",
+		"uuid": "^11.1.0"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3",
+		"@next/eslint-plugin-next": "^15.1.7",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.2.0",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"@typescript-eslint/eslint-plugin": "^8.24.1",
+		"@typescript-eslint/parser": "^8.24.1",
+		"eslint": "^9",
+		"eslint-config-next": "15.1.7",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-import": "^2.31.0",
+		"eslint-plugin-prettier": "^5.2.3",
+		"eslint-plugin-unused-imports": "^4.1.4",
+		"jest": "^29.7.0",
+		"jest-environment-jsdom": "^29.7.0",
+		"postcss": "^8",
+		"prettier": "3.5.1",
+		"sass": "^1.85.0",
+		"strip": "^3.0.0",
+		"strip-ansi": "^7.1.0",
+		"tailwind-scrollbar": "^4.0.0",
+		"tailwindcss": "^3.4.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5"
+	}
 }

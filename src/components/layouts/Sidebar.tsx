@@ -33,12 +33,12 @@ const menuItems: MenuItem[] = [
 		href: `/admin/blog`
 	},
 	{
-		title: 'Accounting',
+		title: 'Menus',
 		icon: <Banknote className='w-5 h-5' />,
 		subMenu: [
-			{ title: 'Account List', href: `/account-list` },
-			{ title: 'Create New Account', href: `/create-new-account` },
-			{ title: 'Account Group', href: `/account-group` }
+			{ title: 'Menu 1', href: `/menu` },
+			{ title: 'Menu 2', href: `/menu` },
+			{ title: 'Menu 3', href: `/menu` }
 		]
 	}
 ]
@@ -94,7 +94,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 					height={32}
 					className='w-14'
 				/> */}
-				<Image
+				{/* <Image
 					alt='logo'
 					width={32}
 					height={32}
@@ -107,9 +107,9 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 					height={32}
 					src='/images/orbit_dark_logo.png'
 					className='w-14 py-2 pl-4 hidden dark:block'
-				/>
+				/> */}
 				{isExpanded && (
-					<span className='text-3xl font-semibold text-gray-700 dark:text-text-primary'>
+					<span className='text-3xl font-semibold text-primary px-4  dark:text-text-primary'>
 						eFly
 					</span>
 				)}

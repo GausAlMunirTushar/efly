@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import BlogForm from '@/components/pages/dashboard/blog/BlogForm'
 import { Blog } from '@/types/Blog'
+import Title from '@/components/common/Title'
 
 const BlogAdminPage = () => {
 	const [blogs, setBlogs] = useState<Blog[]>([])
@@ -22,12 +23,14 @@ const BlogAdminPage = () => {
 	}, [])
 
 	return (
-		<div className='p-4'>
-			<h1 className='text-2xl font-bold mb-4'>Manage Blogs</h1>
-			<BlogForm onBlogCreated={fetchBlogs} />
+		<section className=''>
+			<Title>Manage Blogs</Title>
+			<div className='mt-6'>
+				<BlogForm onBlogCreated={fetchBlogs} />
+			</div>
 
 			{/* Display Blog List */}
-			<div className='mt-6'>
+			<div className='mt-6 bg-white dark:bg-bg_dark px-4 py-6 rounded-lg box-shadow'>
 				<h2 className='text-xl font-semibold'>All Blogs</h2>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
 					{blogs.map(blog => (
@@ -48,7 +51,7 @@ const BlogAdminPage = () => {
 					))}
 				</div>
 			</div>
-		</div>
+		</section>
 	)
 }
 

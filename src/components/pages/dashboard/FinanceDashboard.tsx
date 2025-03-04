@@ -45,7 +45,7 @@ const FinanceDashboard = () => {
 
 	return (
 		<div className=' py-2 '>
-			<Title>Finance Dashboard</Title>
+			<Title>eFly Dashboard</Title>
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-4'>
 				{/* Account Balance */}
 				<div className='bg-white box-shadow dark:bg-bg_dark p-6 rounded-lg shadow-md flex items-center gap-4'>
@@ -62,7 +62,7 @@ const FinanceDashboard = () => {
 
 				{/* Income */}
 				<div className='bg-white box-shadow dark:bg-bg_dark p-6 rounded-lg shadow-md flex items-center gap-4'>
-					<TrendingUp className='text-primary-500 w-10 h-10' />
+					<TrendingUp className='text-primary w-10 h-10' />
 					<div>
 						<p className='text-gray-500 dark:text-gray-400'>
 							Total Income

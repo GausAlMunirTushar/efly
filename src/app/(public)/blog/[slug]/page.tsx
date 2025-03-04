@@ -21,23 +21,22 @@ export default async function BlogDetailPage({
 		<div className='container mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6'>
 			{/* Blog Content */}
 			<div className='md:col-span-3'>
-				<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
-				<p className='text-gray-500 text-sm'>{blog.category}</p>
-
 				{blog.imageUrl && (
 					<img
 						src={blog.imageUrl}
 						alt={blog.title}
-						className='w-full h-72 object-cover rounded-lg my-4'
+						className='w-full h-96 object-cover rounded-lg '
 					/>
 				)}
+				<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
+				<p className='text-gray-500 text-sm'>{blog.category}</p>
 
 				<p className='mt-4 text-gray-700 leading-relaxed'>
 					{blog.content}
 				</p>
 
 				{/* Tags */}
-				<div className='mt-4 flex flex-wrap gap-2'>
+				{/* <div className='mt-4 flex flex-wrap gap-2'>
 					<strong className='text-gray-600'>Tags:</strong>
 					{blog.tags.map((tag: string) => (
 						<span
@@ -47,48 +46,42 @@ export default async function BlogDetailPage({
 							{tag}
 						</span>
 					))}
-				</div>
+				</div> */}
 			</div>
 
 			{/* Sidebar */}
 			<aside className='md:col-span-1 space-y-6'>
 				{/* Categories */}
-				<div className='bg-white p-4 rounded-lg shadow-md'>
+				<div className='bg-white p-4 rounded-lg box-shadow'>
 					<h3 className='font-bold mb-2'>Categories</h3>
 					<ul className='space-y-2'>
-						{['General Blog', 'Travel Blog', 'Hotel Blog'].map(
-							category => (
-								<li
-									key={category}
-									className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
-								>
-									{category}
-								</li>
-							)
-						)}
+						{[].map(category => (
+							<li
+								key={category}
+								className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
+							>
+								{category}
+							</li>
+						))}
 					</ul>
 				</div>
 
 				{/* Popular Tags */}
-				<div className='bg-white p-4 rounded-lg shadow-md'>
-					<h3 className='font-bold mb-2'>Popular Tags</h3>
-					<div className='flex flex-wrap gap-2'>
-						{[
-							'Bangladesh',
-							'Tour',
-							'Hotels',
-							'Visa',
-							'Flights'
-						].map(tag => (
-							<span
-								key={tag}
-								className='bg-gray-200 text-gray-700 px-2 py-1 text-sm rounded-md'
-							>
-								{tag}
-							</span>
-						))}
+				{blog.tags && blog.tags.length > 0 && (
+					<div className='bg-white p-4 rounded-lg box-shadow'>
+						<h3 className='font-bold mb-2'>Popular Tags</h3>
+						<div className='flex flex-wrap gap-2'>
+							{blog.tags.map((tag: string) => (
+								<span
+									key={tag}
+									className='bg-gray-200 text-gray-700 px-2 py-1 text-sm rounded-md'
+								>
+									{tag.trim()}
+								</span>
+							))}
+						</div>
 					</div>
-				</div>
+				)}
 			</aside>
 		</div>
 	)

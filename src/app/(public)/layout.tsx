@@ -4,7 +4,7 @@ import HomeNavbar from '@/components/layouts/HomeNavbar'
 export default function WebLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<section className=''>
-			<header>
+			<header className='sticky top-0 z-10'>
 				<HomeNavbar />
 			</header>
 			<main className='container mx-auto'>{children}</main>

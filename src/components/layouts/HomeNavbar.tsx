@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ChevronDown } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { ChevronDown, Menu, X } from 'lucide-react'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
@@ -23,24 +24,28 @@ const moreItems = [
 
 export default function HomeNavbar() {
 	const [isDropdownOpen, setDropdownOpen] = useState(false)
+	const [isMenuOpen, setMenuOpen] = useState(false)
+	const pathname = usePathname() // Get current pathname
 
 	return (
-		<nav className='flex items-center justify-between p-4 shadow-md bg-white'>
+		<nav className='flex items-center justify-between px-4  border-b bg-white'>
 			{/* Logo */}
 			<div className='flex items-center space-x-2'>
 				<img src='/logo.png' alt='Logo' className='h-8 w-auto' />
-				<span className='text-lg font-semibold text-blue-600'>
-					efly
-				</span>
+				<span className='text-lg font-semibold text-primary'>efly</span>
 			</div>
 
-			{/* Navigation Links */}
-			<div className='hidden md:flex items-center space-x-6'>
+			{/* Desktop Navigation */}
+			<div className='hidden md:flex items-center space-x-6 pt-4'>
 				{navItems.map(item => (
 					<Link
 						key={item.name}
 						href={item.href}
-						className='hover:text-blue-500'
+						className={`relative pb-3 ${
+							pathname === item.href
+								? 'border-b-4 border-primary text-primary transition-all duration-500'
+								: 'hover:border-b-4 hover:border-primary hover:text-primary transition-all duration-500'
+						}`}
 					>
 						{item.name}
 					</Link>
@@ -49,18 +54,22 @@ export default function HomeNavbar() {
 				{/* Dropdown */}
 				<div className='relative'>
 					<button
-						className='flex items-center hover:text-blue-500'
+						className='flex items-center pb-2 hover:text-primary hover:border-b-4 hover:border-primary'
 						onClick={() => setDropdownOpen(!isDropdownOpen)}
 					>
 						More <ChevronDown size={16} className='ml-1' />
 					</button>
 					{isDropdownOpen && (
-						<div className='absolute mt-2 bg-white shadow-lg rounded-md p-2'>
+						<div className='absolute mt-2 bg-white shadow-lg rounded-md p-2 w-40'>
 							{moreItems.map(item => (
 								<Link
 									key={item.name}
 									href={item.href}
-									className='block px-4 py-2 hover:bg-gray-100'
+									className={`block px-4 py-2 hover:bg-gray-100 ${
+										pathname === item.href
+											? 'bg-gray-200'
+											: ''
+									}`}
 								>
 									{item.name}
 								</Link>
@@ -70,24 +79,88 @@ export default function HomeNavbar() {
 				</div>
 			</div>
 
-			{/* Action Buttons */}
-			<div className='flex items-center space-x-4'>
-				<Link
-					href='/promotions'
-					className='px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-400 text-white rounded-md'
-				>
-					Promotions
-				</Link>
-				<Link href='/contact' className='hover:text-blue-500'>
+			{/* Action Buttons (Desktop) */}
+			<div className='hidden md:flex items-center space-x-4'>
+				<Link href='/contact' className='hover:text-primary'>
 					Contact Us
 				</Link>
 				<Link
 					href='/login'
-					className='px-4 py-2 bg-blue-500 text-white rounded-md'
+					className='px-4 py-2 bg-primary text-white rounded-md'
 				>
 					Login
 				</Link>
 			</div>
+
+			{/* Mobile Menu Icon */}
+			<button
+				className='md:hidden text-gray-600'
+				onClick={() => setMenuOpen(!isMenuOpen)}
+			>
+				{isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+			</button>
+
+			{/* Mobile Navigation */}
+			{isMenuOpen && (
+				<div className='absolute top-14 left-0 w-full bg-white shadow-md md:hidden'>
+					<div className='flex flex-col items-start px-4 py-2 space-y-2'>
+						{navItems.map(item => (
+							<Link
+								key={item.name}
+								href={item.href}
+								className={`w-full px-4 py-2 border-l-4 ${
+									pathname === item.href
+										? 'border-primary text-primary'
+										: 'border-transparent hover:border-primary hover:text-primary'
+								}`}
+							>
+								{item.name}
+							</Link>
+						))}
+
+						{/* Dropdown for Mobile */}
+						<div className='w-full'>
+							<button
+								className='w-full flex justify-between px-4 py-2 border-l-4 border-transparent hover:border-primary hover:text-primary'
+								onClick={() => setDropdownOpen(!isDropdownOpen)}
+							>
+								More <ChevronDown size={16} />
+							</button>
+							{isDropdownOpen && (
+								<div className='w-full bg-gray-100 rounded-md p-2'>
+									{moreItems.map(item => (
+										<Link
+											key={item.name}
+											href={item.href}
+											className={`block px-4 py-2 hover:bg-gray-200 ${
+												pathname === item.href
+													? 'bg-gray-300'
+													: ''
+											}`}
+										>
+											{item.name}
+										</Link>
+									))}
+								</div>
+							)}
+						</div>
+
+						{/* Action Buttons (Mobile) */}
+						<Link
+							href='/contact'
+							className='w-full px-4 py-2 border-l-4 border-transparent hover:border-primary hover:text-primary'
+						>
+							Contact Us
+						</Link>
+						<Link
+							href='/login'
+							className='w-full px-4 py-2 bg-primary text-white rounded-md text-center'
+						>
+							Login
+						</Link>
+					</div>
+				</div>
+			)}
 		</nav>
 	)
 }

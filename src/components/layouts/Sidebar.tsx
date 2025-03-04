@@ -30,7 +30,7 @@ const menuItems: MenuItem[] = [
 	{
 		title: 'Blog',
 		icon: <Component className='w-5 h-5' />,
-		href: `/blogs`
+		href: `/admin/blog`
 	},
 	{
 		title: 'Accounting',
@@ -64,7 +64,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 
 	return (
 		<motion.aside
-			className='relative min-h-screen bg-white dark:bg-bg_dark border-r border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300'
+			className='relative min-h-screen bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300'
 			initial={{ width: '4rem' }}
 			animate={{ width: isExpanded ? '15rem' : '4rem' }}
 			transition={{ duration: 0.3 }}
@@ -122,9 +122,9 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 						{item.href ? (
 							<Link
 								href={item.href}
-								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-gray-200 dark:hover:bg-bg_secondary  text-gray-500 dark:text-text-primary${
+								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-primary dark:hover:bg-bg_secondary hover:text-white  text-gray-600 dark:text-text-primary font-semibold ${
 									pathname === item.href
-										? 'bg-primary-500 text-white font-semibold'
+										? 'bg-primary text-white dark:text-text-primary font-semibold'
 										: ''
 								}`}
 							>
@@ -134,7 +134,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 						) : (
 							<button
 								onClick={() => toggleSubMenu(item.title)}
-								className='flex justify-between items-center w-full p-2 rounded-md hover:bg-gray-100 dark:hover:bg-bg_secondary text-gray-500 dark:text-text-primary'
+								className='flex justify-between items-center w-full p-2 rounded-md font-semibold dark:hover:bg-bg_secondary text-gray-500  dark:text-text-primary  hover:bg-primary  hover:text-white'
 							>
 								<div className='flex items-center gap-2'>
 									{item.icon}

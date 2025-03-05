@@ -1,57 +1,25 @@
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
-
-interface EditorProps {
-	label?: string
-	value: string
-	onChange: (content: string) => void
-	placeholder: string
-	required?: boolean
-	error?: string
-}
-const Editor: React.FC<EditorProps> = ({
-	label,
-	value,
-	onChange,
-	required = false,
-	error
-}) => {
-	const [mounted, setMounted] = useState(false)
-
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	const modules = {
-		toolbar: [
-			[{ header: [1, 2, false] }],
-			['bold', 'italic', 'underline', 'strike'],
-			[{ list: 'ordered' }, { list: 'bullet' }],
-			['link', 'image'],
-			['clean']
-		]
-	}
-
-	if (!mounted) return <div className='h-32 bg-gray-100 rounded-lg' /> // Placeholder to prevent mismatch
+const Editor: React.FC = () => {
+	const [content, setContent] = useState('')
 
 	return (
-		<div className='flex flex-col gap-2'>
-			{label && (
-				<label className='font-semibold text-gray-700'>
-					{label}{' '}
-					{required && <span className='text-red-500'>*</span>}
-				</label>
-			)}
+		<div className='max-w-2xl mx-auto p-4 bg-white shadow-lg rounded-lg'>
 			<ReactQuill
 				theme='snow'
-				value={value}
-				onChange={onChange}
-				modules={modules}
-				placeholder='Write something...'
+				value={content}
+				onChange={setContent}
+				className='bg-white'
 			/>
-			{error && <p className='text-red-500 text-sm'>{error}</p>}
+			<div className='mt-4 p-2 border rounded bg-gray-100'>
+				<h3 className='text-lg font-semibold'>Preview:</h3>
+				<div
+					dangerouslySetInnerHTML={{ __html: content }}
+					className='p-2'
+				/>
+			</div>
 		</div>
 	)
 }

@@ -20,7 +20,7 @@ const Login = () => {
 		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-body_dark '>
 			<div className='w-full max-w-sm bg-white dark:text-text-primary dark:bg-bg_dark p-6 rounded-lg box-shadow'>
 				<div className='text-center'>
-					<h1 className='text-4xl font-bold text-primary-600 dark:text-text-primary flex items-center justify-center gap-2'>
+					<h1 className='text-4xl font-bold text-primary	 dark:text-text-primary flex items-center justify-center gap-2'>
 						eFly
 					</h1>
 					<p className='text-gray-600 dark:text-text-secondary'>
@@ -63,7 +63,7 @@ const Login = () => {
 						</label>
 						<Link
 							href='/forgot-password'
-							className='text-sm text-primary-600 dark:text-text-primary hover:underline'
+							className='text-sm text-primary dark:text-text-primary hover:underline'
 						>
 							Forgot Password?
 						</Link>
@@ -80,7 +80,7 @@ const Login = () => {
 					New on our platform?{' '}
 					<Link
 						href='/register'
-						className='text-primary-500 ml-4 dark:text-text-primary  hover:underline'
+						className='text-primary ml-4 dark:text-text-primary  hover:underline'
 					>
 						Create an account
 					</Link>

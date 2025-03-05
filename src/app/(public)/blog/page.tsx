@@ -5,9 +5,11 @@ export default async function BlogPage() {
 	const blogs = await res.json()
 
 	return (
-		<div className='container mx-auto p-6'>
-			<h1 className='text-2xl font-bold mb-4'>Blog List</h1>
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+		<div className='container mx-auto '>
+			<div className='h-20 flex items-center justify-center text-center '>
+				<h1 className='text-4xl font-bold'>Blog</h1>
+			</div>
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-3'>
 				{blogs.map((blog: any) => (
 					<BlogCard key={blog.id} blog={blog} />
 				))}

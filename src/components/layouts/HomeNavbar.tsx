@@ -41,7 +41,7 @@ export default function HomeNavbar() {
 					<Link
 						key={item.name}
 						href={item.href}
-						className={`relative pb-3 ${
+						className={`relative pb-3 text-gray-800 ${
 							pathname === item.href
 								? 'border-b-4 border-primary text-primary transition-all duration-500'
 								: 'hover:border-b-4 hover:border-primary hover:text-primary transition-all duration-500'
@@ -54,7 +54,7 @@ export default function HomeNavbar() {
 				{/* Dropdown */}
 				<div className='relative'>
 					<button
-						className='flex items-center pb-2 hover:text-primary hover:border-b-4 hover:border-primary'
+						className='flex text-gray-800 items-center pb-2 hover:text-primary hover:border-b-4 hover:border-primary'
 						onClick={() => setDropdownOpen(!isDropdownOpen)}
 					>
 						More <ChevronDown size={16} className='ml-1' />

@@ -5,10 +5,11 @@ import { connectDatabase } from '@/configs/database'
 // Get Blog by Slug
 export async function GET(
 	req: Request,
-	{ params }: { params: { slug: string } }
+	{ params }: { params: Promise<{ slug: string }> }
 ) {
 	await connectDatabase()
-	const blog = await Blog.findOne({ slug: params.slug })
+	const { slug } = await params
+	const blog = await Blog.findOne({ slug: slug })
 	return blog
 		? NextResponse.json(blog)
 		: NextResponse.json({ error: 'Not found' }, { status: 404 })
@@ -17,12 +18,13 @@ export async function GET(
 // Update Blog
 export async function PUT(
 	req: Request,
-	{ params }: { params: { slug: string } }
+	{ params }: { params: Promise<{ slug: string }> }
 ) {
 	await connectDatabase()
+	const { slug } = await params
 	const { title, content, category, tags, imageUrl } = await req.json()
 	const updatedBlog = await Blog.findOneAndUpdate(
-		{ slug: params.slug },
+		{ slug: slug },
 		{ title, content, category, tags, imageUrl },
 		{ new: true }
 	)
@@ -32,9 +34,10 @@ export async function PUT(
 // Delete Blog
 export async function DELETE(
 	req: Request,
-	{ params }: { params: { slug: string } }
+	{ params }: { params: Promise<{ slug: string }> }
 ) {
 	await connectDatabase()
-	await Blog.findOneAndDelete({ slug: params.slug })
+	const { slug } = await params
+	await Blog.findOneAndDelete({ slug: slug })
 	return NextResponse.json({ message: 'Blog deleted' })
 }

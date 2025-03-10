@@ -8,11 +8,18 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-
         steps:
+            # Step 1: Checkout the repository
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            # Step 2: Set up SSH with the private key from GitHub Secrets
+            - name: Set up SSH key
+              uses: webfactory/ssh-agent@v0.5.3
+              with:
+                  ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+            # Step 3: Deploy to VPS via SSH
             - name: Deploy to VPS via SSH
               uses: appleboy/ssh-action@master
               with:
@@ -20,13 +27,22 @@ jobs:
                   username: ${{ secrets.VPS_USER }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
-                      echo "Changing directory to efly.com.bd"
-                      cd efly.com.bd
-                      echo "Pulling latest changes from GitHub"
-                      git pull origin main
-                      echo "Installing dependencies"
-                      yarn
-                      echo "Building the project"
-                      yarn build
-                      echo "Restarting the app using PM2"
-                      pm2 restart efly-app
+                      set -e
+                      echo "Deploying to VPS..."
+
+                      # Navigate to the project directory
+                      cd ~/efly.com.bd || exit 1
+
+                      # Pull the latest code from GitHub
+                      git pull origin main || exit 1
+
+                      # Install dependencies
+                      yarn install || exit 1
+
+                      # Build the project
+                      yarn build || exit 1
+
+                      # Restart the app using PM2
+                      pm2 restart efly-app || pm2 start npm --name "efly-app" -- start || exit 1
+
+                      echo "Deployment finished successfully."

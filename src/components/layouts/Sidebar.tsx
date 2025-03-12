@@ -10,7 +10,9 @@ import {
 	Banknote,
 	Component,
 	ChevronDown,
-	ChevronRight
+	ChevronRight,
+	Rss,
+	FileUser
 } from 'lucide-react'
 
 interface MenuItem {
@@ -28,8 +30,13 @@ const menuItems: MenuItem[] = [
 	},
 	{
 		title: 'Blog',
-		icon: <Component className='w-5 h-5' />,
+		icon: <Rss className='w-5 h-5' />,
 		href: `/admin/blog`
+	},
+	{
+		title: 'Jobs',
+		icon: <FileUser className='w-5 h-5' />,
+		href: `/admin/jobs`
 	},
 	{
 		title: 'Menus',

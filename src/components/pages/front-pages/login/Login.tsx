@@ -20,9 +20,11 @@ const Login = () => {
 		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-body_dark '>
 			<div className='w-full max-w-sm bg-white dark:text-text-primary dark:bg-bg_dark p-6 rounded-lg box-shadow'>
 				<div className='text-center'>
-					<h1 className='text-4xl font-bold text-primary	 dark:text-text-primary flex items-center justify-center gap-2'>
-						eFly
-					</h1>
+					<img
+						src='/efly.png'
+						alt='eFly Logo'
+						className='py-4 h-20 mx-auto'
+					/>
 					<p className='text-gray-600 dark:text-text-secondary'>
 						Welcome to eFly! 👋
 					</p>

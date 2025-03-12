@@ -2,14 +2,12 @@ import { NextResponse } from 'next/server'
 import Job from '@/models/job.model'
 import { connectDatabase } from '@/configs/database'
 
-// Get, Update, and Delete Job by ID
-
 export async function GET(
 	req: Request,
 	{ params }: { params: { id: string } }
 ) {
 	const { id } = params
-	await connectDatabase() // Ensure DB connection
+	await connectDatabase()
 
 	try {
 		const job = await Job.findById(id)

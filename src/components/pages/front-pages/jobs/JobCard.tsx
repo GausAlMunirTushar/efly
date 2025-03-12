@@ -22,8 +22,9 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 					<span className='text-green-500 font-semibold'>
 						{job.status}
 					</span>
+
 					<Link
-						href={`/job/${job._id}`}
+						href={`/jobs/${job._id}`}
 						className='text-blue-500 hover:underline'
 					>
 						View Details

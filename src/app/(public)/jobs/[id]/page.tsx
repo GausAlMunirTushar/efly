@@ -1,24 +1,24 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation' // Use the `useParams` hook from the App Router
 import { IJob } from '@/models/job.model'
 
 const JobDetailPage = () => {
+	const { id } = useParams() // Use the `id` from the URL params
 	const [job, setJob] = useState<IJob | null>(null)
-	const { query } = useRouter()
 
 	useEffect(() => {
-		if (query.id) {
-			const fetchJob = async () => {
-				const response = await fetch(`/api/jobs/${query.id}`)
-				const data = await response.json()
-				setJob(data)
-			}
+		const fetchJob = async () => {
+			const response = await fetch(`/api/jobs/${id}`)
+			const data = await response.json()
+			setJob(data)
+		}
 
+		if (id) {
 			fetchJob()
 		}
-	}, [query.id])
+	}, [id])
 
 	if (!job) return <div>Loading...</div>
 

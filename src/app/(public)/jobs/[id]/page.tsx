@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation' // Use the `useParams` hook from the App Router
 import { IJob } from '@/models/job.model'
+import ApplyJob from '@/components/pages/front-pages/jobs/ApplyJob'
+import Modal from '@/components/common/Modal'
 
 const JobDetailPage = () => {
 	const { id } = useParams() // Use the `id` from the URL params
 	const [job, setJob] = useState<IJob | null>(null)
+	const [isModalOpen, setIsModalOpen] = useState(false) // State to control modal visibility
 
 	useEffect(() => {
 		const fetchJob = async () => {
@@ -20,8 +23,11 @@ const JobDetailPage = () => {
 		}
 	}, [id])
 
-	if (!job) return <div>Loading...</div>
+	const handleModalClose = () => setIsModalOpen(false) // Function to close the modal
+	const handleModalOpen = () => setIsModalOpen(true) // Function to open the modal
 
+	if (!job) return <div>Loading...</div>
+	const jobId = typeof id === 'string' ? id : ''
 	return (
 		<div className='container mx-auto p-6'>
 			<h1 className='text-3xl font-semibold text-gray-900'>
@@ -54,6 +60,20 @@ const JobDetailPage = () => {
 					{job.status}
 				</span>
 			</div>
+			<div className='mt-6'>
+				<button
+					onClick={handleModalOpen} // Open modal on click
+					className='bg-blue-500 text-white p-2 rounded'
+				>
+					Apply for Job
+				</button>
+			</div>
+
+			{/* Modal for applying */}
+			<Modal isOpen={isModalOpen} onClose={handleModalClose}>
+				{/* Pass the job ID as a prop to the ApplyJob component */}
+				<ApplyJob jobId={jobId} />
+			</Modal>
 		</div>
 	)
 }

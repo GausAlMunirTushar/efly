@@ -3,10 +3,10 @@
 import { useState } from 'react'
 
 interface ApplyJobProps {
-	params: Promise<{ id: string }>
+	jobId: string
 }
 
-export default function ApplyJob({ params }: ApplyJobProps) {
+export default function ApplyJob({ jobId }: ApplyJobProps) {
 	const [formData, setFormData] = useState({
 		firstName: '',
 		lastName: '',
@@ -29,9 +29,7 @@ export default function ApplyJob({ params }: ApplyJobProps) {
 		e.preventDefault()
 		setIsSubmitting(true)
 
-		// Await the params since it's a Promise
-		const resolvedParams = await params
-		const payload = { ...formData, jobId: resolvedParams.id }
+		const payload = { ...formData, jobId }
 
 		try {
 			const response = await fetch('/api/apply', {

@@ -1,12 +1,18 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import Job from '@/models/job.model'
 import { connectDatabase } from '@/configs/database'
 
+// Type for the route parameters (id)
+interface Params {
+	id: string
+}
+
+// Handling GET request for a specific job
 export async function GET(
-	req: Request,
-	{ params }: { params: { id: string } }
+	req: NextRequest,
+	{ params }: { params: Promise<{ id: string }> } // Typing params as a Promise
 ) {
-	const { id } = params
+	const { id } = await params // Resolving the Promise for id
 	await connectDatabase()
 
 	try {
@@ -28,12 +34,13 @@ export async function GET(
 	}
 }
 
+// Handling PUT request for updating a job
 export async function PUT(
-	req: Request,
-	{ params }: { params: { id: string } }
+	req: NextRequest,
+	{ params }: { params: Promise<{ id: string }> } // Typing params as a Promise
 ) {
-	const { id } = params
-	await connectDatabase() // Ensure DB connection
+	const { id } = await params // Resolving the Promise for id
+	await connectDatabase()
 
 	const {
 		title,
@@ -93,12 +100,13 @@ export async function PUT(
 	}
 }
 
+// Handling DELETE request for a job
 export async function DELETE(
-	req: Request,
-	{ params }: { params: { id: string } }
+	req: NextRequest,
+	{ params }: { params: Promise<{ id: string }> } // Typing params as a Promise
 ) {
-	const { id } = params
-	await connectDatabase() // Ensure DB connection
+	const { id } = await params // Resolving the Promise for id
+	await connectDatabase()
 
 	try {
 		const deletedJob = await Job.findByIdAndDelete(id)

@@ -4,8 +4,9 @@ import '@/styles/globals.scss'
 import { ToastContextProvider } from '@/contexts/ToastContextProvider'
 
 export const metadata = {
-	title: 'efly',
-	description: 'efly '
+	title: 'efly - We Are The New Travel Agency (OTA) in Your City',
+	description:
+		' efly We Are The New Travel Agency (OTA) in Your City. We Are Committed To Make Your Travel Easier And More Comfortable With World Class Services. '
 }
 
 interface LayoutProps {

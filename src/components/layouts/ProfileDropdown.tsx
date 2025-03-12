@@ -5,6 +5,7 @@ import { User, Settings, DollarSign, HelpCircle, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Modal from '@/components/common/Modal'
 import MyProfile from '@/components/pages/user/my-profile/MyProfile'
+import Link from 'next/link'
 
 const ProfileDropdown = ({ onClose }: { onClose: () => void }) => {
 	const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -35,12 +36,12 @@ const ProfileDropdown = ({ onClose }: { onClose: () => void }) => {
 				>
 					<User className='h-5 w-5' /> My Profile
 				</li>
-				<li
+				<Link
+					href='/admin/settings'
 					className='flex items-center gap-2 p-2 hover:bg-gray-100 hover:dark:bg-bg_secondary dark:text-text-primary  rounded cursor-pointer'
-					onClick={onClose}
 				>
 					<Settings className='h-5 w-5' /> Settings
-				</li>
+				</Link>
 				<li
 					className='flex items-center gap-2 p-2 hover:bg-gray-100 hover:dark:bg-bg_secondary dark:text-text-primary rounded cursor-pointer'
 					onClick={onClose}

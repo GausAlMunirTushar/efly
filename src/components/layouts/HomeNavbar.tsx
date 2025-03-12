@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronDown, Menu, X } from 'lucide-react'
+import Image from 'next/image'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
@@ -31,7 +32,13 @@ export default function HomeNavbar() {
 		<nav className='flex items-center justify-between px-4  border-b bg-white'>
 			{/* Logo */}
 			<div className='flex items-center space-x-2'>
-				<img src='/logo.png' alt='Logo' className='h-8 w-auto' />
+				<Image
+					src='/logo.png'
+					alt='Logo'
+					width={40}
+					height={40}
+					className='h-8 w-auto'
+				/>
 				<span className='text-lg font-semibold text-primary'>efly</span>
 			</div>
 

@@ -12,7 +12,6 @@ import {
 	ChevronDown,
 	ChevronRight
 } from 'lucide-react'
-import Image from 'next/image'
 
 interface MenuItem {
 	title: string
@@ -25,7 +24,7 @@ const menuItems: MenuItem[] = [
 	{
 		title: 'Dashboard',
 		icon: <Component className='w-5 h-5' />,
-		href: `/dashboard`
+		href: `/admin/dashboard`
 	},
 	{
 		title: 'Blog',
@@ -36,9 +35,9 @@ const menuItems: MenuItem[] = [
 		title: 'Menus',
 		icon: <Banknote className='w-5 h-5' />,
 		subMenu: [
-			{ title: 'Menu 1', href: `/menu` },
-			{ title: 'Menu 2', href: `/menu` },
-			{ title: 'Menu 3', href: `/menu` }
+			{ title: 'Menu 1', href: `/admin/menu` },
+			{ title: 'Menu 2', href: `/admin/menu` },
+			{ title: 'Menu 3', href: `/admin/menu` }
 		]
 	}
 ]

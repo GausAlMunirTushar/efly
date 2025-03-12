@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function BlogForm({
@@ -114,9 +115,11 @@ export default function BlogForm({
 			</button>
 
 			{imageUrl && (
-				<img
+				<Image
 					src={imageUrl}
 					alt='Uploaded'
+					width={128}
+					height={128}
 					className='w-32 h-32 object-cover mt-2'
 				/>
 			)}

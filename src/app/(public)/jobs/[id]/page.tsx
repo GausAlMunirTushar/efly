@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation' // Use the `useParams` hook from the
 import { IJob } from '@/models/job.model'
 import ApplyJob from '@/components/pages/front-pages/jobs/ApplyJob'
 import Modal from '@/components/common/Modal'
+import Link from 'next/link'
 
 const JobDetailPage = () => {
 	const { id } = useParams() // Use the `id` from the URL params
@@ -60,7 +61,7 @@ const JobDetailPage = () => {
 					{job.status}
 				</span>
 			</div>
-			<div className='mt-6'>
+			{/* <div className='mt-6'>
 				<button
 					onClick={handleModalOpen} // Open modal on click
 					className='bg-blue-500 text-white p-2 rounded'
@@ -74,6 +75,14 @@ const JobDetailPage = () => {
 				{/* Pass the job ID as a prop to the ApplyJob component */}
 				<ApplyJob jobId={jobId} />
 			</Modal>
+			<div>
+				<Link
+					href={`/jobs/${job._id}/apply`}
+					className='bg-blue-500 text-white p-2 rounded'
+				>
+					Apply for Job
+				</Link>
+			</div>
 		</div>
 	)
 }

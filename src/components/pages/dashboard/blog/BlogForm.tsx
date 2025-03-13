@@ -1,136 +1,218 @@
 'use client'
-import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { Loader2 } from 'lucide-react'
+import TextArea from '@/components/form/TextArea'
+import Button from '@/components/form/Button'
+import Input from '@/components/form/Input'
+import { toast } from 'react-toastify'
 
 export default function BlogForm({
-	onBlogCreated
+	selectedBlog,
+	setSelectedBlog,
+	onBlogUpdated
 }: {
-	onBlogCreated: () => void
+	selectedBlog: any
+	setSelectedBlog: (blog: any) => void
+	onBlogUpdated: () => void
 }) {
 	const [form, setForm] = useState({
 		title: '',
 		content: '',
 		category: '',
-		tags: ''
+		tags: '',
+		imageUrl: ''
 	})
-	const [image, setImage] = useState<File | null>(null)
-	const [imageUrl, setImageUrl] = useState('')
 	const [loading, setLoading] = useState(false)
+	const [imageUploading, setImageUploading] = useState(false)
+	const [isMounted, setIsMounted] = useState(false) // Add a mount state
 
-	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	// Ensure it only runs on the client
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
+
+	// Handle form state reset more efficiently
+	useEffect(() => {
+		if (selectedBlog) {
+			setForm({
+				title: selectedBlog.title,
+				content: selectedBlog.content,
+				category: selectedBlog.category,
+				tags: selectedBlog.tags.join(', '),
+				imageUrl: selectedBlog.imageUrl || ''
+			})
+		} else {
+			setForm({
+				title: '',
+				content: '',
+				category: '',
+				tags: '',
+				imageUrl: ''
+			})
+		}
+	}, [selectedBlog])
+
+	const handleInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+			setForm(prevForm => ({
+				...prevForm,
+				[e.target.name]: e.target.value
+			}))
+		},
+		[]
+	)
+
+	// Handle image upload
+	const handleImageUpload = async (
+		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		setForm({ ...form, [e.target.name]: e.target.value })
-	}
+		const file = e.target.files ? e.target.files[0] : null
+		if (!file) return
 
-	const handleImageUpload = async () => {
-		if (!image) return
-
-		setLoading(true)
+		setImageUploading(true)
 		const formData = new FormData()
-		formData.append('file', image)
+		formData.append('file', file)
 
-		const res = await fetch('/api/upload', {
-			method: 'POST',
-			body: formData
-		})
-		const data = await res.json()
-
-		if (data.imageUrl) setImageUrl(data.imageUrl)
-		setLoading(false)
+		try {
+			const res = await fetch('/api/upload', {
+				method: 'POST',
+				body: formData
+			})
+			const data = await res.json()
+			if (data.imageUrl) {
+				setForm({ ...form, imageUrl: data.imageUrl })
+				toast.success('Image uploaded successfully!')
+			} else {
+				toast.error('Image upload failed.')
+			}
+		} catch (error) {
+			toast.error('Error uploading image.')
+		} finally {
+			setImageUploading(false)
+		}
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setLoading(true)
 
-		const res = await fetch('/api/blog', {
-			method: 'POST',
-			body: JSON.stringify({
-				...form,
-				tags: form.tags.split(','),
-				imageUrl
-			}),
-			headers: { 'Content-Type': 'application/json' }
+		const method = selectedBlog ? 'PUT' : 'POST'
+		const url = selectedBlog
+			? `/api/blog/${selectedBlog.slug}`
+			: '/api/blog'
+
+		try {
+			await fetch(url, {
+				method,
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ ...form, tags: form.tags.split(', ') })
+			})
+			setForm({
+				title: '',
+				content: '',
+				category: '',
+				tags: '',
+				imageUrl: ''
+			})
+			setSelectedBlog(null)
+			onBlogUpdated()
+		} catch (error) {
+			console.error('Error submitting blog:', error)
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const handleCancel = useCallback(() => {
+		setSelectedBlog(null)
+		setForm({
+			title: '',
+			content: '',
+			category: '',
+			tags: '',
+			imageUrl: ''
 		})
+	}, [setSelectedBlog])
 
-		const data = await res.json()
-		console.log('Blog Created:', data)
-
-		// Reset form & refresh blog list
-		setForm({ title: '', content: '', category: '', tags: '' })
-		setImage(null)
-		setImageUrl('')
-		onBlogCreated()
-
-		setLoading(false)
+	// Only render the form if mounted (client-side)
+	if (!isMounted) {
+		return null
 	}
 
 	return (
-		<div className='p-6 bg-white rounded-lg shadow-md'>
-			<input
-				type='text'
-				name='title'
-				placeholder='Title'
-				value={form.title}
-				onChange={handleInputChange}
-				className='border p-2 w-full mb-2'
-			/>
-			<textarea
-				name='content'
-				placeholder='Content'
-				value={form.content}
-				onChange={handleInputChange}
-				className='border p-2 w-full mb-2'
-			/>
-			<input
-				type='text'
-				name='category'
-				placeholder='Category'
-				value={form.category}
-				onChange={handleInputChange}
-				className='border p-2 w-full mb-2'
-			/>
-			<input
-				type='text'
-				name='tags'
-				placeholder='Tags (comma-separated)'
-				value={form.tags}
-				onChange={handleInputChange}
-				className='border p-2 w-full mb-2'
-			/>
-
-			<input
-				type='file'
-				accept='image/*'
-				onChange={e => setImage(e.target.files?.[0] || null)}
-				className='border p-2 w-full mb-2'
-			/>
-			<button
-				onClick={handleImageUpload}
-				className='bg-blue-500 text-white px-4 py-2 rounded'
-				disabled={loading}
-			>
-				{loading ? 'Uploading...' : 'Upload Image'}
-			</button>
-
-			{imageUrl && (
-				<Image
-					src={imageUrl}
-					alt='Uploaded'
-					width={128}
-					height={128}
-					className='w-32 h-32 object-cover mt-2'
+		<div className='bg-white p-6 rounded-lg shadow-md border border-gray-200'>
+			<h2 className='text-xl font-semibold mb-4'>
+				{selectedBlog ? 'Edit Blog' : 'Create Blog'}
+			</h2>
+			<form onSubmit={handleSubmit} className='space-y-4'>
+				<Input
+					name='title'
+					placeholder='Title'
+					value={form.title}
+					onChange={handleInputChange}
+					required
 				/>
-			)}
+				<TextArea
+					name='content'
+					placeholder='Content'
+					value={form.content}
+					onChange={handleInputChange}
+					required
+				/>
+				<Input
+					name='category'
+					placeholder='Category'
+					value={form.category}
+					onChange={handleInputChange}
+					required
+				/>
+				<Input
+					name='tags'
+					placeholder='Tags (comma-separated)'
+					value={form.tags}
+					onChange={handleInputChange}
+					required
+				/>
 
-			<button
-				onClick={handleSubmit}
-				className='bg-green-500 text-white px-4 py-2 rounded mt-2 ml-3'
-				disabled={loading}
-			>
-				{loading ? 'Creating Blog...' : 'Create Blog'}
-			</button>
+				{/* Image Upload */}
+				<div className='mb-4'>
+					<label className='block text-sm font-medium text-gray-700'>
+						Upload Image
+					</label>
+					<input
+						type='file'
+						accept='image/*'
+						onChange={handleImageUpload}
+						className='mt-1 block  text-sm text-gray-500 '
+					/>
+					{imageUploading && (
+						<div className='flex justify-center mt-2'>
+							<Loader2 className='animate-spin w-6 h-6 text-gray-500' />
+						</div>
+					)}
+					{form.imageUrl && (
+						<img
+							src={form.imageUrl}
+							alt='Blog Image'
+							className='mt-2 rounded-md max-w-md'
+						/>
+					)}
+				</div>
+
+				<div className='flex gap-2'>
+					<Button type='submit' disabled={loading}>
+						{loading ? (
+							<Loader2 className='animate-spin w-4 h-4 mr-2' />
+						) : null}
+						{selectedBlog ? 'Update Blog' : 'Create Blog'}
+					</Button>
+					{selectedBlog && (
+						<Button variant='secondary' onClick={handleCancel}>
+							Cancel
+						</Button>
+					)}
+				</div>
+			</form>
 		</div>
 	)
 }

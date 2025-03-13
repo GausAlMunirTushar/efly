@@ -7,7 +7,7 @@ export default function BlogCard({
 }) {
 	return (
 		<article className=' border rounded-lg shadow-md hover:shadow-lg'>
-			<div>
+			<Link href={`/blog/${blog.slug}`} className='cursor-pointer'>
 				{blog.imageUrl && (
 					<img
 						src={blog.imageUrl}
@@ -15,13 +15,13 @@ export default function BlogCard({
 						className='w-full h-56 object-cover rounded-t-lg mb-3'
 					/>
 				)}
-			</div>
+			</Link>
 			<div className='p-4'>
 				<h2 className=' text-xl font-semibold'>{blog.title}</h2>
-				<p>{blog.content}</p>
+				<p className='trucnate'>{blog.content}</p>
 				<Link
 					href={`/blog/${blog.slug}`}
-					className='text-blue-500 hover:underline'
+					className='text-primary hover:underline cursor-pointer'
 				>
 					Read More
 				</Link>

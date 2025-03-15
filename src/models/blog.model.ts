@@ -1,10 +1,10 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, Types } from 'mongoose'
 
 export interface IBlog extends Document {
 	title: string
 	slug: string
 	content: string
-	category: string
+	category: Types.ObjectId
 	tags: string[]
 	imageUrl: string
 	createdAt: Date
@@ -15,7 +15,11 @@ const BlogSchema = new Schema<IBlog>(
 		title: { type: String, required: true, unique: true },
 		slug: { type: String, required: true, unique: true },
 		content: { type: String, required: true },
-		category: { type: String, required: true },
+		category: {
+			type: Schema.Types.ObjectId,
+			ref: 'Category',
+			required: true
+		},
 		tags: { type: [String], default: [] },
 		imageUrl: { type: String, required: true }
 	},

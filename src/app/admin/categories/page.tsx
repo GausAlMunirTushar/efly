@@ -66,7 +66,7 @@ export default function CategoriesPage() {
 		setLoading(true)
 		try {
 			await fetch(`/api/categories/${id}`, { method: 'DELETE' })
-			fetchCategories()
+			setCategories(categories.filter(category => category._id !== id)) // Optimistically update the UI
 		} catch (error) {
 			console.error('Error deleting category:', error)
 		} finally {

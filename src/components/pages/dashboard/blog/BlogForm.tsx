@@ -4,7 +4,7 @@ import { Loader2 } from 'lucide-react'
 import TextArea from '@/components/form/TextArea'
 import Button from '@/components/form/Button'
 import Input from '@/components/form/Input'
-import SelectInput from '@/components/form/SelectInput' // Import your SelectInput component
+import SelectInput from '@/components/form/SelectInput'
 import { toast } from 'react-toastify'
 
 export default function BlogForm({
@@ -35,8 +35,10 @@ export default function BlogForm({
 		setIsMounted(true)
 	}, [])
 
-	// Fetch categories from API
+	// Fetch categories from API - Ensure this runs only on the client side after mounting
 	useEffect(() => {
+		if (!isMounted) return // Do not fetch categories if not mounted
+
 		const fetchCategories = async () => {
 			try {
 				const res = await fetch('/api/categories')
@@ -47,7 +49,7 @@ export default function BlogForm({
 			}
 		}
 		fetchCategories()
-	}, [])
+	}, [isMounted])
 
 	// Handle form state reset more efficiently
 	useEffect(() => {
@@ -163,7 +165,7 @@ export default function BlogForm({
 
 	// Transform categories into SelectInput options
 	const categoryOptions = categories.map(category => ({
-		value: category.name,
+		value: category._id, // Use _id as the value for category
 		label: category.name
 	}))
 
@@ -188,24 +190,23 @@ export default function BlogForm({
 					required
 				/>
 				{/* Category Dropdown using SelectInput */}
-				<SelectInput
-					label='Category'
-					options={categories.map(category => ({
-						value: category.name,
-						label: category.name
-					}))}
-					value={form.category}
-					onChange={(value: string) => {
-						handleInputChange({
-							target: {
-								name: 'category',
-								value: value
-							}
-						} as React.ChangeEvent<HTMLInputElement>)
-					}}
-					placeholder='Select a category'
-					required
-				/>
+				{categories.length > 0 && (
+					<SelectInput
+						label='Category'
+						options={categoryOptions}
+						value={form.category}
+						onChange={(value: string) => {
+							handleInputChange({
+								target: {
+									name: 'category',
+									value: value
+								}
+							} as React.ChangeEvent<HTMLInputElement>)
+						}}
+						placeholder='Select a category'
+						required
+					/>
+				)}
 
 				<Input
 					name='tags'
@@ -224,7 +225,7 @@ export default function BlogForm({
 						type='file'
 						accept='image/*'
 						onChange={handleImageUpload}
-						className='mt-1 block  text-sm text-gray-500 '
+						className='mt-1 block text-sm text-gray-500'
 					/>
 					{imageUploading && (
 						<div className='flex justify-center mt-2'>

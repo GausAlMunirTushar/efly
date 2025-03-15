@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react'
 import TextArea from '@/components/form/TextArea'
 import Button from '@/components/form/Button'
 import Input from '@/components/form/Input'
+import SelectInput from '@/components/form/SelectInput' // Import your SelectInput component
 import { toast } from 'react-toastify'
 
 export default function BlogForm({
@@ -24,11 +25,28 @@ export default function BlogForm({
 	})
 	const [loading, setLoading] = useState(false)
 	const [imageUploading, setImageUploading] = useState(false)
-	const [isMounted, setIsMounted] = useState(false) // Add a mount state
+	const [categories, setCategories] = useState<
+		{ _id: string; name: string }[]
+	>([])
+	const [isMounted, setIsMounted] = useState(false)
 
 	// Ensure it only runs on the client
 	useEffect(() => {
 		setIsMounted(true)
+	}, [])
+
+	// Fetch categories from API
+	useEffect(() => {
+		const fetchCategories = async () => {
+			try {
+				const res = await fetch('/api/categories')
+				const data = await res.json()
+				setCategories(data)
+			} catch (error) {
+				console.error('Error fetching categories:', error)
+			}
+		}
+		fetchCategories()
 	}, [])
 
 	// Handle form state reset more efficiently
@@ -53,7 +71,11 @@ export default function BlogForm({
 	}, [selectedBlog])
 
 	const handleInputChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		(
+			e: React.ChangeEvent<
+				HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+			>
+		) => {
 			setForm(prevForm => ({
 				...prevForm,
 				[e.target.name]: e.target.value
@@ -139,6 +161,12 @@ export default function BlogForm({
 		return null
 	}
 
+	// Transform categories into SelectInput options
+	const categoryOptions = categories.map(category => ({
+		value: category.name,
+		label: category.name
+	}))
+
 	return (
 		<div className='bg-white p-6 rounded-lg shadow-md border border-gray-200'>
 			<h2 className='text-xl font-semibold mb-4'>
@@ -159,13 +187,26 @@ export default function BlogForm({
 					onChange={handleInputChange}
 					required
 				/>
-				<Input
-					name='category'
-					placeholder='Category'
+				{/* Category Dropdown using SelectInput */}
+				<SelectInput
+					label='Category'
+					options={categories.map(category => ({
+						value: category.name,
+						label: category.name
+					}))}
 					value={form.category}
-					onChange={handleInputChange}
+					onChange={(value: string) => {
+						handleInputChange({
+							target: {
+								name: 'category',
+								value: value
+							}
+						} as React.ChangeEvent<HTMLInputElement>)
+					}}
+					placeholder='Select a category'
 					required
 				/>
+
 				<Input
 					name='tags'
 					placeholder='Tags (comma-separated)'

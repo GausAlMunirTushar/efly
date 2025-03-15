@@ -31,7 +31,10 @@ const menuItems: MenuItem[] = [
 	{
 		title: 'Blog',
 		icon: <Rss className='w-5 h-5' />,
-		href: `/admin/blog`
+		subMenu: [
+			{ title: 'Blog', href: `/admin/blog` },
+			{ title: 'Category', href: `/admin/categories` }
+		]
 	},
 	{
 		title: 'Jobs',

@@ -7,7 +7,6 @@ export interface IBlog extends Document {
 	category: Types.ObjectId
 	tags: string[]
 	imageUrl: string
-	createdAt: Date
 }
 
 const BlogSchema = new Schema<IBlog>(
@@ -23,7 +22,7 @@ const BlogSchema = new Schema<IBlog>(
 		tags: { type: [String], default: [] },
 		imageUrl: { type: String, required: true }
 	},
-	{ timestamps: true }
+	{ timestamps: true, versionKey: false }
 )
 
 export default mongoose.models.Blog || mongoose.model<IBlog>('Blog', BlogSchema)

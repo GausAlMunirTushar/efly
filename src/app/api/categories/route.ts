@@ -4,28 +4,51 @@ import { connectDatabase } from '@/configs/database'
 
 // Create a new category
 export async function POST(req: Request) {
-	await connectDatabase()
-	const { name } = await req.json()
+	try {
+		await connectDatabase()
+		const { name } = await req.json()
 
-	// Generate slug from category name
-	const slug = name.toLowerCase().replace(/\s+/g, '-')
+		if (!name) {
+			return NextResponse.json(
+				{ error: 'Category name is required' },
+				{ status: 400 }
+			)
+		}
 
-	// Check if category already exists
-	const existingCategory = await Category.findOne({ slug })
-	if (existingCategory) {
+		// Generate slug safely
+		const slug = name.trim().toLowerCase().replace(/\s+/g, '-')
+
+		// Check if category already exists
+		const existingCategory = await Category.findOne({ slug })
+		if (existingCategory) {
+			return NextResponse.json(
+				{ error: 'Category already exists' },
+				{ status: 400 }
+			)
+		}
+
+		const newCategory = await Category.create({ name, slug })
+		return NextResponse.json(newCategory, { status: 201 })
+	} catch (error) {
+		console.error('Error creating category:', error)
 		return NextResponse.json(
-			{ error: 'Category already exists' },
-			{ status: 400 }
+			{ error: 'Internal server error' },
+			{ status: 500 }
 		)
 	}
-
-	const newCategory = await Category.create({ name, slug })
-	return NextResponse.json(newCategory, { status: 201 })
 }
 
 // Get all categories
 export async function GET() {
-	await connectDatabase()
-	const categories = await Category.find()
-	return NextResponse.json(categories)
+	try {
+		await connectDatabase()
+		const categories = await Category.find()
+		return NextResponse.json(categories)
+	} catch (error) {
+		console.error('Error fetching categories:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
+	}
 }

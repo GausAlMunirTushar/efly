@@ -1,57 +1,37 @@
 'use client'
 
-import Toast from '@/components/common/Toast'
-import React, { createContext, useContext, useState, ReactNode } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { createContext, ReactNode, useContext } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-type ToastType = 'success' | 'error' | 'info'
-
-type ToastMessage = {
-	id: string
-	message: string
-	type: ToastType
-	duration: number
+interface ToastContextType {
+	success: (message: string) => void
+	error: (message: string) => void
+	info: (message: string) => void
+	warning: (message: string) => void
 }
 
-type ToastContextType = {
-	addToast: (message: string, type: ToastType, duration?: number) => void
-}
+const ToastContext = createContext<ToastContextType | null>(null)
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined)
-
-export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({
-	children
-}) => {
-	const [toasts, setToasts] = useState<ToastMessage[]>([])
-
-	const addToast = (
-		message: string,
-		type: ToastType,
-		duration: number = 3000
-	) => {
-		const id = uuidv4()
-		setToasts(prev => [...prev, { id, message, type, duration }])
-
-		setTimeout(() => removeToast(id), duration)
-	}
-
-	const removeToast = (id: string) => {
-		setToasts(prev => prev.filter(toast => toast.id !== id))
-	}
+export function ToastContextProvider({ children }: { children: ReactNode }) {
+	const success = (message: string) => toast.success(message)
+	const error = (message: string) => toast.error(message)
+	const info = (message: string) => toast.info(message)
+	const warning = (message: string) => toast.warning(message)
 
 	return (
-		<ToastContext.Provider value={{ addToast }}>
+		<ToastContext.Provider value={{ success, error, info, warning }}>
 			{children}
-			<div className='fixed top-5 right-5 z-50 flex flex-col space-y-2'>
-				{toasts.map(toast => (
-					<Toast key={toast.id} {...toast} onRemove={removeToast} />
-				))}
-			</div>
+			<ToastContainer
+				position='top-right'
+				autoClose={3000}
+				theme='colored'
+			/>
 		</ToastContext.Provider>
 	)
 }
 
-export const useToast = () => {
+export function useToast() {
 	const context = useContext(ToastContext)
 	if (!context)
 		throw new Error('useToast must be used within a ToastContextProvider')

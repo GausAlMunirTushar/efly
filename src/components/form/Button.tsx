@@ -1,3 +1,4 @@
+'use client'
 import { cn } from '@/utils/utils'
 import { Loader2 } from 'lucide-react'
 import { ButtonHTMLAttributes, ReactNode } from 'react'

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { cn } from '@/utils/utils' // Tailwind merge utility
 import { LucideIcon, Eye, EyeOff } from 'lucide-react'

@@ -71,12 +71,21 @@ export default function CreateBlog() {
 	}
 
 	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string
 	) => {
-		setForm(prevForm => ({
-			...prevForm,
-			[e.target.name]: e.target.value
-		}))
+		if (typeof e === 'string') {
+			// For SelectInput component
+			setForm(prevForm => ({
+				...prevForm,
+				category: e
+			}))
+		} else {
+			// For other inputs (text, textarea)
+			setForm(prevForm => ({
+				...prevForm,
+				[e.target.name]: e.target.value
+			}))
+		}
 	}
 
 	const handleImageUpload = async (
@@ -177,8 +186,9 @@ export default function CreateBlog() {
 					label='Category'
 					options={categoryOptions}
 					value={form.category}
-					onChange={handleInputChange}
+					onChange={value => handleInputChange(value)} // Pass only the value string
 				/>
+
 				<Input
 					name='tags'
 					placeholder='Tags (comma-separated)'

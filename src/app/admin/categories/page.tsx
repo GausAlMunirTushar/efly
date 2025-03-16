@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 interface Category {
 	_id: string
 	name: string
+	slug: string
 }
 
 export default function CategoriesPage() {
@@ -20,10 +21,23 @@ export default function CategoriesPage() {
 	)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [isFetching, setIsFetching] = useState<boolean>(true) // Separate fetch loading
+	const [slugPreview, setSlugPreview] = useState<string>('')
 
 	useEffect(() => {
 		fetchCategories()
 	}, [])
+
+	// Generate slug preview as user types category name
+	useEffect(() => {
+		setSlugPreview(
+			categoryName
+				.trim()
+				.toLowerCase()
+				.replace(/\s+/g, '-') // Replace spaces with dashes
+				.replace(/[^\w-]+/g, '') // Remove non-alphanumeric characters
+				.replace(/-+/g, '-') // Remove multiple dashes
+		)
+	}, [categoryName])
 
 	const fetchCategories = async (): Promise<void> => {
 		setIsFetching(true) // Start loading before fetching
@@ -61,12 +75,12 @@ export default function CategoriesPage() {
 
 			setCategoryName('')
 			setEditingCategory(null)
-			fetchCategories()
 			toast.success(
 				editingCategory
 					? 'Category updated successfully!'
 					: 'Category added successfully!'
 			)
+			fetchCategories()
 		} catch (error) {
 			toast.error(
 				error instanceof Error ? error.message : 'An error occurred'
@@ -121,6 +135,10 @@ export default function CategoriesPage() {
 					required
 					disabled={loading}
 				/>
+				{/* Show the generated slug preview */}
+				<div className='text-sm text-gray-500'>
+					<strong>Generated Slug:</strong> {slugPreview}
+				</div>
 				<Button type='submit' disabled={loading}>
 					{loading && (
 						<Loader2 className='animate-spin w-4 h-4 mr-2' />
@@ -135,7 +153,13 @@ export default function CategoriesPage() {
 						key={category._id}
 						className='flex justify-between items-center p-2 bg-gray-100 rounded-md'
 					>
-						<span>{category.name}</span>
+						<div className='flex flex-col'>
+							<span>{category.name}</span>
+							<small className='text-gray-500'>
+								{category.slug}
+							</small>{' '}
+							{/* Display the slug */}
+						</div>
 						<div className='flex gap-2'>
 							<Button
 								variant='secondary'

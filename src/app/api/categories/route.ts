@@ -15,11 +15,8 @@ export async function POST(req: Request) {
 			)
 		}
 
-		// Generate slug safely
-		const slug = name.trim().toLowerCase().replace(/\s+/g, '-')
-
 		// Check if category already exists
-		const existingCategory = await Category.findOne({ slug })
+		const existingCategory = await Category.findOne({ name })
 		if (existingCategory) {
 			return NextResponse.json(
 				{ error: 'Category already exists' },
@@ -27,7 +24,9 @@ export async function POST(req: Request) {
 			)
 		}
 
-		const newCategory = await Category.create({ name, slug })
+		// Create the category (slug will be auto-generated)
+		const newCategory = await Category.create({ name })
+
 		return NextResponse.json(newCategory, { status: 201 })
 	} catch (error) {
 		console.error('Error creating category:', error)

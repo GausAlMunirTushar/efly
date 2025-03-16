@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState, useRef } from 'react'
 import { Sun, Moon, Laptop } from 'lucide-react'
 import { useTheme } from 'next-themes'

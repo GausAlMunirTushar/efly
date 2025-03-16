@@ -2,39 +2,25 @@
 
 import { useEffect, useState } from 'react'
 import { Loader2, Trash2, Pencil } from 'lucide-react'
-import dynamic from 'next/dynamic'
 import Button from '@/components/form/Button'
 import Title from '@/components/common/Title'
-import Image from 'next/image'
-
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
 interface Blog {
 	_id: string
 	title: string
 	slug: string
 	content: string
-	category: {
-		_id: string
-		name: string
-		slug: string
-	}
+	category: { _id: string; name: string; slug: string }
 	tags: string[]
 	imageUrl: string
 	createdAt: string
 	updatedAt: string
 }
 
-// Dynamically import BlogForm to disable SSR
-const BlogForm = dynamic(
-	() => import('@/components/pages/dashboard/blog/BlogForm'),
-	{
-		ssr: false
-	}
-)
-
-const BlogAdminPage = () => {
+const BlogPage = () => {
 	const [blogs, setBlogs] = useState<Blog[]>([])
 	const [loading, setLoading] = useState(true)
-	const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null)
 
 	// Fetch blogs from API
 	const fetchBlogs = async () => {
@@ -52,6 +38,10 @@ const BlogAdminPage = () => {
 		}
 	}
 
+	useEffect(() => {
+		fetchBlogs()
+	}, [])
+
 	// Handle Delete
 	const handleDelete = async (slug: string) => {
 		if (!confirm('Are you sure you want to delete this blog?')) return
@@ -64,26 +54,17 @@ const BlogAdminPage = () => {
 		}
 	}
 
-	// Fetch blogs on component mount
-	useEffect(() => {
-		fetchBlogs()
-	}, [])
-
 	return (
-		<section>
-			<Title>Manage Blogs</Title>
-
-			{/* Blog Form (Create / Edit) */}
-			<BlogForm
-				onBlogUpdated={fetchBlogs}
-				selectedBlog={selectedBlog}
-				setSelectedBlog={setSelectedBlog}
-			/>
-
-			{/* Blog List */}
-			<div className='mt-8'>
-				<h2 className='text-xl font-semibold mb-2'>All Blogs</h2>
-
+		<section className='bg-white p-4 rounded-lg'>
+			<div className='flex justify-between items-center'>
+				<Title>Blogs</Title>
+				<Link href={`/admin/blog/create`}>
+					<Button size='md'>
+						<Plus className='w-4 h-4 mr-1' /> Create New Blog
+					</Button>
+				</Link>
+			</div>
+			<div className='mt-4'>
 				{/* Show Loader While Fetching */}
 				{loading ? (
 					<div className='flex justify-center'>
@@ -92,28 +73,32 @@ const BlogAdminPage = () => {
 				) : (
 					<div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-2'>
 						{blogs.length === 0 ? (
-							<p className='text-center text-gray-500 col-span-full'>
-								No blogs found.
-							</p>
+							<div className='flex justify-center flex-col items-center'>
+								<p className='text-center text-gray-500 mb-4'>
+									No blogs found.
+								</p>
+							</div>
 						) : (
 							blogs.map(blog => (
 								<div
 									key={blog.slug}
 									className='bg-white rounded-lg shadow-md border border-gray-200'
 								>
-									{/* Ensure Image Uses a Valid URL */}
+									{/* Use Image component for optimized image rendering */}
 									<div className='relative w-full h-36'>
 										<img
 											src={
 												blog.imageUrl ||
 												'/placeholder.jpg'
 											} // Fallback image
-											alt={blog.title || 'Blog Image'} // Fallback alt text
+											alt={blog.title || 'Blog Image'}
+											width={500}
+											height={144}
 											className='object-cover h-36 w-full rounded-t-lg'
 										/>
 									</div>
 									<div className='p-2'>
-										<h3 className='text-2xl font-semibold'>
+										<h3 className='text-2xl font-semibold truncate'>
 											{blog.title}
 										</h3>
 										<p className='text-sm text-gray-600'>
@@ -122,16 +107,15 @@ const BlogAdminPage = () => {
 										<p className='mt-2 text-gray-800 line-clamp-3'>
 											{blog.content}
 										</p>
-										<div className='mt-4 flex gap-2'>
-											<Button
-												size='sm'
-												onClick={() =>
-													setSelectedBlog(blog)
-												}
+										<div className='mt-4 flex gap-4'>
+											<Link
+												href={`/admin/blog/create?slug=${blog.slug}`}
 											>
-												<Pencil className='w-4 h-4 mr-1' />{' '}
-												Edit
-											</Button>
+												<Button size='sm'>
+													<Pencil className='w-4 h-4 mr-1' />{' '}
+													Edit
+												</Button>
+											</Link>
 											<Button
 												size='sm'
 												variant='danger'
@@ -154,4 +138,4 @@ const BlogAdminPage = () => {
 	)
 }
 
-export default BlogAdminPage
+export default BlogPage

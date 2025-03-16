@@ -18,11 +18,10 @@ export async function POST(req: Request) {
 			)
 		}
 
-		const slug = title.toLowerCase().replace(/\s+/g, '-')
+		// Create a new blog post
 		const newBlog = await Blog.create({
 			title,
 			content,
-			slug,
 			category,
 			tags,
 			imageUrl
@@ -42,7 +41,7 @@ export async function POST(req: Request) {
 export async function GET() {
 	try {
 		await connectDatabase()
-		const blogs = await Blog.find().populate('category')
+		const blogs = await Blog.find().populate('category', 'name')
 		return NextResponse.json(blogs)
 	} catch (error) {
 		console.error('Error fetching blogs:', error)

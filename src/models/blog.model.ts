@@ -25,4 +25,13 @@ const BlogSchema = new Schema<IBlog>(
 	{ timestamps: true, versionKey: false }
 )
 
-export default mongoose.models.Blog || mongoose.model<IBlog>('Blog', BlogSchema)
+// Add a pre-save hook to generate the slug
+BlogSchema.pre<IBlog>('save', function (next) {
+	if (this.isModified('title')) {
+		this.slug = this.title.toLowerCase().replace(/\s+/g, '-')
+	}
+	next()
+})
+
+const Blog = mongoose.models.Blog || mongoose.model<IBlog>('Blog', BlogSchema)
+export default Blog

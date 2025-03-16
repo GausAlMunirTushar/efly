@@ -5,31 +5,50 @@ import { connectDatabase } from '@/configs/database'
 
 // Create Blog
 export async function POST(req: Request) {
-	await connectDatabase()
-	const { title, content, category, tags, imageUrl } = await req.json()
-	const slug = title.toLowerCase().replace(/\s+/g, '-')
+	try {
+		await connectDatabase()
+		const { title, content, category, tags, imageUrl } = await req.json()
 
-	// Validate if category exists
-	const categoryExists = await Category.findById(category)
-	if (!categoryExists) {
-		return NextResponse.json({ error: 'Invalid category' }, { status: 400 })
+		// Validate if category exists
+		const categoryExists = await Category.findById(category)
+		if (!categoryExists) {
+			return NextResponse.json(
+				{ error: 'Invalid category' },
+				{ status: 400 }
+			)
+		}
+
+		const slug = title.toLowerCase().replace(/\s+/g, '-')
+		const newBlog = await Blog.create({
+			title,
+			content,
+			slug,
+			category,
+			tags,
+			imageUrl
+		})
+
+		return NextResponse.json(newBlog, { status: 201 })
+	} catch (error) {
+		console.error('Error creating blog:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
 	}
-
-	const newBlog = await Blog.create({
-		title,
-		content,
-		slug,
-		category,
-		tags,
-		imageUrl
-	})
-
-	return NextResponse.json(newBlog, { status: 201 })
 }
 
 // Get All Blogs
 export async function GET() {
-	await connectDatabase()
-	const blogs = await Blog.find().populate('category')
-	return NextResponse.json(blogs)
+	try {
+		await connectDatabase()
+		const blogs = await Blog.find().populate('category')
+		return NextResponse.json(blogs)
+	} catch (error) {
+		console.error('Error fetching blogs:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
+	}
 }

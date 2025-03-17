@@ -16,7 +16,7 @@ export default function BlogPage() {
 	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
-				const res = await fetch(`${API_URL}/api/categories`)
+				const res = await fetch(`/api/categories`)
 				if (!res.ok) throw new Error('Failed to fetch categories')
 				const data = await res.json()
 				setCategories(data)
@@ -33,8 +33,8 @@ export default function BlogPage() {
 			setLoading(true)
 			try {
 				const url = selectedCategory
-					? `${API_URL}/api/blog?categories=${selectedCategory}`
-					: `${API_URL}/api/blog`
+					? `/api/blog?categories=${selectedCategory}`
+					: `/api/blog`
 				const res = await fetch(url)
 				if (!res.ok) throw new Error('Failed to fetch blogs')
 				const data = await res.json()

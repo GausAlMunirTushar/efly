@@ -38,17 +38,21 @@ export async function POST(req: Request) {
 }
 
 // Get All Blogs
+// Get All Blogs
 export async function GET(req: Request) {
 	try {
 		await connectDatabase()
 
 		// Parse category query parameter
 		const url = new URL(req.url)
-		const category = url.searchParams.get('category')
+		const category = url.searchParams.get('categories') // Adjusted to match the query parameter in the frontend
 
 		const filter = category ? { category } : {}
 
-		const blogs = await Blog.find(filter).populate('category', 'name')
+		// Fetch blogs sorted by creation date (latest first)
+		const blogs = await Blog.find(filter)
+			.populate('category', 'name')
+			.sort({ createdAt: -1 }) // Sorting by createdAt in descending order
 
 		return NextResponse.json(blogs)
 	} catch (error) {

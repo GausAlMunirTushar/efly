@@ -4,11 +4,18 @@ import { useEffect, useState } from 'react'
 import BlogCard from '@/components/pages/front-pages/blog/BlogCard'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 
+interface Category {
+	_id: string
+	name: string
+	slug: string
+	blogCount: number // blog count should exist in each category
+}
+
 export default function BlogPage() {
 	const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 	const [blogs, setBlogs] = useState([])
-	const [categories, setCategories] = useState([])
+	const [categories, setCategories] = useState<Category[]>([])
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(
 		null
 	)
@@ -52,7 +59,7 @@ export default function BlogPage() {
 
 	return (
 		<section className=''>
-			<div className='flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 h-32'>
+			<div className='flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 h-36'>
 				<h1 className='text-4xl font-bold text-white'>Blog</h1>
 			</div>
 
@@ -75,7 +82,13 @@ export default function BlogPage() {
 								}`}
 								onClick={() => setSelectedCategory(null)}
 							>
-								All
+								All (
+								{categories.reduce(
+									(total, category) =>
+										total + category.blogCount,
+									0
+								)}
+								)
 							</li>
 							{categories.map((category: any) => (
 								<li
@@ -89,7 +102,7 @@ export default function BlogPage() {
 										setSelectedCategory(category._id)
 									}
 								>
-									{category.name} ({category.count ?? 0})
+									{category.name} ({category.blogCount ?? 0})
 								</li>
 							))}
 						</ul>

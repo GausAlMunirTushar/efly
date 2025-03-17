@@ -1,26 +1,75 @@
-export default async function Page({
+'use client'
+import { useEffect, useState } from 'react'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
+
+export default function Page({
 	params
 }: {
 	params: Promise<{ slug: string | string[] }>
 }) {
+	const [blog, setBlog] = useState<any>(null)
+	const [categories, setCategories] = useState<any[]>([])
+	const [loading, setLoading] = useState<boolean>(true)
+	const [loadingCategories, setLoadingCategories] = useState<boolean>(true)
+
 	// Await the params before using them
-	const resolvedParams = await params
-	const slug = Array.isArray(resolvedParams.slug)
-		? resolvedParams.slug.join('/')
-		: resolvedParams.slug
+	const [resolvedParams, setResolvedParams] = useState<{
+		slug: string | string[]
+	} | null>(null)
 
-	const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-	console.log(API_URL)
+	useEffect(() => {
+		params.then(resolved => {
+			setResolvedParams(resolved)
+		})
+	}, [params])
 
-	const res = await fetch(`${API_URL}/api/blog/${slug}`, {
-		cache: 'no-store'
-	})
+	useEffect(() => {
+		const fetchCategories = async () => {
+			setLoadingCategories(true)
+			try {
+				const res = await fetch('/api/categories')
+				if (!res.ok) throw new Error('Failed to fetch categories')
+				const data = await res.json()
+				setCategories(data)
+			} catch (error) {
+				console.error(error)
+			} finally {
+				setLoadingCategories(false)
+			}
+		}
 
-	if (!res.ok) {
-		throw new Error('Blog not found')
+		fetchCategories()
+	}, [])
+
+	useEffect(() => {
+		const fetchBlog = async () => {
+			if (resolvedParams?.slug) {
+				const slug = Array.isArray(resolvedParams.slug)
+					? resolvedParams.slug.join('/')
+					: resolvedParams.slug
+
+				const API_URL =
+					process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+				const res = await fetch(`/api/blog/${slug}`, {
+					cache: 'no-store'
+				})
+
+				if (!res.ok) {
+					throw new Error('Blog not found')
+				}
+
+				const data = await res.json()
+				setBlog(data)
+				setLoading(false)
+			}
+		}
+
+		fetchBlog()
+	}, [resolvedParams])
+
+	if (loading || !blog) {
+		return <SkeletonLoader type='blog' />
 	}
-
-	const blog = await res.json()
 
 	return (
 		<div className='container mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6'>
@@ -34,7 +83,7 @@ export default async function Page({
 					/>
 				)}
 				<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
-				<p className='text-gray-500 text-sm'>{blog.category}</p>
+				<p className='text-gray-500 text-sm'>{blog.category?.name}</p>
 
 				<p className='mt-4 text-gray-700 leading-relaxed'>
 					{blog.content}
@@ -59,36 +108,26 @@ export default async function Page({
 			{/* Sidebar */}
 			<aside className='md:col-span-1 space-y-6'>
 				{/* Categories */}
-				<div className='bg-white p-4 rounded-lg box-shadow'>
+				<div className='bg-white p-4 rounded-lg shadow'>
 					<h3 className='font-bold mb-2'>Categories</h3>
-					<ul className='space-y-2'>
-						{blog.categories?.map((category: string) => (
-							<li
-								key={category}
-								className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
-							>
-								{category}
-							</li>
-						))}
-					</ul>
+					{loadingCategories ? (
+						<SkeletonLoader type='category' />
+					) : (
+						<ul className='space-y-2'>
+							{categories?.map(
+								(category: { _id: string; name: string }) => (
+									<li
+										key={category._id}
+										className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
+									>
+										{category?.name}{' '}
+										{/* Ensure you're accessing the 'name' */}
+									</li>
+								)
+							)}
+						</ul>
+					)}
 				</div>
-
-				{/* Popular Tags */}
-				{blog.tags && blog.tags.length > 0 && (
-					<div className='bg-white p-4 rounded-lg box-shadow'>
-						<h3 className='font-bold mb-2'>Popular Tags</h3>
-						<div className='flex flex-wrap gap-2'>
-							{blog.tags.map((tag: string) => (
-								<span
-									key={tag}
-									className='bg-gray-200 text-gray-700 px-2 py-1 text-sm rounded-md'
-								>
-									{tag.trim()}
-								</span>
-							))}
-						</div>
-					</div>
-				)}
 			</aside>
 		</div>
 	)

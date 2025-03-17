@@ -38,10 +38,18 @@ export async function POST(req: Request) {
 }
 
 // Get All Blogs
-export async function GET() {
+export async function GET(req: Request) {
 	try {
 		await connectDatabase()
-		const blogs = await Blog.find().populate('category', 'name')
+
+		// Parse category query parameter
+		const url = new URL(req.url)
+		const category = url.searchParams.get('category')
+
+		const filter = category ? { category } : {}
+
+		const blogs = await Blog.find(filter).populate('category', 'name')
+
 		return NextResponse.json(blogs)
 	} catch (error) {
 		console.error('Error fetching blogs:', error)

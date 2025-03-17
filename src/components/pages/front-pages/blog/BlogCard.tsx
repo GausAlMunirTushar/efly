@@ -16,15 +16,19 @@ export default function BlogCard({
 					/>
 				)}
 			</Link>
-			<div className='p-4'>
-				<h2 className=' text-xl font-semibold'>{blog.title}</h2>
-				<p className='trucnate'>{blog.content}</p>
-				<Link
-					href={`/blog/${blog.slug}`}
-					className='text-primary hover:underline cursor-pointer'
-				>
-					Read More
-				</Link>
+			<div className='px-4 py-2'>
+				<h2 className=' text-xl font-semibold truncate'>
+					{blog.title}
+				</h2>
+				<p className='trucnate line-clamp-3 min-h-24'>{blog.content}</p>
+				<div className='my-2'>
+					<Link
+						href={`/blog/${blog.slug}`}
+						className='bg-primary px-4 py-1.5 text-white rounded-lg cursor-pointer'
+					>
+						Read More
+					</Link>
+				</div>
 			</div>
 		</article>
 	)

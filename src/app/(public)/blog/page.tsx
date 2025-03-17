@@ -1,44 +1,100 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import BlogCard from '@/components/pages/front-pages/blog/BlogCard'
 
-export default async function BlogPage() {
-	try {
-		const API_URL =
-			process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+export default function BlogPage() {
+	const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-		const res = await fetch(`${API_URL}/api/blog`, {
-			cache: 'no-store'
-		})
+	const [blogs, setBlogs] = useState([])
+	const [categories, setCategories] = useState([])
+	const [selectedCategory, setSelectedCategory] = useState<string | null>(
+		null
+	)
+	const [loading, setLoading] = useState(true)
 
-		if (!res.ok) {
-			throw new Error('Failed to fetch blogs')
+	useEffect(() => {
+		const fetchCategories = async () => {
+			try {
+				const res = await fetch(`${API_URL}/api/categories`)
+				if (!res.ok) throw new Error('Failed to fetch categories')
+				const data = await res.json()
+				setCategories(data)
+			} catch (error) {
+				console.error(error)
+			}
 		}
 
-		const blogs = await res.json()
+		fetchCategories()
+	}, [])
 
-		return (
-			<div className='container mx-auto '>
-				<div className='h-20 flex items-center justify-center text-center '>
-					<h1 className='text-4xl font-bold'>Blog</h1>
-				</div>
-				<div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 py-3'>
-					{blogs.length > 0 ? (
-						blogs.map((blog: any) => (
-							<BlogCard key={blog.id} blog={blog} />
-						))
-					) : (
-						<p className='text-center text-gray-500'>
-							No blogs available.
-						</p>
-					)}
-				</div>
+	useEffect(() => {
+		const fetchBlogs = async () => {
+			setLoading(true)
+			try {
+				const url = selectedCategory
+					? `${API_URL}/api/blog?categories=${selectedCategory}`
+					: `${API_URL}/api/blog`
+				const res = await fetch(url)
+				if (!res.ok) throw new Error('Failed to fetch blogs')
+				const data = await res.json()
+				setBlogs(data)
+			} catch (error) {
+				console.error(error)
+			} finally {
+				setLoading(false)
+			}
+		}
+
+		fetchBlogs()
+	}, [selectedCategory])
+
+	return (
+		<div className='container mx-auto flex gap-6 my-2'>
+			{/* Sidebar */}
+			<aside className='w-2/12 h-full bg-gray-100 px-4 py-2 my-4 rounded-lg'>
+				<h2 className='text-xl font-bold mb-4'>Categories</h2>
+				<ul>
+					<li
+						className={`cursor-pointer p-2 rounded ${
+							!selectedCategory ? 'bg-blue-500 text-white' : ''
+						}`}
+						onClick={() => setSelectedCategory(null)}
+					>
+						All
+					</li>
+					{categories.map((category: any) => (
+						<li
+							key={category._id}
+							className={`cursor-pointer p-1.5 rounded my-2 ${
+								selectedCategory === category._id
+									? 'bg-primary text-white'
+									: 'border border-primary hover:bg-primary hover:text-white transition-colors duration-300'
+							}`}
+							onClick={() => setSelectedCategory(category._id)}
+						>
+							{category.name}
+						</li>
+					))}
+				</ul>
+			</aside>
+
+			{/* Blog Grid */}
+			<div className='w-10/12 my-4'>
+				{loading ? (
+					<p className='text-center'>Loading blogs...</p>
+				) : blogs.length > 0 ? (
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+						{blogs.map((blog: any) => (
+							<BlogCard key={blog._id} blog={blog} />
+						))}
+					</div>
+				) : (
+					<p className='text-center text-gray-500'>
+						No blogs available.
+					</p>
+				)}
 			</div>
-		)
-	} catch (error) {
-		console.error('Error fetching blogs:', error)
-		return (
-			<div className='text-center text-red-500'>
-				Failed to load blogs.
-			</div>
-		)
-	}
+		</div>
+	)
 }

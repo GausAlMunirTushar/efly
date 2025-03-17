@@ -50,51 +50,63 @@ export default function BlogPage() {
 	}, [selectedCategory])
 
 	return (
-		<div className='container mx-auto flex gap-6 my-2'>
-			{/* Sidebar */}
-			<aside className='w-2/12 h-full bg-gray-100 px-4 py-2 my-4 rounded-lg'>
-				<h2 className='text-xl font-bold mb-4'>Categories</h2>
-				<ul>
-					<li
-						className={`cursor-pointer p-2 rounded ${
-							!selectedCategory ? 'bg-blue-500 text-white' : ''
-						}`}
-						onClick={() => setSelectedCategory(null)}
-					>
-						All
-					</li>
-					{categories.map((category: any) => (
-						<li
-							key={category._id}
-							className={`cursor-pointer p-1.5 rounded my-2 ${
-								selectedCategory === category._id
-									? 'bg-primary text-white'
-									: 'border border-primary hover:bg-primary hover:text-white transition-colors duration-300'
-							}`}
-							onClick={() => setSelectedCategory(category._id)}
-						>
-							{category.name}
-						</li>
-					))}
-				</ul>
-			</aside>
-
-			{/* Blog Grid */}
-			<div className='w-10/12 my-4'>
-				{loading ? (
-					<p className='text-center'>Loading blogs...</p>
-				) : blogs.length > 0 ? (
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-						{blogs.map((blog: any) => (
-							<BlogCard key={blog._id} blog={blog} />
-						))}
-					</div>
-				) : (
-					<p className='text-center text-gray-500'>
-						No blogs available.
-					</p>
-				)}
+		<section className=''>
+			<div className='flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 h-32'>
+				<h1 className='text-4xl font-bold text-white'>Blog</h1>
 			</div>
-		</div>
+
+			<div className='container mx-auto flex gap-6 my-2'>
+				{/* Sidebar */}
+				<aside className='w-2/12 h-full bg-gray-100 px-4 py-2 my-4 rounded-lg'>
+					<h2 className='text-lg text-gray-700 font-bold mb-2'>
+						Categories
+					</h2>
+					<ul>
+						<li
+							className={`cursor-pointer p-1.5 px-4 rounded ${
+								!selectedCategory
+									? 'bg-primary text-white'
+									: 'border border-primary'
+							}`}
+							onClick={() => setSelectedCategory(null)}
+						>
+							All
+						</li>
+						{categories.map((category: any) => (
+							<li
+								key={category._id}
+								className={`cursor-pointer p-1.5 px-3 rounded my-2 ${
+									selectedCategory === category._id
+										? 'bg-primary text-white'
+										: 'border border-primary hover:bg-primary hover:text-white transition-colors duration-300'
+								}`}
+								onClick={() =>
+									setSelectedCategory(category._id)
+								}
+							>
+								{category.name}
+							</li>
+						))}
+					</ul>
+				</aside>
+
+				{/* Blog Grid */}
+				<div className='w-10/12 my-4'>
+					{loading ? (
+						<p className='text-center'>Loading blogs...</p>
+					) : blogs.length > 0 ? (
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+							{blogs.map((blog: any) => (
+								<BlogCard key={blog._id} blog={blog} />
+							))}
+						</div>
+					) : (
+						<p className='text-center text-gray-500'>
+							No blogs available.
+						</p>
+					)}
+				</div>
+			</div>
+		</section>
 	)
 }

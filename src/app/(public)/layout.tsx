@@ -7,7 +7,7 @@ export default function WebLayout({ children }: { children: React.ReactNode }) {
 			<header className='sticky top-0 z-10'>
 				<HomeNavbar />
 			</header>
-			<main className='container mx-auto'>{children}</main>
+			<main className=''>{children}</main>
 			<Footer />
 		</section>
 	)

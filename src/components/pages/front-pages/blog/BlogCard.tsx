@@ -6,7 +6,7 @@ export default function BlogCard({
 	blog: { slug: string; title: string; content: string; imageUrl: string }
 }) {
 	return (
-		<article className=' border rounded-lg shadow-md hover:shadow-lg'>
+		<article className=' border rounded-lg '>
 			<Link href={`/blog/${blog.slug}`} className='cursor-pointer'>
 				{blog.imageUrl && (
 					<img

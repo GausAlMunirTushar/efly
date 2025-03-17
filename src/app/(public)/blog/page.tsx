@@ -89,7 +89,7 @@ export default function BlogPage() {
 										setSelectedCategory(category._id)
 									}
 								>
-									{category.name}
+									{category.name} ({category.count ?? 0})
 								</li>
 							))}
 						</ul>

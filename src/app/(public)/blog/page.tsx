@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import BlogCard from '@/components/pages/front-pages/blog/BlogCard'
+import SkeletonLoader from '@/components/common/SkeletonLoader'
 
 export default function BlogPage() {
 	const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
@@ -61,39 +62,49 @@ export default function BlogPage() {
 					<h2 className='text-lg text-gray-700 font-bold mb-2'>
 						Categories
 					</h2>
-					<ul>
-						<li
-							className={`cursor-pointer p-1.5 px-4 rounded ${
-								!selectedCategory
-									? 'bg-primary text-white'
-									: 'border border-primary'
-							}`}
-							onClick={() => setSelectedCategory(null)}
-						>
-							All
-						</li>
-						{categories.map((category: any) => (
+					{/* Show Skeleton for Categories */}
+					{loading ? (
+						<SkeletonLoader type='category' />
+					) : (
+						<ul>
 							<li
-								key={category._id}
-								className={`cursor-pointer p-1.5 px-3 rounded my-2 ${
-									selectedCategory === category._id
+								className={`cursor-pointer p-1.5 px-4 rounded ${
+									!selectedCategory
 										? 'bg-primary text-white'
-										: 'border border-primary hover:bg-primary hover:text-white transition-colors duration-300'
+										: 'border border-primary'
 								}`}
-								onClick={() =>
-									setSelectedCategory(category._id)
-								}
+								onClick={() => setSelectedCategory(null)}
 							>
-								{category.name}
+								All
 							</li>
-						))}
-					</ul>
+							{categories.map((category: any) => (
+								<li
+									key={category._id}
+									className={`cursor-pointer p-1.5 px-3 rounded my-2 ${
+										selectedCategory === category._id
+											? 'bg-primary text-white'
+											: 'border border-primary hover:bg-primary hover:text-white transition-colors duration-300'
+									}`}
+									onClick={() =>
+										setSelectedCategory(category._id)
+									}
+								>
+									{category.name}
+								</li>
+							))}
+						</ul>
+					)}
 				</aside>
 
 				{/* Blog Grid */}
 				<div className='w-10/12 my-4'>
+					{/* Show Skeleton for Blogs */}
 					{loading ? (
-						<p className='text-center'>Loading blogs...</p>
+						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+							<SkeletonLoader type='blog' />
+							<SkeletonLoader type='blog' />
+							<SkeletonLoader type='blog' />
+						</div>
 					) : blogs.length > 0 ? (
 						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 							{blogs.map((blog: any) => (

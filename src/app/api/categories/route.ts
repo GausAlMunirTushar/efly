@@ -38,10 +38,57 @@ export async function POST(req: Request) {
 }
 
 // Get all categories
+/**
+ * This TypeScript function asynchronously fetches categories from a database and returns them as a
+ * JSON response, handling errors with a 500 status code if necessary.
+ * @returns The `GET` function is returning a JSON response containing the fetched categories from the
+ * database. If the fetching is successful, it returns the categories as JSON. If there is an error
+ * during the process, it returns a JSON object with an error message indicating "Internal server
+ * error" along with a status code of 500.
+ */
+// export async function GET() {
+// 	try {
+// 		await connectDatabase()
+// 		const categories = await Category.find()
+// 		return NextResponse.json(categories)
+// 	} catch (error) {
+// 		console.error('Error fetching categories:', error)
+// 		return NextResponse.json(
+// 			{ error: 'Internal server error' },
+// 			{ status: 500 }
+// 		)
+// 	}
+// }
+
+// Get all categories with blog count
 export async function GET() {
 	try {
 		await connectDatabase()
-		const categories = await Category.find()
+
+		// Use aggregation to get categories with the number of blogs in each category
+		const categories = await Category.aggregate([
+			{
+				$lookup: {
+					from: 'blogs', // The name of the blog collection in MongoDB
+					localField: '_id', // Field in Category collection
+					foreignField: 'category', // Field in Blog collection
+					as: 'blogs' // Alias for the matched blogs
+				}
+			},
+			{
+				$addFields: {
+					blogCount: { $size: '$blogs' } // Add a blogCount field with the size of the blogs array
+				}
+			},
+			{
+				$project: {
+					name: 1,
+					slug: 1,
+					blogCount: 1 // Include only the necessary fields
+				}
+			}
+		])
+
 		return NextResponse.json(categories)
 	} catch (error) {
 		console.error('Error fetching categories:', error)

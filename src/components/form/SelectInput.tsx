@@ -32,11 +32,10 @@ const SelectInput: React.FC<SelectProps> = ({
 	disabled,
 	className
 }) => {
-	const [isOpen, setIsOpen] = useState(false)
 	const [selectedValue, setSelectedValue] = useState<string | undefined>(
 		value
 	)
-	const selectRef = useRef<HTMLDivElement>(null)
+	const selectRef = useRef<HTMLSelectElement>(null)
 
 	useEffect(() => {
 		if (value !== undefined) {
@@ -44,81 +43,61 @@ const SelectInput: React.FC<SelectProps> = ({
 		}
 	}, [value])
 
-	useEffect(() => {
-		const handleClickOutside = (event: MouseEvent) => {
-			if (
-				selectRef.current &&
-				!selectRef.current.contains(event.target as Node)
-			) {
-				setIsOpen(false)
-			}
-		}
-		document.addEventListener('mousedown', handleClickOutside)
-		return () =>
-			document.removeEventListener('mousedown', handleClickOutside)
-	}, [])
-
-	const handleSelect = (selected: string) => {
+	const handleSelectChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selected = event.target.value
 		setSelectedValue(selected)
 		onChange?.(selected)
-		setIsOpen(false)
 	}
 
 	return (
-		<div className={cn('relative', fullWidth && 'w-full')}>
+		<div className={cn('relative', fullWidth && 'w-full', className)}>
 			{label && (
-				<label className='text-sm font-medium'>
+				<label
+					htmlFor='select-input'
+					className='text-sm font-medium block mb-2'
+				>
 					{label}{' '}
-					{required ? <span className='text-red-500'>*</span> : ''}
+					{required && <span className='text-red-500'>*</span>}
 				</label>
 			)}
 
 			<div
-				ref={selectRef}
 				className={cn(
-					'relative w-full border border-gray-300 bg-white dark:bg-body_dark text-sm rounded-md shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all cursor-pointer',
+					'relative w-full border border-gray-300 bg-white dark:bg-body_dark text-sm rounded-md shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all',
 					disabled && 'opacity-50 cursor-not-allowed',
-					error && 'border-red-500 focus-within:ring-red-500',
-					className
+					error && 'border-red-500 focus-within:ring-red-500'
 				)}
-				onClick={() => !disabled && setIsOpen(prev => !prev)}
 			>
-				<div className='flex items-center justify-between px-3 py-2'>
-					<span
-						className={cn(
-							'truncate',
-							!selectedValue && 'text-gray-500'
-						)}
-					>
-						{selectedValue
-							? options.find(opt => opt.value === selectedValue)
-									?.label
-							: placeholder}
-					</span>
-					<ChevronDown className='h-5 w-5 text-gray-500' />
-				</div>
-
-				{/* Dropdown */}
-				{isOpen && (
-					<ul className='absolute left-0 top-full mt-1 w-full bg-white dark:bg-body_dark border border-gray-200 shadow-md rounded-md max-h-48 overflow-y-auto z-10'>
-						{options.map(option => (
-							<li
-								key={option.value}
-								className={cn(
-									'px-3 py-2 cursor-pointer hover:bg-gray-100 hover:dark:bg-bg_dark transition-all',
-									selectedValue === option.value &&
-										'bg-blue-100 dark:bg-bg_dark'
-								)}
-								onClick={() => handleSelect(option.value)}
-							>
-								{option.label}
-							</li>
-						))}
-					</ul>
-				)}
+				<select
+					id='select-input'
+					ref={selectRef}
+					value={selectedValue}
+					onChange={handleSelectChange}
+					disabled={disabled}
+					className='w-full p-2 pl-3 pr-8 bg-transparent text-sm text-gray-800 dark:text-white focus:outline-none appearance-none'
+					aria-required={required}
+					aria-invalid={!!error}
+					aria-describedby={error ? 'select-error' : undefined}
+				>
+					<option value='' disabled hidden>
+						{placeholder}
+					</option>
+					{options.map(option => (
+						<option key={option.value} value={option.value}>
+							{option.label}
+						</option>
+					))}
+				</select>
+				<ChevronDown className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500' />
 			</div>
 
-			{error && <p className='text-sm text-red-500 mt-1'>{error}</p>}
+			{error && (
+				<p id='select-error' className='text-sm text-red-500 mt-1'>
+					{error}
+				</p>
+			)}
 		</div>
 	)
 }

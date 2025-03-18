@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
+import BlogDetailsSidebar from '@/components/layouts/blog/BlogDetailsSidebar'
 
 export default function Page({
 	params
@@ -78,17 +79,18 @@ export default function Page({
 	}
 
 	if (error) {
-		return <div className='text-center text-red-500'>{error}</div> // Show error message if any
+		return <div className='text-center text-red-500'>{error}</div>
 	}
 
 	return (
-		<section>
+		<section className=''>
+			{/* Hero Section */}
 			<div className='relative w-full h-36'>
 				{blog.imageUrl && (
 					<img
 						src={blog.imageUrl}
 						alt={blog.title}
-						className='absolute inset-0 w-full h-full object-cover'
+						className='absolute inset-0 w-full h-full object-cover '
 					/>
 				)}
 				<div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
@@ -98,18 +100,19 @@ export default function Page({
 				</div>
 			</div>
 
-			<div className='container mx-auto py-2 grid grid-cols-1 md:grid-cols-4 gap-6'>
+			{/* Blog Content & Sidebar */}
+			<div className='container mx-auto py-6 grid grid-cols-1 md:grid-cols-8 gap-6'>
 				{/* Blog Content */}
-				<div className='md:col-span-3 '>
+				<div className='md:col-span-6'>
 					{blog.imageUrl && (
 						<img
 							src={blog.imageUrl}
 							alt={blog.title}
-							className='w-full h-[500px] object-cover rounded-lg'
+							className='w-full h-[400px] object-cover rounded-lg mb-4'
 						/>
 					)}
 					<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
-					<p className='text-gray-500 text-sm'>
+					<p className='text-gray-500 text-sm mb-4'>
 						{blog.category?.name}
 					</p>
 
@@ -134,8 +137,11 @@ export default function Page({
 				</div>
 
 				{/* Sidebar */}
+				<div className='md:col-span-2'>
+					<BlogDetailsSidebar />{' '}
+					{/* Add the BlogSidebar component here */}
+				</div>
 			</div>
-			<div></div>
 		</section>
 	)
 }

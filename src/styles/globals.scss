@@ -9,7 +9,22 @@ body {
 .box-shadow {
 	@apply shadow-[0px_10px_20px_rgba(0,0,0,0.08),0px_-10px_20px_rgba(0,0,0,0.05)];
 }
-/* Default scrollbar styles (light theme) */
+/* Custom thin scrollbar */
 ::-webkit-scrollbar {
-	display: none; /* Hide the scrollbar */
+	width: 12px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.5);
 }

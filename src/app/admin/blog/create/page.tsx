@@ -17,6 +17,7 @@ import { Italic } from '@tiptap/extension-italic'
 import { TextStyle } from '@tiptap/extension-text-style'
 import { Heading } from '@tiptap/extension-heading' // Corrected import
 import { ListItem } from '@tiptap/extension-list' // Corrected import
+import TagInput from '@/components/form/TagInput'
 
 interface Category {
 	_id: string
@@ -90,7 +91,10 @@ export default function CreateBlog() {
 	}
 
 	const handleInputChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | string
+		e:
+			| React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+			| string
+			| { target: { name: string; value: string } }
 	) => {
 		if (typeof e === 'string') {
 			// For SelectInput component
@@ -220,16 +224,6 @@ export default function CreateBlog() {
 						>
 							I
 						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor &&
-								editor.chain().focus().toggleUnderline().run()
-							}
-							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('underline') ? 'text-black' : 'text-gray-500'}`}
-						>
-							<u>U</u> {/* Correct usage of the <u> tag */}
-						</button>
 					</div>
 
 					{/* Editor Content */}
@@ -246,12 +240,15 @@ export default function CreateBlog() {
 					onChange={value => handleInputChange(value)} // Pass only the value string
 				/>
 
-				<Input
-					name='tags'
-					placeholder='Tags (comma-separated)'
+				<TagInput
 					value={form.tags}
-					onChange={handleInputChange}
+					onChange={newTags =>
+						handleInputChange({
+							target: { name: 'tags', value: newTags }
+						})
+					}
 				/>
+
 				<div className='mb-4'>
 					<label className='block text-sm font-medium text-gray-700'>
 						Upload Image

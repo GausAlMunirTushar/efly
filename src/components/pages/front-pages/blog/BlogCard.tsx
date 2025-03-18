@@ -31,7 +31,7 @@ export default function BlogCard({
 					<img
 						src={blog.imageUrl}
 						alt={blog.title}
-						className='w-full h-56 object-cover rounded-t-lg mb-3'
+						className='w-full h-56 object-fill rounded-t-lg mb-3'
 					/>
 				)}
 			</Link>

@@ -94,7 +94,7 @@ export default function Page({
 						className='absolute inset-0 w-full h-full object-cover '
 					/>
 				)}
-				<div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+				<div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-70'>
 					<h1 className='text-3xl font-bold text-center text-white'>
 						{blog.title}
 					</h1>
@@ -109,7 +109,7 @@ export default function Page({
 						<img
 							src={blog.imageUrl}
 							alt={blog.title}
-							className='w-full h-[400px] object-cover rounded-lg mb-4'
+							className='w-full h-[500px] object-fill rounded-lg mb-4'
 						/>
 					)}
 					<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>

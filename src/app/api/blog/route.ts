@@ -38,61 +38,15 @@ export async function POST(req: Request) {
 }
 
 // Get All Blogs
-// Get All Blogs
-// export async function GET(req: Request) {
-// 	try {
-// 		await connectDatabase()
-
-// 		// Parse category query parameter
-// 		const url = new URL(req.url)
-// 		const category = url.searchParams.get('categories') // Adjusted to match the query parameter in the frontend
-
-// 		const filter = category ? { category } : {}
-
-// 		// Fetch blogs sorted by creation date (latest first)
-// 		const blogs = await Blog.find(filter)
-// 			.populate('category', 'name')
-// 			.sort({ createdAt: -1 }) // Sorting by createdAt in descending order
-
-// 		return NextResponse.json(blogs)
-// 	} catch (error) {
-// 		console.error('Error fetching blogs:', error)
-// 		return NextResponse.json(
-// 			{ error: 'Internal server error' },
-// 			{ status: 500 }
-// 		)
-// 	}
-// }
-// export async function GET(req: NextRequest) {
-// 	try {
-// 		await connectDatabase()
-
-// 		// Use req.nextUrl correctly
-// 		const url = req.nextUrl
-// 		const category = url.searchParams.get('categories')
-
-// 		const filter = category ? { category } : {}
-
-// 		// Fetch blogs sorted by creation date (latest first)
-// 		const blogs = await Blog.find(filter)
-// 			.populate('category', 'name')
-// 			.sort({ createdAt: -1 })
-
-// 		return NextResponse.json(blogs)
-// 	} catch (error) {
-// 		console.error('Error fetching blogs:', error)
-// 		return NextResponse.json(
-// 			{ error: 'Internal server error' },
-// 			{ status: 500 }
-// 		)
-// 	}
-// }
 export async function GET(req: NextRequest) {
 	try {
 		await connectDatabase()
 
 		const url = req.nextUrl
-		const slug = url.searchParams.get('category') // Updated key
+		const slug = url.searchParams.get('category')
+		const limit = url.searchParams.get('limit')
+			? parseInt(url.searchParams.get('limit') as string, 5)
+			: undefined
 
 		let filter = {}
 
@@ -111,10 +65,15 @@ export async function GET(req: NextRequest) {
 			filter = { category: category._id }
 		}
 
-		// Fetch blogs sorted by creation date (latest first)
-		const blogs = await Blog.find(filter)
-			.populate('category', 'name slug') // Populate name & slug
+		let query = Blog.find(filter)
+			.populate('category', 'name slug')
 			.sort({ createdAt: -1 })
+
+		if (limit) {
+			query = query.limit(limit)
+		}
+
+		const blogs = await query
 
 		return NextResponse.json(blogs)
 	} catch (error) {

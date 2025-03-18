@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import BlogDetailsSidebar from '@/components/layouts/blog/BlogDetailsSidebar'
+import LatestBlog from '@/components/pages/front-pages/blog/LatestBlog'
 
 export default function Page({
 	params
@@ -139,8 +140,10 @@ export default function Page({
 
 				{/* Sidebar */}
 				<div className='md:col-span-2'>
-					<BlogDetailsSidebar />{' '}
-					{/* Add the BlogSidebar component here */}
+					<BlogDetailsSidebar />
+					<div className='mt-4'>
+						<LatestBlog />
+					</div>
 				</div>
 			</div>
 		</section>

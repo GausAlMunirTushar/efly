@@ -88,19 +88,19 @@ export default function Page({
 					<img
 						src={blog.imageUrl}
 						alt={blog.title}
-						className='absolute inset-0 w-full h-full object-cover'
+						className='absolute inset-0 w-full h-full object-cover rounded-lg'
 					/>
 				)}
 				<div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-					<h1 className='text-3xl font-bold text-white'>
+					<h1 className='text-3xl font-bold text-center text-white'>
 						{blog.title}
 					</h1>
 				</div>
 			</div>
 
-			<div className='container mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6'>
+			<div className='container mx-auto py-2 grid grid-cols-1 md:grid-cols-4 gap-6'>
 				{/* Blog Content */}
-				<div className='md:col-span-3'>
+				<div className='md:col-span-3 '>
 					{blog.imageUrl && (
 						<img
 							src={blog.imageUrl}
@@ -134,32 +134,8 @@ export default function Page({
 				</div>
 
 				{/* Sidebar */}
-				<aside className='md:col-span-1 space-y-6'>
-					{/* Categories */}
-					<div className='bg-white p-4 rounded-lg border'>
-						<h3 className='font-bold mb-2'>Categories</h3>
-						{loadingCategories ? (
-							<SkeletonLoader type='category' />
-						) : (
-							<ul className='space-y-2'>
-								{categories?.map(
-									(category: {
-										_id: string
-										name: string
-									}) => (
-										<li
-											key={category._id}
-											className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
-										>
-											{category?.name}
-										</li>
-									)
-								)}
-							</ul>
-						)}
-					</div>
-				</aside>
 			</div>
+			<div></div>
 		</section>
 	)
 }

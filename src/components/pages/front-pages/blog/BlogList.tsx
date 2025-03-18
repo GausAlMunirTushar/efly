@@ -8,14 +8,14 @@ import SkeletonLoader from '@/components/common/SkeletonLoader'
 export default function BlogList() {
 	const [blogs, setBlogs] = useState([])
 	const [loading, setLoading] = useState(true)
-	const { categorySlug } = useParams() // Get categorySlug from the URL
+	const { category } = useParams<{ category?: string }>()
 
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			setLoading(true)
 			try {
-				const url = categorySlug
-					? `/api/blog?categorySlug=${categorySlug}`
+				const url = category
+					? `/api/blog?category=${category}`
 					: `/api/blog`
 				const res = await fetch(url)
 				if (!res.ok) throw new Error('Failed to fetch blogs')
@@ -29,7 +29,7 @@ export default function BlogList() {
 		}
 
 		fetchBlogs()
-	}, [categorySlug]) // Re-fetch when categorySlug changes
+	}, [category])
 
 	return (
 		<div>
@@ -43,7 +43,11 @@ export default function BlogList() {
 			) : blogs.length > 0 ? (
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 					{blogs.map((blog: any) => (
-						<BlogCard key={blog._id} blog={blog} />
+						<BlogCard
+							key={blog._id}
+							blog={blog}
+							category={category}
+						/>
 					))}
 				</div>
 			) : (

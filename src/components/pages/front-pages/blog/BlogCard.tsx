@@ -4,17 +4,17 @@ import Link from 'next/link'
 
 export default function BlogCard({
 	blog,
-	categorySlug
+	category
 }: {
 	blog: { slug: string; title: string; content: string; imageUrl: string }
-	categorySlug?: string // Optional, for category-based blog post
+	category?: string // Optional, for category-based blog post
 }) {
 	return (
 		<article className='border rounded-lg'>
 			<Link
 				href={
-					categorySlug
-						? `/blog/${categorySlug}/${blog.slug}`
+					category
+						? `/blog/${category}/${blog.slug}`
 						: `/blog/${blog.slug}`
 				}
 				className='cursor-pointer'
@@ -33,8 +33,8 @@ export default function BlogCard({
 				<div className='my-2'>
 					<Link
 						href={
-							categorySlug
-								? `/blog/${categorySlug}/${blog.slug}`
+							category
+								? `/blog/${category}/${blog.slug}`
 								: `/blog/${blog.slug}`
 						}
 						className='bg-primary px-4 py-1.5 text-white rounded-lg cursor-pointer'

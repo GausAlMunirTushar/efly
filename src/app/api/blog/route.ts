@@ -91,15 +91,14 @@ export async function GET(req: NextRequest) {
 	try {
 		await connectDatabase()
 
-		// Get categorySlug from query parameters
 		const url = req.nextUrl
-		const categorySlug = url.searchParams.get('categorySlug') // Updated key
+		const slug = url.searchParams.get('category') // Updated key
 
 		let filter = {}
 
-		if (categorySlug) {
+		if (slug) {
 			// Find the category by slug
-			const category = await Category.findOne({ slug: categorySlug })
+			const category = await Category.findOne({ slug: slug })
 
 			if (!category) {
 				return NextResponse.json(

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import Blog from '@/models/blog.model'
 import Category from '@/models/category.model'
 import { connectDatabase } from '@/configs/database'
@@ -39,20 +39,83 @@ export async function POST(req: Request) {
 
 // Get All Blogs
 // Get All Blogs
-export async function GET(req: Request) {
+// export async function GET(req: Request) {
+// 	try {
+// 		await connectDatabase()
+
+// 		// Parse category query parameter
+// 		const url = new URL(req.url)
+// 		const category = url.searchParams.get('categories') // Adjusted to match the query parameter in the frontend
+
+// 		const filter = category ? { category } : {}
+
+// 		// Fetch blogs sorted by creation date (latest first)
+// 		const blogs = await Blog.find(filter)
+// 			.populate('category', 'name')
+// 			.sort({ createdAt: -1 }) // Sorting by createdAt in descending order
+
+// 		return NextResponse.json(blogs)
+// 	} catch (error) {
+// 		console.error('Error fetching blogs:', error)
+// 		return NextResponse.json(
+// 			{ error: 'Internal server error' },
+// 			{ status: 500 }
+// 		)
+// 	}
+// }
+// export async function GET(req: NextRequest) {
+// 	try {
+// 		await connectDatabase()
+
+// 		// Use req.nextUrl correctly
+// 		const url = req.nextUrl
+// 		const category = url.searchParams.get('categories')
+
+// 		const filter = category ? { category } : {}
+
+// 		// Fetch blogs sorted by creation date (latest first)
+// 		const blogs = await Blog.find(filter)
+// 			.populate('category', 'name')
+// 			.sort({ createdAt: -1 })
+
+// 		return NextResponse.json(blogs)
+// 	} catch (error) {
+// 		console.error('Error fetching blogs:', error)
+// 		return NextResponse.json(
+// 			{ error: 'Internal server error' },
+// 			{ status: 500 }
+// 		)
+// 	}
+// }
+export async function GET(req: NextRequest) {
 	try {
 		await connectDatabase()
 
-		// Parse category query parameter
-		const url = new URL(req.url)
-		const category = url.searchParams.get('categories') // Adjusted to match the query parameter in the frontend
+		// Get categorySlug from query parameters
+		const url = req.nextUrl
+		const categorySlug = url.searchParams.get('categorySlug') // Updated key
 
-		const filter = category ? { category } : {}
+		let filter = {}
+
+		if (categorySlug) {
+			// Find the category by slug
+			const category = await Category.findOne({ slug: categorySlug })
+
+			if (!category) {
+				return NextResponse.json(
+					{ error: 'Category not found' },
+					{ status: 404 }
+				)
+			}
+
+			// Filter blogs by the found category ID
+			filter = { category: category._id }
+		}
 
 		// Fetch blogs sorted by creation date (latest first)
 		const blogs = await Blog.find(filter)
-			.populate('category', 'name')
-			.sort({ createdAt: -1 }) // Sorting by createdAt in descending order
+			.populate('category', 'name slug') // Populate name & slug
+			.sort({ createdAt: -1 })
 
 		return NextResponse.json(blogs)
 	} catch (error) {

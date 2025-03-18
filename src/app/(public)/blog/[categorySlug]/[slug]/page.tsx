@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 
@@ -11,8 +12,8 @@ export default function Page({
 	const [categories, setCategories] = useState<any[]>([])
 	const [loading, setLoading] = useState<boolean>(true)
 	const [loadingCategories, setLoadingCategories] = useState<boolean>(true)
+	const [error, setError] = useState<string | null>(null) // Error state
 
-	// Await the params before using them
 	const [resolvedParams, setResolvedParams] = useState<{
 		slug: string | string[]
 	} | null>(null)
@@ -33,6 +34,7 @@ export default function Page({
 				setCategories(data)
 			} catch (error) {
 				console.error(error)
+				setError('Failed to load categories') // Set error message
 			} finally {
 				setLoadingCategories(false)
 			}
@@ -50,17 +52,21 @@ export default function Page({
 
 				const API_URL =
 					process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-				const res = await fetch(`/api/blog/${slug}`, {
-					cache: 'no-store'
-				})
-
-				if (!res.ok) {
-					throw new Error('Blog not found')
+				try {
+					const res = await fetch(`/api/blog/${slug}`, {
+						cache: 'no-store'
+					})
+					if (!res.ok) {
+						throw new Error('Blog not found')
+					}
+					const data = await res.json()
+					setBlog(data)
+				} catch (error) {
+					console.error(error)
+					setError('Failed to load blog') // Set error message
+				} finally {
+					setLoading(false)
 				}
-
-				const data = await res.json()
-				setBlog(data)
-				setLoading(false)
 			}
 		}
 
@@ -69,6 +75,10 @@ export default function Page({
 
 	if (loading || !blog) {
 		return <SkeletonLoader type='blog' />
+	}
+
+	if (error) {
+		return <div className='text-center text-red-500'>{error}</div> // Show error message if any
 	}
 
 	return (
@@ -141,8 +151,7 @@ export default function Page({
 											key={category._id}
 											className='bg-gray-100 p-2 rounded-md text-blue-700 cursor-pointer hover:bg-blue-200'
 										>
-											{category?.name}{' '}
-											{/* Ensure you're accessing the 'name' */}
+											{category?.name}
 										</li>
 									)
 								)}

@@ -1,9 +1,7 @@
-// CreateBlog.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
-import TextArea from '@/components/form/TextArea'
 import Button from '@/components/form/Button'
 import Input from '@/components/form/Input'
 import SelectInput from '@/components/form/SelectInput'
@@ -12,6 +10,13 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import { Bold } from '@tiptap/extension-bold'
+import { Italic } from '@tiptap/extension-italic'
+import { TextStyle } from '@tiptap/extension-text-style'
+import { Heading } from '@tiptap/extension-heading' // Corrected import
+import { ListItem } from '@tiptap/extension-list' // Corrected import
 
 interface Category {
 	_id: string
@@ -33,6 +38,20 @@ export default function CreateBlog() {
 	const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({})
 	const [slug, setSlug] = useState<string | null>(null)
 	const router = useRouter()
+
+	// Initialize Tiptap editor
+	const editor = useEditor({
+		extensions: [StarterKit, Bold, Italic, Heading, TextStyle, ListItem],
+		content: form.content,
+		onUpdate({ editor }) {
+			if (editor) {
+				setForm(prevForm => ({
+					...prevForm,
+					content: editor.getHTML()
+				}))
+			}
+		}
+	})
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search)
@@ -176,12 +195,50 @@ export default function CreateBlog() {
 					value={form.title}
 					onChange={handleInputChange}
 				/>
-				<TextArea
-					name='content'
-					placeholder='Content'
-					value={form.content}
-					onChange={handleInputChange}
-				/>
+
+				{/* Tiptap Editor */}
+				<div className='border-b border-gray-200'>
+					{/* Toolbar with icons */}
+					<div className='flex space-x-4 mb-4'>
+						<button
+							type='button'
+							onClick={() =>
+								editor &&
+								editor.chain().focus().toggleBold().run()
+							}
+							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('bold') ? 'text-black' : 'text-gray-500'}`}
+						>
+							B
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor &&
+								editor.chain().focus().toggleItalic().run()
+							}
+							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('italic') ? 'text-black' : 'text-gray-500'}`}
+						>
+							I
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor &&
+								editor.chain().focus().toggleUnderline().run()
+							}
+							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('underline') ? 'text-black' : 'text-gray-500'}`}
+						>
+							<u>U</u> {/* Correct usage of the <u> tag */}
+						</button>
+					</div>
+
+					{/* Editor Content */}
+					<EditorContent
+						editor={editor}
+						className='min-h-[200px] w-full border rounded-lg p-6 text-lg leading-relaxed overflow-auto transition-all focus:ring-2 focus:ring-blue-500'
+					/>
+				</div>
+
 				<SelectInput
 					label='Category'
 					options={categoryOptions}

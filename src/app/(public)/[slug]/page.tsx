@@ -116,9 +116,10 @@ export default function Page({
 						{blog.category?.name}
 					</p>
 
-					<p className='mt-4 text-gray-700 leading-relaxed'>
-						{blog.content}
-					</p>
+					<div
+						className='mt-4 text-gray-700 leading-relaxed'
+						dangerouslySetInnerHTML={{ __html: blog.content }}
+					/>
 
 					{/* Tags */}
 					{blog.tags && blog.tags.length > 0 && (

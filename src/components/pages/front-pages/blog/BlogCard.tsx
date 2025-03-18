@@ -41,7 +41,10 @@ export default function BlogCard({
 					{/* Display the formatted date */}
 					<Clock5 size={16} /> <span>{formattedDate}</span>
 				</div>
-				<p className='truncate line-clamp-3 min-h-24'>{blog.content}</p>
+				<p className='line-clamp-3 min-h-24 my-2'>
+					{blog.content.replace(/<\/?[^>]+(>|$)/g, '')}
+				</p>
+
 				<div className='my-2'>
 					<Link
 						href={`/${blog.slug}`} // Only using the blog slug for the link

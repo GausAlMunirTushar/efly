@@ -89,6 +89,15 @@ export async function GET() {
 			}
 		])
 
+		// Check if there are no categories, and add the default "All" category
+		if (categories.length === 0) {
+			categories.push({
+				name: 'All',
+				slug: 'all',
+				blogCount: 0 // You can customize this as needed
+			})
+		}
+
 		return NextResponse.json(categories)
 	} catch (error) {
 		console.error('Error fetching categories:', error)

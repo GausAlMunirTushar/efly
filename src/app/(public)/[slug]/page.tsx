@@ -88,7 +88,7 @@ export default function Page({
 					<img
 						src={blog.imageUrl}
 						alt={blog.title}
-						className='absolute inset-0 w-full h-full object-cover rounded-lg'
+						className='absolute inset-0 w-full h-full object-cover'
 					/>
 				)}
 				<div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50'>

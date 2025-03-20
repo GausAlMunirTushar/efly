@@ -8,7 +8,7 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
 	return (
-		<div className='max-w-sm bg-white shadow-lg rounded-lg overflow-hidden'>
+		<div className='max-w-sm bg-white border rounded-lg overflow-hidden'>
 			<div className='p-6'>
 				<h2 className='text-xl font-semibold text-gray-800'>
 					{job.title}

@@ -8,26 +8,18 @@ import { motion } from 'framer-motion'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
-	{ name: 'Blog', href: '/blog' },
-	{ name: 'Jobs', href: '/jobs' },
-	{ name: 'Events', href: '/events' },
+	{ name: 'Flight', href: '/flight' },
 	{ name: 'Holiday', href: '/holiday' },
+	{ name: 'Umrah', href: '/umrah' },
+	{ name: 'Blog', href: '/blog' },
+
 	{
-		name: 'Visa',
+		name: 'More',
 		href: '#',
 		submenu: [
-			{ name: 'Visa on Arrival', href: '/visa-on-arrival' },
-			{ name: 'Visa Free', href: '/visa-free' },
-			{ name: 'Visa Required', href: '/visa-required' },
-			{ name: 'Visa Extension', href: '/visa-extension' }
-		]
-	},
-	{
-		name: 'Services',
-		href: '#',
-		submenu: [
-			{ name: 'Package Deals', href: '/packages' },
-			{ name: 'Travel Guide', href: '/guide' }
+			{ name: 'Jobs', href: '/jobs' },
+			{ name: 'Events', href: '/events' },
+			{ name: 'Holiday', href: '/holiday' }
 		]
 	}
 ]

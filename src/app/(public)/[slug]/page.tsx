@@ -86,7 +86,7 @@ export default function Page({
 	return (
 		<section className=''>
 			{/* Hero Section */}
-			<div className='relative w-full h-36'>
+			{/* <div className='relative w-full h-36'>
 				{blog.imageUrl && (
 					<img
 						src={blog.imageUrl}
@@ -99,50 +99,59 @@ export default function Page({
 						{blog.title}
 					</h1>
 				</div>
-			</div>
+			</div> */}
 
 			{/* Blog Content & Sidebar */}
-			<div className='container mx-auto py-6 grid grid-cols-1 md:grid-cols-8 gap-6'>
+			<div className='container mx-auto py-6 '>
 				{/* Blog Content */}
-				<div className='md:col-span-6'>
+				<div className='w-full'>
 					{blog.imageUrl && (
 						<img
 							src={blog.imageUrl}
 							alt={blog.title}
-							className='w-full h-[500px] object-fill rounded-lg mb-4'
+							className='w-full h-[600] object- rounded-lg mb-4'
 						/>
 					)}
-					<h1 className='text-3xl font-bold mb-2'>{blog.title}</h1>
-					<p className='text-gray-500 text-sm mb-4'>
-						{blog.category?.name}
-					</p>
+					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
+						<div className='md:col-span-6'>
+							<h1 className='text-3xl font-bold mb-2'>
+								{blog.title}
+							</h1>
+							<p className='text-gray-500 text-sm mb-4'>
+								{blog.category?.name}
+							</p>
 
-					<div
-						className='mt-4 text-gray-700 leading-relaxed'
-						dangerouslySetInnerHTML={{ __html: blog.content }}
-					/>
+							<div
+								className='mt-4 text-gray-700 leading-relaxed'
+								dangerouslySetInnerHTML={{
+									__html: blog.content
+								}}
+							/>
 
-					{/* Tags */}
-					{blog.tags && blog.tags.length > 0 && (
-						<div className='mt-4 flex flex-wrap gap-2'>
-							<strong className='text-gray-600'>Tags:</strong>
-							{blog.tags.map((tag: string) => (
-								<span
-									key={tag}
-									className='bg-blue-100 text-blue-700 px-2 py-1 text-sm rounded-md'
-								>
-									{tag}
-								</span>
-							))}
+							{/* Tags */}
+							{blog.tags && blog.tags.length > 0 && (
+								<div className='mt-4 flex flex-wrap gap-2'>
+									<strong className='text-gray-600'>
+										Tags:
+									</strong>
+									{blog.tags.map((tag: string) => (
+										<span
+											key={tag}
+											className='bg-blue-100 text-blue-700 px-2 py-1 text-sm rounded-md'
+										>
+											{tag}
+										</span>
+									))}
+								</div>
+							)}
 						</div>
-					)}
-				</div>
-
-				{/* Sidebar */}
-				<div className='md:col-span-2'>
-					<BlogDetailsSidebar />
-					<div className='mt-4'>
-						<LatestBlog />
+						{/* Sidebar */}
+						<div className='md:col-span-2'>
+							<BlogDetailsSidebar />
+							<div className='mt-4'>
+								<LatestBlog />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

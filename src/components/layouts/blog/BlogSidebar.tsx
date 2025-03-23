@@ -34,7 +34,7 @@ export default function BlogSidebar() {
 	}, [])
 
 	return (
-		<aside className='w-2/12 h-full bg-gray-100 px-4 py-2 my-4 rounded-lg'>
+		<aside className='w-full h-full bg-gray-100 px-4 py-2 my-4 rounded-lg'>
 			<h2 className='text-lg text-gray-700 font-bold mb-2'>Categories</h2>
 			{loading ? (
 				<SkeletonLoader type='category' />

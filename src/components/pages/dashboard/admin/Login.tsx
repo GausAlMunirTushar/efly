@@ -6,10 +6,15 @@ import Link from 'next/link'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 
-const Login = () => {
+const AdminLogin = () => {
 	const router = useRouter()
 	const params = useParams()
 	const [rememberMe, setRememberMe] = useState(false)
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault()
+		router.push(`/admin/dashboard`)
+	}
 
 	return (
 		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-body_dark '>
@@ -27,12 +32,13 @@ const Login = () => {
 						Please sign-in to your account and start the adventure
 					</p>
 				</div>
-				<form className='mt-6'>
+				<form onSubmit={handleSubmit} className='mt-6'>
 					<Input
 						label='Email or Username'
 						type='text'
 						name='email'
 						placeholder='johndoe@email.com'
+						defaultValue={'admin@admin.com'}
 						fullWidth
 					/>
 					<div className='mt-4'>
@@ -41,6 +47,7 @@ const Login = () => {
 							type='password'
 							name='password'
 							placeholder='********'
+							defaultValue={'12345678'}
 							fullWidth
 						/>
 					</div>
@@ -63,7 +70,11 @@ const Login = () => {
 							Forgot Password?
 						</Link>
 					</div>
-					<Button color='primary' className='w-full mt-6'>
+					<Button
+						type='submit'
+						color='primary'
+						className='w-full mt-6'
+					>
 						Login
 					</Button>
 				</form>
@@ -81,4 +92,4 @@ const Login = () => {
 	)
 }
 
-export default Login
+export default AdminLogin

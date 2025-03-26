@@ -1,7 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Loader2 } from 'lucide-react'
+import {
+	Loader2,
+	ArrowLeft,
+	Image as ImageIcon,
+	Link as LinkIcon,
+	List,
+	ListOrdered
+} from 'lucide-react'
 import Button from '@/components/form/Button'
 import Input from '@/components/form/Input'
 import SelectInput from '@/components/form/SelectInput'
@@ -9,14 +16,15 @@ import Title from '@/components/common/Title'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Bold } from '@tiptap/extension-bold'
 import { Italic } from '@tiptap/extension-italic'
 import { TextStyle } from '@tiptap/extension-text-style'
-import { Heading } from '@tiptap/extension-heading' // Corrected import
-import { ListItem } from '@tiptap/extension-list' // Corrected import
+import { Heading } from '@tiptap/extension-heading'
+import { ListItem } from '@tiptap/extension-list'
+import { Link as TiptapLink } from '@tiptap/extension-link'
+import { Image } from '@tiptap/extension-image'
 import TagInput from '@/components/form/TagInput'
 
 interface Category {
@@ -42,15 +50,22 @@ export default function CreateBlog() {
 
 	// Initialize Tiptap editor
 	const editor = useEditor({
-		extensions: [StarterKit, Bold, Italic, Heading, TextStyle, ListItem],
+		extensions: [
+			StarterKit,
+			Bold,
+			Italic,
+			Heading.configure({ levels: [1, 2, 3] }),
+			TextStyle,
+			ListItem,
+			TiptapLink,
+			Image
+		],
 		content: form.content,
 		onUpdate({ editor }) {
-			if (editor) {
-				setForm(prevForm => ({
-					...prevForm,
-					content: editor.getHTML()
-				}))
-			}
+			setForm(prevForm => ({
+				...prevForm,
+				content: editor.getHTML()
+			}))
 		}
 	})
 
@@ -202,34 +217,120 @@ export default function CreateBlog() {
 
 				{/* Tiptap Editor */}
 				<div className='border-b border-gray-200'>
-					{/* Toolbar with icons */}
 					<div className='flex space-x-4 mb-4'>
 						<button
 							type='button'
 							onClick={() =>
-								editor &&
-								editor.chain().focus().toggleBold().run()
+								editor?.chain().focus().toggleBold().run()
 							}
-							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('bold') ? 'text-black' : 'text-gray-500'}`}
+							className='p-2 bg-gray-200 rounded-lg'
 						>
 							B
 						</button>
 						<button
 							type='button'
 							onClick={() =>
-								editor &&
-								editor.chain().focus().toggleItalic().run()
+								editor?.chain().focus().toggleItalic().run()
 							}
-							className={`text-xl bg-gray-200 px-4 py-2 rounded-lg ${editor?.isActive('italic') ? 'text-black' : 'text-gray-500'}`}
+							className='p-2 bg-gray-200 rounded-lg'
 						>
 							I
 						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.toggleHeading({ level: 1 })
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							H1
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.toggleHeading({ level: 2 })
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							H2
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.toggleHeading({ level: 3 })
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							H3
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor?.chain().focus().toggleBulletList().run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							<List size={16} />
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.toggleOrderedList()
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							<ListOrdered size={16} />
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.toggleLink({
+										href: prompt('Enter URL') || ''
+									})
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							<LinkIcon size={16} />
+						</button>
+						<button
+							type='button'
+							onClick={() =>
+								editor
+									?.chain()
+									.focus()
+									.setImage({
+										src: prompt('Enter image URL') || ''
+									})
+									.run()
+							}
+							className='p-2 bg-gray-200 rounded-lg'
+						>
+							<ImageIcon size={16} />
+						</button>
 					</div>
-
-					{/* Editor Content */}
 					<EditorContent
 						editor={editor}
-						className='min-h-[200px] w-full border rounded-lg p-6 text-lg leading-relaxed overflow-auto transition-all focus:ring-2 focus:ring-blue-500'
+						className='min-h-[200px] w-full border rounded-lg p-6 text-lg leading-relaxed overflow-auto'
 					/>
 				</div>
 

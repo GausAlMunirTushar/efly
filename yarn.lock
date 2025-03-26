@@ -1231,10 +1231,22 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-horizontal-rule/-/extension-horizontal-rule-2.11.5.tgz#b876f606386c51bc2ff45d4bd26267f5b104a850"
   integrity sha512-3up2r1Du8/5/4ZYzTC0DjTwhgPI3dn8jhOCLu73m5F3OGvK/9whcXoeWoX103hYMnGDxBlfOje71yQuN35FL4A==
 
+"@tiptap/extension-image@^2.11.5":
+  version "2.11.5"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-image/-/extension-image-2.11.5.tgz#f16d05c8045dc7d84d85efdbb946a2a8713fb2d3"
+  integrity sha512-HbUq9AL8gb8eSuQfY/QKkvMc66ZFN/b6jvQAILGArNOgalUfGizoC6baKTJShaExMSPjBZlaAHtJiQKPaGRHaA==
+
 "@tiptap/extension-italic@^2.11.5":
   version "2.11.5"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-italic/-/extension-italic-2.11.5.tgz#63b09c7fb41ab64681983df7be8cf6bc330c0ede"
   integrity sha512-9VGfb2/LfPhQ6TjzDwuYLRvw0A6VGbaIp3F+5Mql8XVdTBHb2+rhELbyhNGiGVR78CaB/EiKb6dO9xu/tBWSYA==
+
+"@tiptap/extension-link@^2.11.5":
+  version "2.11.5"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-link/-/extension-link-2.11.5.tgz#a2c3a92682233892413e3c1ec69d03a48815ab1e"
+  integrity sha512-4Iu/aPzevbYpe50xDI0ZkqRa6nkZ9eF270Ue2qaF3Ab47nehj+9Jl78XXzo8+LTyFMnrETI73TAs1aC/IGySeQ==
+  dependencies:
+    linkifyjs "^4.2.0"
 
 "@tiptap/extension-list-item@^2.11.5":
   version "2.11.5"
@@ -1260,6 +1272,11 @@
   version "2.11.5"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.11.5.tgz#94e214dcede09f6c5f99d0c58290a1d3f5db61eb"
   integrity sha512-PVfUiCqrjvsLpbIoVlegSY8RlkR64F1Rr2RYmiybQfGbg+AkSZXDeO0eIrc03//4gua7D9DfIozHmAKv1KN3ow==
+
+"@tiptap/extension-table@^2.11.5":
+  version "2.11.5"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table/-/extension-table-2.11.5.tgz#2296c1076ef3381bca4601709956085f093ff9e0"
+  integrity sha512-NKXLhKWdAdURklm98YkCd2ai4fh8jY8HS/+X2s/2QiQt8Z98CU1keCm35fJEEExM234iB/hCqG5vY4JgTc0Tvw==
 
 "@tiptap/extension-text-style@^2.11.5":
   version "2.11.5"
@@ -4340,6 +4357,11 @@ linkify-it@^5.0.0:
   integrity sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==
   dependencies:
     uc.micro "^2.0.0"
+
+linkifyjs@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/linkifyjs/-/linkifyjs-4.2.0.tgz#9dd30222b9cbabec9c950e725ec00031c7fa3f08"
+  integrity sha512-pCj3PrQyATaoTYKHrgWRF3SJwsm61udVh+vuls/Rl6SptiDhgE7ziUIudAedRY9QEfynmM7/RmLEfPUyw1HPCw==
 
 locate-path@^5.0.0:
   version "5.0.0"

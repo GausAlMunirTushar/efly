@@ -39,7 +39,7 @@ export default function FlightSearch() {
 		<div className='bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl mx-auto'>
 			{/* Navigation Tabs */}
 			<div className='flex gap-6 border-b pb-3'>
-				{['Flight', 'Hotel', 'Shop', 'Holiday', 'Visa'].map(tab => (
+				{['Flight'].map(tab => (
 					<TabButton
 						key={tab}
 						label={tab}

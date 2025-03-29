@@ -29,7 +29,7 @@ export default function BlogSlider() {
 				const res = await fetch('/api/blogslides')
 				if (!res.ok) throw new Error('Failed to fetch slides')
 				const data: Slide[] = await res.json()
-				setSlides(data) // Only take the first 3 slides
+				setSlides(data)
 			} catch (error) {
 				console.error(error)
 			} finally {
@@ -68,17 +68,17 @@ export default function BlogSlider() {
 
 			<Swiper
 				modules={[Navigation, Pagination, Autoplay]}
-				spaceBetween={20}
-				slidesPerView={1.2}
+				spaceBetween={0}
+				slidesPerView={1}
 				pagination={{ clickable: true }}
-				autoplay={{ delay: 3000, disableOnInteraction: false }}
+				autoplay={{ delay: 2000, disableOnInteraction: false }}
 				className='w-full rounded-lg overflow-hidden'
 				ref={swiperRef}
 			>
 				{slides.map(slide => (
 					<SwiperSlide key={slide._id} className='relative'>
 						<div className='relative h-56 md:h-64 lg:h-96 w-full rounded-lg'>
-							<Link href={slide.link}>
+							<Link href={slide.link} target='_blank'>
 								<img
 									src={slide.image}
 									alt='Slide image'

@@ -118,6 +118,9 @@ const BlogSlide = () => {
 		setEditingId(null)
 	}
 
+	// Enable submit button only if the file is selected or there is a preview
+	const isSubmitDisabled = !link || (file && !preview) || loading
+
 	return (
 		<section className='mx-auto p-6 bg-white min-h-screen box-shadow rounded-lg'>
 			<div className='flex justify-between items-center'>
@@ -167,6 +170,7 @@ const BlogSlide = () => {
 						variant='primary'
 						size='md'
 						isLoading={loading}
+						disabled={isSubmitDisabled}
 					>
 						{editingId ? 'Update Slide' : 'Upload Slide'}
 					</Button>

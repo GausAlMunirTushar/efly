@@ -38,13 +38,15 @@ export default function HomeNavbar() {
 			<div className='container mx-auto flex justify-between items-center py-2.5'>
 				{/* Logo */}
 				<div className='flex items-center space-x-2'>
-					<img
-						src='/efly.png'
-						alt='Logo'
-						width={40}
-						height={40}
-						className='h-8 w-auto'
-					/>
+					<Link href='/' className='cursor-pointer'>
+						<img
+							src='/efly.png'
+							alt='Logo'
+							width={40}
+							height={40}
+							className='h-8 w-auto'
+						/>
+					</Link>
 				</div>
 
 				{/* Desktop Navigation */}

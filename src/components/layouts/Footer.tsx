@@ -16,7 +16,9 @@ const Footer = () => {
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-gray-800'>
 					{/* About Section */}
 					<div className='flex flex-col items-start'>
-						<img src='/efly.png' alt='eFly' className='h-10' />
+						<Link href='/' className='cursor-pointer'>
+							<img src='/efly.png' alt='eFly' className='h-10' />
+						</Link>
 						<p className='text-sm mt-2'>
 							efly - We Are The New Travel Agency (OTA) in Your
 							City. We Are Committed To Making Your Travel Easier
@@ -124,23 +126,6 @@ const Footer = () => {
 							</li>
 						</ul>
 					</div>
-
-					{/* Payment Section */}
-					{/* <div className='col-span-1 sm:col-span-2 md:col-span-3 flex flex-wrap justify-center border-t pt-4 mt-4'>
-						<h3 className='text-lg font-semibold w-full text-center mb-2'>
-							We Accept
-						</h3>
-						<div className='flex flex-wrap justify-center gap-4'>
-							<img src='/visa.png' alt='Visa' className='h-6' />
-							<img
-								src='/mastercard.png'
-								alt='Mastercard'
-								className='h-6'
-							/>
-							<img src='/bkash.png' alt='bKash' className='h-6' />
-							<img src='/nagad.png' alt='Nagad' className='h-6' />
-						</div>
-					</div> */}
 				</div>
 
 				{/* Contact Section */}

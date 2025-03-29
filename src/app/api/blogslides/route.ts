@@ -9,10 +9,11 @@ export async function GET() {
 	return NextResponse.json(slides)
 }
 
-// Create a slide (POST)
+// Create a new blog slide
 export async function POST(req: Request) {
 	await connectDatabase()
 	const { image, link } = await req.json()
+
 	if (!image || !link) {
 		return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
 	}

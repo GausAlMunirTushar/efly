@@ -5,38 +5,70 @@ import { NextResponse } from 'next/server'
 // Fetch single slide (GET)
 export async function GET(
 	req: Request,
-	{ params }: { params: { id: string } }
-) {
-	await connectDatabase()
-	const slide = await BlogSlide.findById(params.id)
-	if (!slide)
-		return NextResponse.json({ error: 'Not found' }, { status: 404 })
-
-	return NextResponse.json(slide)
+	{ params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+	try {
+		const { id } = await params // Resolving the Promise for `params`
+		await connectDatabase()
+		const slide = await BlogSlide.findById(id)
+		if (!slide) {
+			return NextResponse.json({ error: 'Not found' }, { status: 404 })
+		}
+		return NextResponse.json(slide)
+	} catch (error) {
+		console.error('Error fetching slide:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
+	}
 }
 
 // Update slide (PUT)
 export async function PUT(
 	req: Request,
-	{ params }: { params: { id: string } }
-) {
-	await connectDatabase()
-	const { image, link } = await req.json()
-	const updatedSlide = await BlogSlide.findByIdAndUpdate(
-		params.id,
-		{ image, link },
-		{ new: true }
-	)
-
-	return NextResponse.json(updatedSlide)
+	{ params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+	try {
+		const { id } = await params // Resolving the Promise for `params`
+		const { image, link } = await req.json()
+		await connectDatabase()
+		const updatedSlide = await BlogSlide.findByIdAndUpdate(
+			id,
+			{ image, link },
+			{ new: true }
+		)
+		if (!updatedSlide) {
+			return NextResponse.json({ error: 'Not found' }, { status: 404 })
+		}
+		return NextResponse.json(updatedSlide)
+	} catch (error) {
+		console.error('Error updating slide:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
+	}
 }
 
 // Delete slide (DELETE)
 export async function DELETE(
 	req: Request,
-	{ params }: { params: { id: string } }
-) {
-	await connectDatabase()
-	await BlogSlide.findByIdAndDelete(params.id)
-	return NextResponse.json({ message: 'Deleted' })
+	{ params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+	try {
+		const { id } = await params // Resolving the Promise for `params`
+		await connectDatabase()
+		const deletedSlide = await BlogSlide.findByIdAndDelete(id)
+		if (!deletedSlide) {
+			return NextResponse.json({ error: 'Not found' }, { status: 404 })
+		}
+		return NextResponse.json({ message: 'Deleted' })
+	} catch (error) {
+		console.error('Error deleting slide:', error)
+		return NextResponse.json(
+			{ error: 'Internal server error' },
+			{ status: 500 }
+		)
+	}
 }

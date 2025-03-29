@@ -1,6 +1,5 @@
 'use client'
-
-import React, { useEffect, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
@@ -63,8 +62,7 @@ const Modal: React.FC<ModalProps> = ({
 					aria-modal='true'
 					tabIndex={-1}
 				>
-					{/* Modal Header */}
-					<div className='flex justify-between items-center '>
+					<div className='flex justify-between items-center'>
 						{title && (
 							<h2 className='text-lg text-primary-500 font-bold dark:text-text-primary'>
 								{title}
@@ -73,13 +71,11 @@ const Modal: React.FC<ModalProps> = ({
 						<button
 							onClick={onClose}
 							aria-label='Close modal'
-							className='p-2 rounded-full bg-gray-100 hover:bg-gray-200  dark:bg-bg_dark dark:hover:bg-bg_secondary  transition-colors duration-500'
+							className='p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-bg_dark dark:hover:bg-bg_secondary transition-colors duration-500'
 						>
 							<X className='w-5 h-5 text-gray-600 dark:text-text-primary hover:text-red-500 transition-colors duration-500' />
 						</button>
 					</div>
-
-					{/* Modal Content */}
 					<div>{children}</div>
 				</motion.div>
 			</motion.div>

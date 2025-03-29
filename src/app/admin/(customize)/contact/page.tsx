@@ -71,53 +71,9 @@ const ContactPage = () => {
 	}, [])
 
 	return (
-		<section className='container mx-auto p-6'>
-			<h1 className='text-3xl font-bold text-center mb-6'>Contact Us</h1>
-
-			{/* Contact Form */}
-			<div className='max-w-lg mx-auto bg-white shadow-md p-6 rounded-lg'>
-				<form onSubmit={handleSubmit} className='space-y-4'>
-					<input
-						type='text'
-						name='name'
-						placeholder='Name'
-						value={formData.name}
-						onChange={handleChange}
-						className='w-full p-2 border rounded-md'
-						required
-					/>
-					<input
-						type='email'
-						name='email'
-						placeholder='Email'
-						value={formData.email}
-						onChange={handleChange}
-						className='w-full p-2 border rounded-md'
-						required
-					/>
-					<textarea
-						name='message'
-						placeholder='Message'
-						value={formData.message}
-						onChange={handleChange}
-						rows={4}
-						className='w-full p-2 border rounded-md'
-						required
-					/>
-					<button
-						type='submit'
-						className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
-						disabled={loading}
-					>
-						{loading ? 'Sending...' : 'Send Now'}
-					</button>
-				</form>
-			</div>
-
+		<section className='bg-white min-h-screen'>
 			{/* Messages List */}
-			<div className='mt-10'>
-				<h2 className='text-2xl font-semibold mb-4'>Messages</h2>
-
+			<div className='p-4'>
 				{error && <p className='text-red-500'>{error}</p>}
 
 				<div className='grid md:grid-cols-2 gap-4'>

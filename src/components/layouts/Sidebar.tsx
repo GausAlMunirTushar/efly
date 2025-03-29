@@ -42,11 +42,12 @@ const menuItems: MenuItem[] = [
 		href: `/admin/jobs`
 	},
 	{
-		title: 'eFly Profile',
+		title: 'Customize',
 		icon: <Banknote className='w-5 h-5' />,
 		subMenu: [
 			{ title: 'Contact', href: `/admin/contact` },
-			{ title: 'About Us', href: `/admin/about` }
+			{ title: 'About Us', href: `/admin/about` },
+			{ title: 'Blog Slide', href: `/admin/blog-slide` }
 		]
 	}
 ]

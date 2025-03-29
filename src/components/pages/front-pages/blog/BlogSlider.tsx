@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -19,6 +19,8 @@ type Slide = {
 export default function BlogSlider() {
 	const [slides, setSlides] = useState<Slide[]>([])
 	const [loading, setLoading] = useState(true)
+
+	const swiperRef = useRef<any>(null)
 
 	useEffect(() => {
 		const fetchSlides = async () => {
@@ -52,12 +54,14 @@ export default function BlogSlider() {
 			<button
 				className='absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full hidden md:flex focus:outline-none'
 				aria-label='Previous slide'
+				onClick={() => swiperRef.current?.slidePrev()}
 			>
 				<ChevronLeft className='h-6 w-6 text-gray-600' />
 			</button>
 			<button
 				className='absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full hidden md:flex focus:outline-none'
 				aria-label='Next slide'
+				onClick={() => swiperRef.current?.slideNext()}
 			>
 				<ChevronRight className='h-6 w-6 text-gray-600' />
 			</button>
@@ -69,6 +73,7 @@ export default function BlogSlider() {
 				pagination={{ clickable: true }}
 				autoplay={{ delay: 3000, disableOnInteraction: false }}
 				className='w-full rounded-lg overflow-hidden'
+				ref={swiperRef}
 			>
 				{slides.map(slide => (
 					<SwiperSlide key={slide._id} className='relative'>

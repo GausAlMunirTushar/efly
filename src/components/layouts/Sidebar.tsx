@@ -47,6 +47,7 @@ const menuItems: MenuItem[] = [
 		subMenu: [
 			{ title: 'Contact', href: `/admin/contact` },
 			{ title: 'About Us', href: `/admin/about` },
+			{ title: 'Home Slide', href: `/admin/home-slide` },
 			{ title: 'Blog Slide', href: `/admin/blog-slide` }
 		]
 	}

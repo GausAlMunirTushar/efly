@@ -15,4 +15,4 @@ const HomeSlideSchema = new Schema<IHomeSlide>(
 )
 
 export default models.HomeSlide ||
-	model<IHomeSlide>('BlogSlide', HomeSlideSchema)
+	model<IHomeSlide>('HomeSlide', HomeSlideSchema)

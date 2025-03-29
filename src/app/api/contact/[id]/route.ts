@@ -4,11 +4,12 @@ import Contact from '@/models/contact.model'
 
 export async function DELETE(
 	req: Request,
-	{ params }: { params: { id: string } }
-) {
+	{ params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
 	try {
+		const { id } = await params
 		await connectDatabase()
-		const deletedContact = await Contact.findByIdAndDelete(params.id)
+		const deletedContact = await Contact.findByIdAndDelete(id)
 
 		if (!deletedContact) {
 			return NextResponse.json(

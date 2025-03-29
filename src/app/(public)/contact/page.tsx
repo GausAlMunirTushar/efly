@@ -1,11 +1,55 @@
 'use client'
 
+import { useState } from 'react'
 import Input from '@/components/form/Input'
 import TextArea from '@/components/form/TextArea'
-import React from 'react'
-import { FaWhatsapp, FaPhoneAlt, FaEnvelope } from 'react-icons/fa'
 
 const ContactPage = () => {
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		message: ''
+	})
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
+	const [success, setSuccess] = useState('')
+
+	// Handle input change
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value })
+	}
+
+	// Handle form submission
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		setLoading(true)
+		setError('')
+		setSuccess('')
+
+		try {
+			const res = await fetch('/api/contact', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(formData)
+			})
+
+			const data = await res.json()
+
+			if (res.ok) {
+				setSuccess('Message sent successfully!')
+				setFormData({ name: '', email: '', message: '' }) // Reset form
+			} else {
+				setError(data.error || 'Something went wrong')
+			}
+		} catch (err) {
+			setError('Server error. Please try again later.')
+		}
+
+		setLoading(false)
+	}
+
 	return (
 		<section>
 			<div className='flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 h-36'>
@@ -20,24 +64,45 @@ const ContactPage = () => {
 							phone. For a personalized touch, visit us in person
 							and discuss your travel plans.
 						</p>
-						<form className='space-y-4 mt-14'>
+
+						{/* Success & Error Messages */}
+						{error && <p className='text-red-500'>{error}</p>}
+						{success && <p className='text-green-500'>{success}</p>}
+
+						<form
+							onSubmit={handleSubmit}
+							className='space-y-4 mt-6'
+						>
 							<Input
 								type='text'
+								name='name'
 								placeholder='Name'
-								className=''
+								value={formData.name}
+								onChange={handleChange}
+								required
 							/>
 							<Input
 								type='email'
+								name='email'
 								placeholder='Email'
-								className=''
+								value={formData.email}
+								onChange={handleChange}
+								required
 							/>
 							<TextArea
+								name='message'
 								placeholder='Message'
 								rows={4}
-								className='w-full p-2 border rounded-md'
-							></TextArea>
-							<button className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'>
-								Send Now
+								value={formData.message}
+								onChange={handleChange}
+								required
+							/>
+							<button
+								type='submit'
+								className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
+								disabled={loading}
+							>
+								{loading ? 'Sending...' : 'Send Now'}
 							</button>
 						</form>
 					</div>
@@ -50,41 +115,19 @@ const ContactPage = () => {
 							allowFullScreen
 							loading='lazy'
 						></iframe>
-						<div className=' p-4'>
+						<div className='p-4'>
 							<h3 className='text-lg font-semibold'>Email:</h3>
 							<p>efly@gmail.com</p>
 							<h3 className='text-lg font-semibold mt-4'>
 								📍 eFly Lounge (Dhaka):
 							</h3>
 							<p>
-								Mohakhali DOHS, Rode-30, Hous-437, 3rd Floor,
+								Mohakhali DOHS, Road-30, House-437, 3rd Floor,
 								Dhaka 1206.
 							</p>
 						</div>
 					</div>
 				</div>
-
-				{/* Contact Buttons */}
-				{/* <div className='flex flex-col gap-4 mt-6'>
-					<a
-						href='tel:+8801901468550'
-						className='flex items-center justify-center bg-green-500 text-white py-2 rounded-md hover:bg-green-600'
-					>
-						<FaWhatsapp className='mr-2' /> +880 1901-468550
-					</a>
-					<a
-						href='tel:+8801901468559'
-						className='flex items-center justify-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
-					>
-						<FaPhoneAlt className='mr-2' /> +880 1901-468559
-					</a>
-					<a
-						href='mailto:itsholidaysbd@gmail.com'
-						className='flex items-center justify-center bg-red-500 text-white py-2 rounded-md hover:bg-red-600'
-					>
-						<FaEnvelope className='mr-2' /> itsholidaysbd@gmail.com
-					</a>
-				</div> */}
 			</div>
 		</section>
 	)

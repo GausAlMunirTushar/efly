@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Input from '@/components/form/Input'
 import TextArea from '@/components/form/TextArea'
+import { FaWhatsapp, FaPhoneAlt, FaEnvelope } from 'react-icons/fa'
+import Link from 'next/link'
 
 const ContactPage = () => {
 	const [formData, setFormData] = useState({
@@ -119,14 +121,12 @@ const ContactPage = () => {
 					{/* Right Side - Map and Address */}
 					<div className='shadow-md rounded-lg'>
 						<iframe
-							className='w-full h-60 rounded-lg mb-4'
+							className='w-full h-72 rounded-lg mb-2'
 							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.9020684300725!2d90.3984!3d23.7509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x123456789abcdef!2sITS%20Holidays%20Ltd.!5e0!3m2!1sen!2sbd!4v1631234567890'
 							allowFullScreen
 							loading='lazy'
 						></iframe>
 						<div className='p-4'>
-							<h3 className='text-lg font-semibold'>Email:</h3>
-							<p>efly@gmail.com</p>
 							<h3 className='text-lg font-semibold mt-4'>
 								📍 eFly Lounge (Dhaka):
 							</h3>
@@ -134,6 +134,33 @@ const ContactPage = () => {
 								Mohakhali DOHS, Road-30, House-437, 3rd Floor,
 								Dhaka 1206.
 							</p>
+
+							{/* Contact Buttons */}
+							<div className='flex flex-wrap gap-3 mt-6'>
+								<Link
+									href='https://wa.me/8801901468550'
+									target='_blank'
+									rel='noopener noreferrer'
+									className='flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-md shadow hover:bg-teal-600 transition'
+								>
+									<FaWhatsapp />
+									+880 1901-468550
+								</Link>
+								<Link
+									href='tel:+8801901468559'
+									className='flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition'
+								>
+									<FaPhoneAlt />
+									+880 1901-468559
+								</Link>
+								<Link
+									href='mailto:itsholidaysbd@gmail.com'
+									className='flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition'
+								>
+									<FaEnvelope />
+									efly@gmail.com
+								</Link>
+							</div>
 						</div>
 					</div>
 				</div>

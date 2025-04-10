@@ -138,27 +138,27 @@ const ContactPage = () => {
 							{/* Contact Buttons */}
 							<div className='flex flex-wrap gap-3 mt-6'>
 								<Link
-									href='https://wa.me/8801901468550'
+									href='https://wa.me/8801400054666'
 									target='_blank'
 									rel='noopener noreferrer'
 									className='flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-md shadow hover:bg-teal-600 transition'
 								>
 									<FaWhatsapp />
-									+880 1901-468550
+									+880 1400-054666
 								</Link>
 								<Link
-									href='tel:+8801901468559'
+									href='tel:+8801400054777'
 									className='flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition'
 								>
 									<FaPhoneAlt />
-									+880 1901-468559
+									+880 1400-054777
 								</Link>
 								<Link
-									href='mailto:itsholidaysbd@gmail.com'
+									href='mailto:help.efly@gmail.com'
 									className='flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition'
 								>
 									<FaEnvelope />
-									efly@gmail.com
+									help.efly@gmail.com
 								</Link>
 							</div>
 						</div>

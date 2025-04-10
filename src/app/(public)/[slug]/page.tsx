@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import SkeletonLoader from '@/components/common/SkeletonLoader'
 import BlogDetailsSidebar from '@/components/layouts/blog/BlogDetailsSidebar'
 import LatestBlog from '@/components/pages/front-pages/blog/LatestBlog'
+import PopularBlog from '@/components/pages/front-pages/blog/PopularBlog'
 
 export default function Page({
 	params
@@ -109,7 +110,7 @@ export default function Page({
 						<img
 							src={blog.imageUrl}
 							alt={blog.title}
-							className='w-full h-[600] object- rounded-lg mb-4'
+							className='w-full h-[600] object- rounded-lg border mb-4'
 						/>
 					)}
 					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
@@ -144,6 +145,9 @@ export default function Page({
 									))}
 								</div>
 							)}
+							<div>
+								<PopularBlog />
+							</div>
 						</div>
 						{/* Sidebar */}
 						<div className='md:col-span-2'>

@@ -5,21 +5,22 @@ import Contact from '@/models/contact.model'
 export async function POST(req: Request) {
 	try {
 		await connectDatabase()
-		const { name, email, message } = await req.json()
+		const { name, email, message, phone } = await req.json()
 
-		if (!name || !email || !message) {
+		if (!name || !email || !message || !phone) {
 			return NextResponse.json(
 				{ error: 'All fields are required' },
 				{ status: 400 }
 			)
 		}
 
-		const newContact = await Contact.create({ name, email, message })
+		const newContact = await Contact.create({ name, email, message, phone })
 		return NextResponse.json(newContact, { status: 201 })
 	} catch (error) {
 		return NextResponse.json({ error: 'Server Error' }, { status: 500 })
 	}
 }
+
 export async function GET() {
 	try {
 		await connectDatabase()

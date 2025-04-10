@@ -8,7 +8,8 @@ const ContactPage = () => {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
-		message: ''
+		message: '',
+		phone: ''
 	})
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState('')
@@ -39,7 +40,7 @@ const ContactPage = () => {
 
 			if (res.ok) {
 				setSuccess('Message sent successfully!')
-				setFormData({ name: '', email: '', message: '' }) // Reset form
+				setFormData({ name: '', email: '', message: '', phone: '' })
 			} else {
 				setError(data.error || 'Something went wrong')
 			}
@@ -86,6 +87,14 @@ const ContactPage = () => {
 								name='email'
 								placeholder='Email'
 								value={formData.email}
+								onChange={handleChange}
+								required
+							/>
+							<Input
+								type='tel'
+								name='phone'
+								placeholder='Phone'
+								value={formData.phone}
 								onChange={handleChange}
 								required
 							/>

@@ -6,7 +6,8 @@ const ContactPage = () => {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
-		message: ''
+		message: '',
+		phone: '' // Added phone to formData
 	})
 	const [messages, setMessages] = useState([])
 	const [loading, setLoading] = useState(false)
@@ -43,7 +44,7 @@ const ContactPage = () => {
 			})
 
 			if (res.ok) {
-				setFormData({ name: '', email: '', message: '' })
+				setFormData({ name: '', email: '', message: '', phone: '' })
 				fetchMessages() // Refresh messages
 			} else {
 				setError('Error sending message')
@@ -63,6 +64,12 @@ const ContactPage = () => {
 		} catch (error) {
 			setError('Error deleting message')
 		}
+	}
+
+	// Copy phone number to clipboard
+	const handleCopyPhone = (phone: string) => {
+		navigator.clipboard.writeText(phone)
+		alert('Phone number copied to clipboard!')
 	}
 
 	// Load messages on mount
@@ -88,6 +95,24 @@ const ContactPage = () => {
 								<h3 className='font-bold'>{msg.name}</h3>
 								<p className='text-gray-600'>{msg.email}</p>
 								<p className='mt-2'>{msg.message}</p>
+
+								{/* Show phone number and copy button */}
+								{msg.phone && (
+									<div className='mt-2'>
+										<p className='text-gray-800'>
+											<strong>Phone:</strong> {msg.phone}
+										</p>
+										<button
+											onClick={() =>
+												handleCopyPhone(msg.phone)
+											}
+											className='mt-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'
+										>
+											Copy Phone Number
+										</button>
+									</div>
+								)}
+
 								<button
 									onClick={() => handleDelete(msg._id)}
 									className='mt-3 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'

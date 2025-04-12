@@ -152,7 +152,6 @@ export default function CreateBlog() {
 
 			if (res.ok) {
 				toast.success('Blog saved successfully!')
-				router.push('/admin/blogs') // Redirect to blogs page
 			} else {
 				toast.error('Error saving blog.')
 			}

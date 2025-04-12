@@ -16,16 +16,8 @@ import Title from '@/components/common/Title'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import { Bold } from '@tiptap/extension-bold'
-import { Italic } from '@tiptap/extension-italic'
-import { TextStyle } from '@tiptap/extension-text-style'
-import { Heading } from '@tiptap/extension-heading'
-import { ListItem } from '@tiptap/extension-list'
-import { Link as TiptapLink } from '@tiptap/extension-link'
-import { Image } from '@tiptap/extension-image'
 import TagInput from '@/components/form/TagInput'
+import JoditEdit from '@/components/form/JoditEditor'
 
 interface Category {
 	_id: string
@@ -47,27 +39,6 @@ export default function CreateBlog() {
 	const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({})
 	const [slug, setSlug] = useState<string | null>(null)
 	const router = useRouter()
-
-	// Initialize Tiptap editor
-	const editor = useEditor({
-		extensions: [
-			StarterKit,
-			Bold,
-			Italic,
-			Heading.configure({ levels: [1, 2, 3] }),
-			TextStyle,
-			ListItem,
-			TiptapLink,
-			Image
-		],
-		content: form.content,
-		onUpdate({ editor }) {
-			setForm(prevForm => ({
-				...prevForm,
-				content: editor.getHTML()
-			}))
-		}
-	})
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(window.location.search)
@@ -215,122 +186,17 @@ export default function CreateBlog() {
 					onChange={handleInputChange}
 				/>
 
-				{/* Tiptap Editor */}
+				{/* Jodit Editor */}
 				<div className='border-b border-gray-200'>
-					<div className='flex space-x-4 mb-4'>
-						<button
-							type='button'
-							onClick={() =>
-								editor?.chain().focus().toggleBold().run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							B
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor?.chain().focus().toggleItalic().run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							I
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.toggleHeading({ level: 1 })
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							H1
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.toggleHeading({ level: 2 })
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							H2
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.toggleHeading({ level: 3 })
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							H3
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor?.chain().focus().toggleBulletList().run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							<List size={16} />
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.toggleOrderedList()
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							<ListOrdered size={16} />
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.toggleLink({
-										href: prompt('Enter URL') || ''
-									})
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							<LinkIcon size={16} />
-						</button>
-						<button
-							type='button'
-							onClick={() =>
-								editor
-									?.chain()
-									.focus()
-									.setImage({
-										src: prompt('Enter image URL') || ''
-									})
-									.run()
-							}
-							className='p-2 bg-gray-200 rounded-lg'
-						>
-							<ImageIcon size={16} />
-						</button>
-					</div>
-					<EditorContent
-						editor={editor}
-						className='min-h-[200px] w-full border rounded-lg p-6 text-lg leading-relaxed overflow-auto'
+					<JoditEdit
+						value={form.content}
+						onChange={newContent =>
+							setForm(prevForm => ({
+								...prevForm,
+								content: newContent
+							}))
+						}
+						placeholder='Write your blog content...'
 					/>
 				</div>
 
@@ -338,7 +204,7 @@ export default function CreateBlog() {
 					label='Category'
 					options={categoryOptions}
 					value={form.category}
-					onChange={value => handleInputChange(value)} // Pass only the value string
+					onChange={value => handleInputChange(value)}
 				/>
 
 				<TagInput

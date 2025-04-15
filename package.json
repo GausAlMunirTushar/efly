@@ -27,6 +27,7 @@
 		"@tiptap/extension-text-style": "^2.11.5",
 		"@tiptap/react": "^2.11.5",
 		"@tiptap/starter-kit": "^2.11.5",
+		"bcryptjs": "^3.0.2",
 		"cloudinary": "^2.5.1",
 		"clsx": "^2.1.1",
 		"date-fns": "^4.1.0",

@@ -112,7 +112,7 @@ const ContactPage = () => {
 	const totalPages = Math.ceil(total / limit)
 
 	return (
-		<section className='bg-white min-h-screen'>
+		<section className='bg-white min-h-screen rounded-xl'>
 			<div className='p-4'>
 				{error && <p className='text-red-500'>{error}</p>}
 

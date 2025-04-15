@@ -29,11 +29,11 @@ export async function DELETE(
 // PATCH contact status
 export async function PATCH(
 	req: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
 		await connectDatabase()
-
+		const { id } = await params
 		const { status } = await req.json()
 
 		if (!status) {
@@ -44,7 +44,7 @@ export async function PATCH(
 		}
 
 		const updatedContact = await Contact.findByIdAndUpdate(
-			params.id,
+			id,
 			{ status },
 			{ new: true }
 		)

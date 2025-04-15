@@ -26,3 +26,38 @@ export async function DELETE(
 		return NextResponse.json({ error: 'Server Error' }, { status: 500 })
 	}
 }
+// PATCH contact status
+export async function PATCH(
+	req: Request,
+	{ params }: { params: { id: string } }
+) {
+	try {
+		await connectDatabase()
+
+		const { status } = await req.json()
+
+		if (!status) {
+			return NextResponse.json(
+				{ error: 'Status is required' },
+				{ status: 400 }
+			)
+		}
+
+		const updatedContact = await Contact.findByIdAndUpdate(
+			params.id,
+			{ status },
+			{ new: true }
+		)
+
+		if (!updatedContact) {
+			return NextResponse.json(
+				{ error: 'Contact Not Found' },
+				{ status: 404 }
+			)
+		}
+
+		return NextResponse.json(updatedContact, { status: 200 })
+	} catch (error) {
+		return NextResponse.json({ error: 'Server Error' }, { status: 500 })
+	}
+}

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
+import Cookies from 'js-cookie'
 import {
 	Circle,
 	CircleDot,
@@ -62,6 +63,12 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 	const pathname = usePathname()
 	const [isPersistent, setIsPersistent] = useState(false)
 	const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({})
+	const [role, setRole] = useState<string | null>(null)
+
+	useEffect(() => {
+		const userRole = Cookies.get('role') || 'user'
+		setRole(userRole)
+	}, [])
 
 	const toggleSidebar = () => {
 		setIsPersistent(!isPersistent)
@@ -71,6 +78,13 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 	const toggleSubMenu = (title: string) => {
 		setOpenMenus(prev => ({ ...prev, [title]: !prev[title] }))
 	}
+
+	const filteredMenuItems = menuItems.filter(item => {
+		if (role === 'editor') {
+			return item.title === 'Blog'
+		}
+		return true
+	})
 
 	return (
 		<motion.aside
@@ -97,27 +111,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 
 			{/* Logo */}
 			<div className='flex items-center gap-1 my-2'>
-				{/* <Image
-					src='/images/orbit_logo.svg'
-					alt='Logo'
-					width={32}
-					height={32}
-					className='w-14'
-				/> */}
-				{/* <Image
-					alt='logo'
-					width={32}
-					height={32}
-					src='/images/orbit_logo.png'
-					className='w-16 dark:hidden'
-				/>
-				<Image
-					alt='logo-dark'
-					width={32}
-					height={32}
-					src='/images/orbit_dark_logo.png'
-					className='w-14 py-2 pl-4 hidden dark:block'
-				/> */}
+				{/* <Image src='/images/orbit_logo.svg' alt='Logo' width={32} height={32} className='w-14' /> */}
 				{isExpanded && (
 					<span className='text-3xl font-semibold text-primary px-4  dark:text-text-primary'>
 						eFly
@@ -127,7 +121,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 
 			{/* Navigation */}
 			<nav className='space-y-1 p-2'>
-				{menuItems.map(item => (
+				{filteredMenuItems.map(item => (
 					<div key={item.title}>
 						{item.href ? (
 							<Link
@@ -150,7 +144,6 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 									{item.icon}
 									{isExpanded && <span>{item.title}</span>}
 								</div>
-								{/* Only show submenu toggle icons if sidebar is expanded */}
 								{isExpanded && (
 									<motion.div
 										animate={{

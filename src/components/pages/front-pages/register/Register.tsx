@@ -51,7 +51,7 @@ const Register: React.FC = () => {
 				setError(data.error || 'Registration failed')
 			} else {
 				setSuccess('Registration successful! Redirecting to login...')
-				setTimeout(() => router.push('/login'), 2000)
+				setTimeout(() => router.push('/admin/login'), 2000)
 			}
 		} catch (err) {
 			setError('Something went wrong')

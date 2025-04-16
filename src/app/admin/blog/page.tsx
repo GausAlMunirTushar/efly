@@ -71,7 +71,7 @@ const BlogPage = () => {
 						<Loader2 className='animate-spin text-gray-500' />
 					</div>
 				) : (
-					<div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-2'>
+					<div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-2'>
 						{blogs.length === 0 ? (
 							<div className='flex justify-center flex-col items-center'>
 								<p className='text-center text-gray-500 mb-4'>

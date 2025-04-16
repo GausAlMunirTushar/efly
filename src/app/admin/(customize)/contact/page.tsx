@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import getRelativeTime from '@/utils/getRelativeTime'
+import { Copy, Trash2 } from 'lucide-react'
 
 const statusOptions = [
 	'new',
@@ -117,7 +118,7 @@ const ContactPage = () => {
 				{error && <p className='text-red-500'>{error}</p>}
 
 				{/* Message Grid */}
-				<div className='grid md:grid-cols-4 gap-4'>
+				<div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
 					{messages.length === 0 ? (
 						<p>No messages yet</p>
 					) : (
@@ -132,7 +133,9 @@ const ContactPage = () => {
 										{getRelativeTime(msg.createdAt)}
 									</p>
 								</div>
-								<p className='text-gray-600'>{msg.email}</p>
+								<p className='text-gray-600 trunscate'>
+									{msg.email}
+								</p>
 								<p className='mt-2 truncate'>{msg.message}</p>
 
 								{/* Phone */}
@@ -153,9 +156,10 @@ const ContactPage = () => {
 											onClick={() =>
 												handleCopyPhone(msg.phone)
 											}
-											className='mt-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'
+											className='mt-2 flex gap-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'
 										>
-											Copy Phone
+											<Copy />
+											<span>Copy Phone</span>
 										</button>
 									</div>
 								)}
@@ -163,9 +167,9 @@ const ContactPage = () => {
 								<div className='flex justify-between items-center mt-4'>
 									<button
 										onClick={() => handleDelete(msg._id)}
-										className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600'
+										className='bg-red-500 text-white px-1.5 py-1 rounded hover:bg-red-600'
 									>
-										Delete
+										<Trash2 />
 									</button>
 									<select
 										value={msg.status}

@@ -2,16 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
 	const { pathname } = req.nextUrl
-	const role = req.cookies.get('role')?.value
+	const role = req.cookies.get('role')?.value // Get the role cookie
 
-	// Public routes
+	// Public routes that can be accessed without authentication
 	const publicPaths = ['/', '/login', '/register']
 
+	// If the request is to a public path, let it pass through
 	if (publicPaths.includes(pathname)) {
 		return NextResponse.next()
 	}
 
-	// Block if no role
+	// Redirect to login if no role is found
 	if (!role) {
 		return NextResponse.redirect(new URL('/login', req.url))
 	}
@@ -34,7 +35,7 @@ export function middleware(req: NextRequest) {
 			}
 		}
 
-		// Regular users cannot access any admin routes
+		// Regular users cannot access admin routes
 		if (role === 'user') {
 			return NextResponse.redirect(new URL('/unauthorized', req.url))
 		}
@@ -44,5 +45,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: ['/admin/:path*']
+	matcher: ['/admin/:path*', '/dashboard/:path*', '/profile/:path*']
 }

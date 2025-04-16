@@ -1,11 +1,12 @@
-import Login from '@/components/pages/front-pages/login/Login'
+import AdminLogin from '@/components/pages/dashboard/admin/Login'
+import React from 'react'
 
-const LoginPage = () => {
+const AdminLoginPage = () => {
 	return (
-		<>
-			<Login />
-		</>
+		<section>
+			<AdminLogin />
+		</section>
 	)
 }
 
-export default LoginPage
+export default AdminLoginPage

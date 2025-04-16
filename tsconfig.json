@@ -28,7 +28,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"next.config.mjs"
+		"next.config.mjs",
+		"src/app/api/auth/logout/page.tx"
 	],
 	"exclude": ["node_modules"]
 }

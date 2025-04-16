@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { User, Settings, DollarSign, HelpCircle, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Modal from '@/components/common/Modal'
@@ -9,6 +10,18 @@ import Link from 'next/link'
 
 const ProfileDropdown = ({ onClose }: { onClose: () => void }) => {
 	const [isProfileOpen, setIsProfileOpen] = useState(false)
+	const router = useRouter()
+
+	const handleLogout = async () => {
+		try {
+			await fetch('/api/auth/logout', { method: 'POST' })
+			onClose() //
+			router.push('/')
+		} catch (error) {
+			console.error('Logout failed:', error)
+		}
+	}
+
 	return (
 		<div className='absolute right-0 mt-5 w-56 bg-white dark:text-text-primary dark:bg-bg_dark  shadow-lg rounded-lg border dark:border-bg_dark p-3 z-50'>
 			{/* Profile Info */}
@@ -59,10 +72,11 @@ const ProfileDropdown = ({ onClose }: { onClose: () => void }) => {
 			{/* Logout */}
 			<button
 				className='mt-2 w-full flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600'
-				onClick={onClose}
+				onClick={handleLogout}
 			>
 				<LogOut className='h-5 w-5' /> Logout
 			</button>
+
 			{/* MyProfile Modal */}
 			{isProfileOpen && (
 				<Modal

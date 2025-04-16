@@ -26,6 +26,7 @@ export function middleware(req: NextRequest) {
 		if (role === 'editor') {
 			// Editor can only access /admin/blog and /admin/categories
 			if (
+				pathname.startsWith('/admin/dashboard') ||
 				pathname.startsWith('/admin/blog') ||
 				pathname.startsWith('/admin/categories')
 			) {

@@ -97,6 +97,7 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 		>
 			<Input
 				label='First Name'
+				placeholder='First Name'
 				name='firstName'
 				value={formData.firstName}
 				onChange={handleChange}
@@ -107,6 +108,7 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 
 			<Input
 				label='Last Name'
+				placeholder='Last Name'
 				name='lastName'
 				value={formData.lastName}
 				onChange={handleChange}
@@ -117,6 +119,7 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 
 			<Input
 				label='Email Address'
+				placeholder='Email Address'
 				name='email'
 				value={formData.email}
 				onChange={handleChange}

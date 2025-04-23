@@ -1,6 +1,8 @@
 import '@/styles/globals.scss'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { ToastContextProvider } from '@/contexts/ToastContextProvider'
+import Script from 'next/script'
 
 export const metadata = {
 	title: 'efly - We Are The New Travel Agency (OTA) in Your City',
@@ -15,9 +17,11 @@ interface LayoutProps {
 export default async function RootLayout({ children }: LayoutProps) {
 	return (
 		<html>
+			<head></head>
 			<body>
 				<ToastContextProvider>{children}</ToastContextProvider>
 			</body>
+			<GoogleAnalytics gaId='G-0WL6ZE3TYJ' />
 		</html>
 	)
 }

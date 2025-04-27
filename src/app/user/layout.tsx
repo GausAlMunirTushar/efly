@@ -1,5 +1,6 @@
 'use client'
 
+import HomeNavbar from '@/components/layouts/HomeNavbar'
 import Navbar from '@/components/layouts/Navbar'
 import UserSidebar from '@/components/layouts/UserSidebar'
 import { useState } from 'react'
@@ -18,22 +19,20 @@ export default function UserDashboardLayout({
 	}
 
 	return (
-		<section className='h-screen flex bg-gray-100 dark:bg-body_dark transition-all duration-300'>
-			{/* Sidebar */}
-			<UserSidebar
-				isExpanded={isExpanded}
-				setIsExpanded={setIsExpanded}
-			/>
-
+		<section className='h-screen bg-gray-100 dark:bg-body_dark transition-all duration-300'>
+			{/* Navbar */}
+			<HomeNavbar />
 			{/* Main Content - No extra spacing issues */}
-			<div className='flex flex-1 flex-col transition-all duration-300'>
-				{/* Navbar */}
-				<header className='w-full py-3 px-4'>
-					<Navbar />
-				</header>
-
+			<div className='flex transition-all duration-300'>
+				<aside className='mt-4'>
+					{/* Sidebar */}
+					<UserSidebar
+						isExpanded={isExpanded}
+						setIsExpanded={setIsExpanded}
+					/>
+				</aside>
 				{/* Scrollable Content */}
-				<main className='flex-1 overflow-y-auto px-4'>{children}</main>
+				<main className='flex-1 overflow-y-auto p-4'>{children}</main>
 			</div>
 		</section>
 	)

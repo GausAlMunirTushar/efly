@@ -96,7 +96,7 @@ export default function UserSidebar({
 
 	return (
 		<motion.aside
-			className='relative min-h-screen bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300'
+			className='relative min-h-screen bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300 rounded-t-lg'
 			initial={{ width: '4rem' }}
 			animate={{ width: isExpanded ? '15rem' : '4rem' }}
 			transition={{ duration: 0.3 }}
@@ -107,7 +107,7 @@ export default function UserSidebar({
 			{isExpanded && (
 				<button
 					onClick={toggleSidebar}
-					className='absolute right-4 top-5 bg-gray-100 text-gray-500 dark:text-text-primary dark:bg-bg_dark p-1 rounded-full shadow-md'
+					className='absolute right-4 top-4 bg-gray-100 text-gray-500 dark:text-text-primary dark:bg-bg_dark p-1 rounded-full shadow-md'
 				>
 					{isPersistent ? (
 						<CircleDot className='w-5 h-5' />
@@ -118,13 +118,13 @@ export default function UserSidebar({
 			)}
 
 			{/* Logo */}
-			<div className='flex items-center gap-1 my-2'>
+			<div className='flex items-center gap-1'>
 				{/* <Image src='/images/orbit_logo.svg' alt='Logo' width={32} height={32} className='w-14' /> */}
-				{isExpanded && (
-					<span className='text-3xl font-semibold text-primary px-4  dark:text-text-primary'>
-						efly
+				{/* {isExpanded && (
+					<span className='text-xl font-semibold text-primary px-4  dark:text-text-primary'>
+						User Dashboard
 					</span>
-				)}
+				)} */}
 			</div>
 
 			{/* Navigation */}

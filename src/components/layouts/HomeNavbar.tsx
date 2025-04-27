@@ -19,7 +19,7 @@ const navItems = [
 		submenu: [
 			{ name: 'Jobs', href: '/jobs' },
 			{ name: 'Events', href: '/events' },
-			{ name: 'Holiday', href: '/holiday' }
+			{ name: 'Gallery', href: '/gallery' }
 		]
 	}
 ]

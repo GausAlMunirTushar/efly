@@ -135,25 +135,19 @@ const Footer = () => {
 						<p>
 							Email:{' '}
 							<a
-								href='mailto:ask@eFly.net'
+								href='mailto:help.efly@gmail.com'
 								className='text-blue-500'
 							>
-								ask@eFly.net
+								help.efly@gmail.com
 							</a>
 						</p>
 						<p>
 							Phone:{' '}
 							<a
-								href='tel:+8809617617617'
+								href='tel:+8801400054666'
 								className='text-blue-500'
 							>
-								+880 9617 617617
-							</a>
-						</p>
-						<p>
-							WhatsApp:{' '}
-							<a href='#' className='text-blue-500'>
-								Message us
+								+880 1400-054666
 							</a>
 						</p>
 						<div className='flex space-x-3 mt-3 text-lg'>
@@ -173,7 +167,7 @@ const Footer = () => {
 					</div>
 
 					<div>
-						<h3 className='font-semibold'>eFly Lounge (Dhaka)</h3>
+						<h3 className='font-semibold'>efly Lounge (Dhaka)</h3>
 						<p>
 							Mohakhali DOHS, Rode-30, Hous-437, 3rd
 							Floor, Dhaka 1206.
@@ -198,38 +192,6 @@ const Footer = () => {
 					</div> */}
 				</div>
 
-				{/* Accreditations and Partners */}
-				{/* <div className='border-t border-gray-300 mt-6 pt-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm text-center'>
-					<div>
-						<h3 className='font-semibold'>Accredited Member</h3>
-						<img
-							src='basis.png'
-							alt='BASIS'
-							className='h-8 mx-auto'
-						/>
-					</div>
-					<div>
-						<h3 className='font-semibold'>Verified by</h3>
-						<img
-							src='trust-logo.png'
-							alt='Verified'
-							className='h-8 mx-auto'
-						/>
-					</div>
-					<div>
-						<h3 className='font-semibold'>Our Partners</h3>
-						<img
-							src='google.png'
-							alt='Google'
-							className='h-8 mx-auto'
-						/>
-					</div>
-					<div>
-						<h3 className='font-semibold'>Certified By</h3>
-						<img src='iso.png' alt='ISO' className='h-8 mx-auto' />
-					</div>
-				</div> */}
-
 				{/* Footer Bottom */}
 				<div className='border-t border-gray-100 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
 					<div className='flex justify-center space-x-4'>
@@ -249,7 +211,7 @@ const Footer = () => {
 					<p className='mt-4 sm:mt-0'>
 						&copy; {new Date().getFullYear()}{' '}
 						<Link href='#' className='text-blue-500'>
-							eFly
+							efly
 						</Link>
 						. All rights reserved.
 					</p>

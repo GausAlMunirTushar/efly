@@ -41,11 +41,11 @@ export default function PopularBlogCard({
 					{/* Display the formatted date */}
 					<Clock5 size={16} /> <span>{formattedDate}</span>
 				</div>
-				<p className='line-clamp-3 min-h-24 my-2'>
+				<p className='line-clamp-2 truncate min-h-10 my-2'>
 					{blog.content.replace(/<\/?[^>]+(>|$)/g, '')}
 				</p>
 
-				<div className='my-2'>
+				<div className='flex justify-end'>
 					<Link
 						href={`/${blog.slug}`} // Only using the blog slug for the link
 						className='bg-primary px-4 py-1.5 text-white rounded-lg cursor-pointer'

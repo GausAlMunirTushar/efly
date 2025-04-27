@@ -1,4 +1,5 @@
 import FlightSearch from '@/components/pages/home/FlightSearch'
+import HomePopularBlog from '@/components/pages/home/HomePopularBlog'
 import Slider from '@/components/pages/home/Slider'
 
 const HomePage = () => {
@@ -12,6 +13,9 @@ const HomePage = () => {
 			</div>
 			<div className='container mx-auto my-3'>
 				<Slider />
+			</div>
+			<div className='container mx-auto my-3'>
+				<HomePopularBlog title='Popular Blogs' />
 			</div>
 		</section>
 	)

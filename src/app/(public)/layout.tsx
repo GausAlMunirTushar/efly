@@ -1,3 +1,4 @@
+import WhatsAppButton from '@/components/form/WhatsAppButton'
 import Footer from '@/components/layouts/Footer'
 import HomeNavbar from '@/components/layouts/HomeNavbar'
 
@@ -8,6 +9,7 @@ export default function WebLayout({ children }: { children: React.ReactNode }) {
 				<HomeNavbar />
 			</header>
 			<main className=''>{children}</main>
+			<WhatsAppButton />
 			<Footer />
 		</section>
 	)

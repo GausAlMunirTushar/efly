@@ -19,7 +19,9 @@ export function middleware(req: NextRequest) {
 	if (role === 'admin') {
 		return NextResponse.next()
 	}
-
+	if (role === 'user') {
+		return NextResponse.next()
+	}
 	// Editor: limited access under /admin
 	if (role === 'editor') {
 		const allowedEditorPaths = [

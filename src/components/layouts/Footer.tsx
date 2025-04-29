@@ -10,6 +10,10 @@ import {
 import { FaLocationDot } from 'react-icons/fa6'
 
 const Footer = () => {
+	const phoneNumber = '+8801400054666'
+	const message = 'Hello! I would like to know more about your services.'
+
+	const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 	return (
 		<footer className=' text-gray-700 py-10 px-5'>
 			<div className='container mx-auto'>
@@ -33,29 +37,44 @@ const Footer = () => {
 							<h3 className='text-lg font-semibold'>Explore</h3>
 							<ul className='mt-2 space-y-1 text-sm'>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										About Us
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Terms & Conditions
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										FAQ
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Hotel Sitemap
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Medical Tourism
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -65,24 +84,36 @@ const Footer = () => {
 							<h3 className='text-lg font-semibold'>Services</h3>
 							<ul className='mt-2 space-y-1 text-sm'>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Flight
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Visa
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Holiday
-									</a>
+									</Link>
 								</li>
 								<li>
-									<a href='#' className='hover:text-blue-500'>
+									<Link
+										href='#'
+										className='hover:text-blue-500'
+									>
 										Omra
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -134,35 +165,35 @@ const Footer = () => {
 						<h3 className='font-semibold'>Contact Us</h3>
 						<p>
 							Email:{' '}
-							<a
+							<Link
 								href='mailto:help.efly@gmail.com'
 								className='text-blue-500'
 							>
 								help.efly@gmail.com
-							</a>
+							</Link>
 						</p>
 						<p>
 							Phone:{' '}
-							<a
+							<Link
 								href='tel:+8801400054666'
 								className='text-blue-500'
 							>
 								+880 1400-054666
-							</a>
+							</Link>
 						</p>
 						<div className='flex space-x-3 mt-3 text-lg'>
-							<a href='#'>
+							<Link href='#'>
 								<FaFacebookF className='hover:text-blue-500' />
-							</a>
-							<a href='#'>
+							</Link>
+							<Link href={whatsappLink} target='_blank'>
 								<FaWhatsapp className='hover:text-green-500' />
-							</a>
-							<a href='#'>
+							</Link>
+							<Link href='#'>
 								<FaInstagram className='hover:text-pink-500' />
-							</a>
-							<a href='#'>
+							</Link>
+							<Link href='#'>
 								<FaLinkedinIn className='hover:text-blue-700' />
-							</a>
+							</Link>
 						</div>
 					</div>
 
@@ -184,18 +215,18 @@ const Footer = () => {
 				{/* Footer Bottom */}
 				<div className='border-t border-gray-100 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
 					<div className='flex justify-center space-x-4'>
-						<a href='#' className='hover:text-blue-500'>
+						<Link href='#' className='hover:text-blue-500'>
 							Support Center
-						</a>
-						<a href='#' className='hover:text-blue-500'>
+						</Link>
+						<Link href='#' className='hover:text-blue-500'>
 							Payment Security
-						</a>
-						<a href='#' className='hover:text-blue-500'>
+						</Link>
+						<Link href='#' className='hover:text-blue-500'>
 							Privacy Policy
-						</a>
-						<a href='#' className='hover:text-blue-500'>
+						</Link>
+						<Link href='#' className='hover:text-blue-500'>
 							EMI
-						</a>
+						</Link>
 					</div>
 					<p className='mt-4 sm:mt-0'>
 						&copy; {new Date().getFullYear()}{' '}

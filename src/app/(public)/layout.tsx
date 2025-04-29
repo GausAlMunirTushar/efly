@@ -9,8 +9,10 @@ export default function WebLayout({ children }: { children: React.ReactNode }) {
 				<HomeNavbar />
 			</header>
 			<main className=''>{children}</main>
-			<WhatsAppButton />
-			<Footer />
+			<footer className=''>
+				<WhatsAppButton />
+				<Footer />
+			</footer>
 		</section>
 	)
 }

@@ -179,17 +179,6 @@ const Footer = () => {
 							</Link>
 						</div>
 					</div>
-
-					{/* <div>
-						<h3 className='font-semibold'>Chattogram Office</h3>
-						<p>
-							BM Height 5th Floor, 318 Sheikh Mujib Road,
-							Chattogram 4100, Bangladesh
-						</p>
-						<a href='#' className='text-blue-500'>
-							View Map
-						</a>
-					</div> */}
 				</div>
 
 				{/* Footer Bottom */}

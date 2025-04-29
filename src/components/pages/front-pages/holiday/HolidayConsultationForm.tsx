@@ -93,8 +93,11 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='space-y-4 bg-white p-6 rounded-md shadow-md w-full max-w-md'
+			className='space-y-4 bg-white p-6 rounded-md  w-full max-w-md'
 		>
+			<h1 className='text-md font-bold text-primary'>
+				Get Free Holiday Consultation
+			</h1>
 			<Input
 				label='First Name'
 				placeholder='First Name'
@@ -197,14 +200,15 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 					value={formData.additionalRequirements}
 					onChange={handleChange}
 					rows={3}
-					className='w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all'
+					placeholder='Additional Requirements'
+					className='w-full rounded-md border resize-none border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all'
 				/>
 			</div>
 
 			<Button
 				type='submit'
 				variant='primary'
-				size='lg'
+				size='md'
 				isLoading={isLoading}
 				className='w-full'
 			>

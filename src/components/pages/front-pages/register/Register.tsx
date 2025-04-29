@@ -5,6 +5,7 @@ import { Mail, Lock, User } from 'lucide-react'
 import Link from 'next/link'
 import Input from '@/components/form/Input'
 import { useRouter } from 'next/navigation'
+import Button from '@/components/form/Button'
 
 const Register: React.FC = () => {
 	const router = useRouter()
@@ -62,7 +63,7 @@ const Register: React.FC = () => {
 
 	return (
 		<div className='flex justify-center items-center min-h-screen bg-gray-100'>
-			<div className='bg-white p-6 rounded-lg shadow-md w-full max-w-md'>
+			<div className='bg-white p-6 rounded-lg shadow-md w-full max-w-sm'>
 				<h2 className='text-2xl font-semibold text-center mb-4'>
 					Create an Account
 				</h2>
@@ -122,20 +123,20 @@ const Register: React.FC = () => {
 						required
 					/>
 
-					<button
+					<Button
 						type='submit'
 						disabled={loading}
-						className='w-full bg-primary-500 text-white py-2 rounded-md hover:bg-primary-600 transition-all disabled:opacity-50'
+						className='w-full bg-primary text-white py-2 rounded-md hover:bg-primary transition-all disabled:opacity-50'
 					>
 						{loading ? 'Registering...' : 'Register'}
-					</button>
+					</Button>
 				</form>
 
-				<p className='text-sm text-center mt-4'>
+				<p className='text-sm text-center mt-4 space-x-3'>
 					Already have an account?{' '}
 					<Link
 						href='/login'
-						className='text-primary-500 hover:underline'
+						className='text-primary hover:underline'
 					>
 						Login
 					</Link>

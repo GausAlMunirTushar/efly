@@ -1,7 +1,11 @@
-import React from 'react'
+import FlightSearch from '@/components/pages/home/FlightSearch'
 
 const FlightPage = () => {
-	return <div>FlightPage</div>
+	return (
+		<section>
+			<FlightSearch />
+		</section>
+	)
 }
 
 export default FlightPage

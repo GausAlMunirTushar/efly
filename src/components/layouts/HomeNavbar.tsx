@@ -10,6 +10,7 @@ const navItems = [
 	{ name: 'Home', href: '/' },
 	{ name: 'Flight', href: '/flight' },
 	{ name: 'Holiday', href: '/holiday' },
+	{ name: 'Visa', href: '/visa' },
 	{ name: 'Umrah', href: '/umrah' },
 	{ name: 'Blog', href: '/blog' },
 
@@ -35,7 +36,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow'>
-			<div className='container mx-auto flex justify-between items-center py-2.5'>
+			<div className='container mx-auto flex justify-between items-center py-3.5'>
 				{/* Logo */}
 				<div className='flex items-center space-x-2'>
 					<Link href='/' className='cursor-pointer'>
@@ -62,7 +63,7 @@ export default function HomeNavbar() {
 						>
 							<Link
 								href={item.href}
-								className={`relative text-gray-800 font-semibold px-4 py-5 ${
+								className={`relative text-gray-800 font-semibold px-4 py-6 ${
 									pathname === item.href
 										? 'text-primary'
 										: 'hover:bg-primary hover:text-white hover:border-primary transition-all duration-500'
@@ -78,7 +79,7 @@ export default function HomeNavbar() {
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0, y: -10 }}
 									transition={{ duration: 0.3 }}
-									className='absolute mt-5 bg-white shadow min-w-48'
+									className='absolute mt-6 bg-white shadow min-w-48'
 								>
 									{item.submenu.map(subitem => (
 										<Link

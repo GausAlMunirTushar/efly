@@ -19,12 +19,14 @@ export default function UserDashboardLayout({
 	}
 
 	return (
-		<section className='h-screen bg-gray-100 dark:bg-body_dark transition-all duration-300'>
+		<section className='h-screen bg-gray-100  transition-all duration-300'>
 			{/* Navbar */}
-			<HomeNavbar />
+			<div className='sticky top-0 z-10'>
+				<HomeNavbar />
+			</div>
 			{/* Main Content - No extra spacing issues */}
-			<div className='flex transition-all duration-300'>
-				<aside className='mt-4'>
+			<div className='flex h-screen container mx-auto transition-all duration-300 bg-gray-100'>
+				<aside className='mt-4 h-screen overflow-y-auto'>
 					{/* Sidebar */}
 					<UserSidebar
 						isExpanded={isExpanded}
@@ -32,7 +34,9 @@ export default function UserDashboardLayout({
 					/>
 				</aside>
 				{/* Scrollable Content */}
-				<main className='flex-1 overflow-y-auto p-4'>{children}</main>
+				<main className='flex-1 overflow-y-auto scrollbar-none m-4'>
+					{children}
+				</main>
 			</div>
 		</section>
 	)

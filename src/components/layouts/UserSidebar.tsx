@@ -96,7 +96,7 @@ export default function UserSidebar({
 
 	return (
 		<motion.aside
-			className='relative min-h-screen bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300 rounded-t-lg'
+			className='relative min-h-screen bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 dark:border-dark:bg-bg_dark shadow-md flex flex-col transition-all duration-300 rounded-t-lg overflow-y-auto scrollbar-none'
 			initial={{ width: '4rem' }}
 			animate={{ width: isExpanded ? '15rem' : '4rem' }}
 			transition={{ duration: 0.3 }}

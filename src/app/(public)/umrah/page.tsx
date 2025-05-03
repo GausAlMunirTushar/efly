@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 const UmrahPage = () => {
 	return (
 		<section className='container mx-auto'>
+			<h1 className='text-3xl font-bold text-center py-10'>
+				Umrah Packages
+			</h1>
 			<Umrah />
 		</section>
 	)

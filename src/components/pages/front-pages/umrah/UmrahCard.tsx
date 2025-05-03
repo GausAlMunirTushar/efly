@@ -26,7 +26,7 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 		<article
 			role='group'
 			aria-label={`Umrah package: ${title}`}
-			className='rounded-xl min-w-72 sm:min-w-80 border bg-white p-3 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+			className='rounded-xl min-w-72 max-w-sm border bg-white p-3 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 			tabIndex={0}
 		>
 			<div className='relative h-48 w-full overflow-hidden rounded-lg'>

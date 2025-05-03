@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronRight, Menu, X } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import UserProfileDropdown from './UserProfileDropown'
+import Cookies from 'js-cookie'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
@@ -12,7 +14,6 @@ const navItems = [
 	{ name: 'Holiday', href: '/holiday' },
 	{ name: 'Visa', href: '/visa' },
 	{ name: 'Umrah', href: '/umrah' },
-
 	{
 		name: 'More',
 		href: '#',
@@ -25,12 +26,30 @@ const navItems = [
 
 export default function HomeNavbar() {
 	const [isMenuOpen, setMenuOpen] = useState(false)
+	const [dropdownOpen, setDropdownOpen] = useState(false)
 	const [activeDropdown, setActiveDropdown] = useState<number | null>(null)
 	const pathname = usePathname()
+	const token = Cookies.get('token') // Get the token from cookies
 
 	// Explicitly type the index parameter as a number
 	const handleMouseEnter = (index: number) => setActiveDropdown(index)
 	const handleMouseLeave = () => setActiveDropdown(null)
+	const dropdownRef = useRef<HTMLDivElement>(null)
+
+	// Close dropdown when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
+				setDropdownOpen(false)
+			}
+		}
+		document.addEventListener('mousedown', handleClickOutside)
+		return () =>
+			document.removeEventListener('mousedown', handleClickOutside)
+	}, [])
 
 	return (
 		<nav className='bg-white shadow'>
@@ -106,15 +125,59 @@ export default function HomeNavbar() {
 
 				{/* Action Buttons (Desktop) */}
 				<div className='hidden md:flex items-center space-x-4'>
-					<Link href='/contact' className='hover:text-primary'>
+					<Link
+						href='/contact'
+						className='w-full px-4 py-2 hover:text-primary '
+					>
 						Contact Us
 					</Link>
-					<Link
-						href='/login'
-						className='px-4 py-2 bg-primary text-white rounded-md'
-					>
-						Login
-					</Link>
+					{token ? (
+						// Show Profile Icon if token exists
+						<div className='relative'>
+							<button
+								onClick={() => setDropdownOpen(!dropdownOpen)}
+								className='flex items-center space-x-2'
+							>
+								<img
+									src='/profile-icon.png' // Add a profile icon here
+									alt='Profile'
+									width={30}
+									height={30}
+									className='rounded-full'
+								/>
+							</button>
+
+							{/* Animated Profile Dropdown */}
+							<AnimatePresence>
+								{dropdownOpen && (
+									<motion.div
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -10 }}
+										transition={{
+											duration: 0.2,
+											ease: 'easeInOut'
+										}}
+										className='absolute right-0 mt-1 w-48 bg-white dark:bg-bg_dark rounded-md shadow-lg'
+									>
+										<UserProfileDropdown
+											onClose={() =>
+												setDropdownOpen(false)
+											}
+										/>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</div>
+					) : (
+						// Show Login Button if token does not exist
+						<Link
+							href='/login'
+							className='px-4 py-2 bg-primary text-white rounded-md'
+						>
+							Login
+						</Link>
+					)}
 				</div>
 
 				{/* Mobile Menu Icon */}
@@ -178,12 +241,18 @@ export default function HomeNavbar() {
 							>
 								Contact Us
 							</Link>
-							<Link
-								href='/login'
-								className='w-full px-4 py-2 bg-primary text-white rounded-md text-center'
-							>
-								Login
-							</Link>
+							{token ? (
+								<div className='w-full px-4 py-2 bg-primary text-white text-center'>
+									User Profile
+								</div>
+							) : (
+								<Link
+									href='/login'
+									className='w-full px-4 py-2 bg-primary text-white rounded-md text-center'
+								>
+									Login
+								</Link>
+							)}
 						</div>
 					</div>
 				)}

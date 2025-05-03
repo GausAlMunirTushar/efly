@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { CalendarDays, Clock } from 'lucide-react'
+import { useState } from 'react'
 
 interface UmrahCardProps {
 	imageUrl: string
@@ -13,6 +14,8 @@ interface UmrahCardProps {
 	newPrice: string
 }
 
+const fallbackImage = '/images/placeholder.webp'
+
 const UmrahCard: React.FC<UmrahCardProps> = ({
 	imageUrl,
 	discount,
@@ -22,6 +25,7 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 	oldPrice,
 	newPrice
 }) => {
+	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
 	return (
 		<article
 			role='group'
@@ -31,10 +35,11 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 		>
 			<div className='relative h-48 w-full overflow-hidden rounded-lg'>
 				<Image
-					src={imageUrl}
+					src={imgSrc || fallbackImage}
 					alt={title || 'Umrah package image'}
 					fill
 					className='object-cover'
+					onError={() => setImgSrc(fallbackImage)}
 					sizes='(max-width: 768px) 100vw, 33vw'
 				/>
 				<span className='absolute top-2 right-2 rounded bg-blue-700 px-2 py-1 text-sm font-semibold text-white'>

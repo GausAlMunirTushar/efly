@@ -30,7 +30,7 @@ const iconMapper: { [key: string]: ReactNode } = {
 	Tour: <Camera size={14} />
 }
 
-const fallbackImage = '/images/fallback.jpg' // Replace with your own fallback image path
+const fallbackImage = '/images/placeholder.webp'
 
 const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 	imageUrl,
@@ -48,7 +48,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 		<div className='border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all bg-white flex flex-col h-[500px]'>
 			<div className='relative h-48 w-full'>
 				<Image
-					src={imgSrc}
+					src={imgSrc || fallbackImage}
 					alt={title}
 					fill
 					className='object-cover'

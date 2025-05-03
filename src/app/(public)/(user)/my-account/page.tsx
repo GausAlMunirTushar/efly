@@ -6,7 +6,7 @@ export const metadata = {
 
 const UserMyAccount = () => {
 	return (
-		<section className=' overflow-y-auto '>
+		<section className='overflow-y-auto '>
 			<MyAccountForm />
 		</section>
 	)

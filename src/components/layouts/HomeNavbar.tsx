@@ -7,6 +7,7 @@ import { ChevronRight, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import UserProfileDropdown from './UserProfileDropown'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
 
 const navItems = [
 	{ name: 'Home', href: '/' },
@@ -23,6 +24,7 @@ const navItems = [
 		]
 	}
 ]
+const fallbackImage = '/images/avatar.png'
 
 export default function HomeNavbar() {
 	const [isMenuOpen, setMenuOpen] = useState(false)
@@ -50,7 +52,7 @@ export default function HomeNavbar() {
 		return () =>
 			document.removeEventListener('mousedown', handleClickOutside)
 	}, [])
-
+	const [imgSrc, setImgSrc] = useState(fallbackImage)
 	return (
 		<nav className='bg-white shadow'>
 			<div className='container mx-auto flex justify-between items-center py-4'>
@@ -138,11 +140,11 @@ export default function HomeNavbar() {
 								onClick={() => setDropdownOpen(!dropdownOpen)}
 								className='flex items-center space-x-2'
 							>
-								<img
-									src='/profile-icon.png' // Add a profile icon here
+								<Image
+									src={imgSrc || fallbackImage}
 									alt='Profile'
-									width={30}
-									height={30}
+									width={50}
+									height={50}
 									className='rounded-full'
 								/>
 							</button>

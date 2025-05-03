@@ -1,3 +1,4 @@
+import HolidayHomeSlider from '@/components/pages/front-pages/holiday/HolidayHomeSlider'
 import UmrahSlider from '@/components/pages/front-pages/umrah/UmrahSlider'
 import FlightSearch from '@/components/pages/home/FlightSearch'
 import HomePopularBlog from '@/components/pages/home/HomePopularBlog'
@@ -14,6 +15,9 @@ const HomePage = () => {
 			</section>
 			<section className='container mx-auto my-3'>
 				<Slider />
+			</section>
+			<section className='container mx-auto my-3'>
+				<HolidayHomeSlider />
 			</section>
 			<section className='container mx-auto my-3'>
 				<h2

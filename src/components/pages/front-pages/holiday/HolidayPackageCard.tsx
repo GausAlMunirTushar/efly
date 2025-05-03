@@ -1,5 +1,3 @@
-// components/TourPackageCard.tsx
-
 'use client'
 
 import {
@@ -11,10 +9,10 @@ import {
 	Utensils
 } from 'lucide-react'
 import Image from 'next/image'
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 
 interface HolidayPackageCardProps {
-	imageUrl: string
+	imageUrl?: string
 	title: string
 	description?: string
 	location: string
@@ -32,6 +30,8 @@ const iconMapper: { [key: string]: ReactNode } = {
 	Tour: <Camera size={14} />
 }
 
+const fallbackImage = '/images/fallback.jpg' // Replace with your own fallback image path
+
 const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 	imageUrl,
 	title,
@@ -42,17 +42,21 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 	tags,
 	buttonText = 'Book Now'
 }) => {
+	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
+
 	return (
-		<div className='border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all bg-white'>
+		<div className='border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all bg-white flex flex-col h-[500px]'>
 			<div className='relative h-48 w-full'>
 				<Image
-					src={imageUrl}
+					src={imgSrc}
 					alt={title}
 					fill
 					className='object-cover'
+					onError={() => setImgSrc(fallbackImage)}
 				/>
 			</div>
-			<div className='p-4 flex flex-col gap-2'>
+
+			<div className='px-4 py-6 flex flex-col gap-2 flex-grow'>
 				<div className='flex flex-wrap gap-2'>
 					{tags.map(tag => {
 						const icon = iconMapper[tag]
@@ -61,16 +65,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 								key={tag}
 								className='flex items-center gap-1 text-xs bg-blue-100 text-blue-600 border border-gray-400 px-3 font-semibold py-1 rounded-lg'
 							>
-								{typeof icon === 'string' ? (
-									<Image
-										src={icon}
-										alt={tag}
-										width={14}
-										height={14}
-									/>
-								) : (
-									icon
-								)}
+								{icon}
 								<span>{tag}</span>
 							</div>
 						)
@@ -80,23 +75,27 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 				<h2 className='text-base font-semibold line-clamp-2'>
 					{title}
 				</h2>
+
 				{description && (
-					<p className='text-xs text-gray-500'>{description}</p>
+					<p className='text-xs text-gray-500 line-clamp-3'>
+						{description}
+					</p>
 				)}
 
-				<div className='text-sm flex items-center gap-1 text-gray-600 mt-1'>
+				<div className='text-sm py-3 flex items-center gap-1 text-gray-600 mt-1'>
 					<MapPin />
-					<span> {location}</span> <span>{nightsInfo}</span>
+					<span>{location}</span>
 				</div>
 
-				<div className='mt-3 flex justify-between items-center'>
+				<div className='mt-auto flex justify-between items-center pt-2'>
 					<div className='text-primary font-bold text-lg'>
 						BDT {price.toLocaleString()}
 					</div>
-					<button className='bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded'>
-						{buttonText}
-					</button>
 				</div>
+
+				<button className='bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded mt-2'>
+					{buttonText}
+				</button>
 			</div>
 		</div>
 	)

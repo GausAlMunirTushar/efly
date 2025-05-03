@@ -20,7 +20,7 @@ export default function HomePopularBlog({ title }: { title: string }) {
 	useEffect(() => {
 		const fetchLatestBlogs = async () => {
 			try {
-				const res = await fetch('/api/blog?limit=4')
+				const res = await fetch('/api/blog?limit=3')
 				if (!res.ok) throw new Error('Failed to fetch latest blogs')
 				const data = await res.json()
 				setLatestBlogs(data)

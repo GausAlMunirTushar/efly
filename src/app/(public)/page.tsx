@@ -23,6 +23,15 @@ const HomePage = () => {
 				</div>
 			</section>
 			<section className='container mx-auto my-3'>
+				<h2
+					id='holiday-heading'
+					className='text-2xl md:text-3xl font-bold my-3  text-gray-800'
+				>
+					Holiday Packages for You
+				</h2>
+				<p className='text-gray-600 w-1/2'>
+					{`Plan your perfect escape with efly! Discover top holiday deals for unforgettable international adventures.`}
+				</p>
 				<HolidayHomeSlider />
 			</section>
 			<section className='container mx-auto my-3'>

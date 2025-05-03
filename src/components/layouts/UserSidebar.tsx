@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Cookies from 'js-cookie'
 import {
-	Component,
 	ListChecks,
 	LayoutList,
 	Wallet,
 	BookUser,
-	Settings
+	LockKeyhole,
+	Headset,
+	Component,
+	CalendarDays
 } from 'lucide-react'
 
 interface MenuItem {
@@ -21,28 +23,23 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
 	{
 		title: 'My Account',
-		icon: <BookUser className='w-5 h-5' />,
+		icon: <Component className='w-5 h-5' />,
 		href: `/my-account`
 	},
 	{
 		title: 'My Booking',
-		icon: <ListChecks className='w-5 h-5' />,
+		icon: <CalendarDays className='w-5 h-5' />,
 		href: `/my-booking`
 	},
 	{
-		title: 'Wishlist',
-		icon: <LayoutList className='w-5 h-5' />,
-		href: `/wishlist`
-	},
-	{
-		title: 'Add Deposit',
-		icon: <Wallet className='w-5 h-5' />,
-		href: `/deposit`
-	},
-	{
 		title: 'Change Password',
-		icon: <Settings className='w-5 h-5' />,
+		icon: <LockKeyhole className='w-5 h-5' />,
 		href: `/change-password`
+	},
+	{
+		title: 'Support',
+		icon: <Headset className='w-5 h-5' />,
+		href: `/support`
 	}
 ]
 

@@ -37,10 +37,15 @@ const HomePage = () => {
 			<section className='container mx-auto my-3'>
 				<h2
 					id='umrah-heading'
-					className='text-2xl md:text-3xl font-bold my-6 text-center text-gray-800'
+					className='text-2xl md:text-3xl font-bold my-3 text-gray-800'
 				>
-					Umrah Packages
+					Peaceful Umrah Journeys for You
 				</h2>
+				<p className='text-gray-600 w-1/2'>
+					Embark on your spiritual journey with eFly. Find the best
+					Umrah packages designed for comfort, convenience, and peace
+					of mind.
+				</p>
 				<UmrahSlider />
 			</section>
 

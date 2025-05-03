@@ -1,7 +1,12 @@
+import Support from '@/components/pages/user/support/Support'
 import React from 'react'
 
 const SupportPage = () => {
-	return <div>SupportPage</div>
+	return (
+		<>
+			<Support />
+		</>
+	)
 }
 
 export default SupportPage

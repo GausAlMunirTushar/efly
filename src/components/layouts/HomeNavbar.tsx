@@ -12,14 +12,12 @@ const navItems = [
 	{ name: 'Holiday', href: '/holiday' },
 	{ name: 'Visa', href: '/visa' },
 	{ name: 'Umrah', href: '/umrah' },
-	{ name: 'Blog', href: '/blog' },
 
 	{
 		name: 'More',
 		href: '#',
 		submenu: [
-			{ name: 'Jobs', href: '/jobs' },
-			{ name: 'Events', href: '/events' },
+			{ name: 'Blog', href: '/blog' },
 			{ name: 'Gallery', href: '/gallery' }
 		]
 	}
@@ -36,7 +34,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow'>
-			<div className='container mx-auto flex justify-between items-center py-3.5'>
+			<div className='container mx-auto flex justify-between items-center py-4'>
 				{/* Logo */}
 				<div className='flex items-center space-x-2'>
 					<Link href='/' className='cursor-pointer'>

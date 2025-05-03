@@ -1,7 +1,11 @@
-import React from 'react'
+import MyBooking from '@/components/pages/user/my-booking/MyBooking'
 
 const UserBookingPage = () => {
-	return <div>UserBookingPage</div>
+	return (
+		<>
+			<MyBooking />
+		</>
+	)
 }
 
 export default UserBookingPage

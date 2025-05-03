@@ -15,7 +15,7 @@ const Footer = () => {
 
 	const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 	return (
-		<footer className=' text-gray-700 py-10 px-5'>
+		<footer className=' text-gray-700 py-10 px-5 bg-gray-100 shadow-md'>
 			<div className='container mx-auto'>
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-gray-800'>
 					{/* About Section */}
@@ -112,7 +112,7 @@ const Footer = () => {
 										href='#'
 										className='hover:text-blue-500'
 									>
-										Omra
+										Umrah
 									</Link>
 								</li>
 							</ul>

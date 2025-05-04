@@ -15,7 +15,7 @@ const Footer = () => {
 
 	const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 	return (
-		<footer className=' text-gray-700 py-10 px-5 bg-gray-100 shadow-md'>
+		<footer className=' text-gray-700 py-10 px-5 bg-blue-100 shadow-md'>
 			<div className='container mx-auto'>
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-gray-800'>
 					{/* About Section */}
@@ -160,7 +160,7 @@ const Footer = () => {
 				</div>
 
 				{/* Contact Section */}
-				<div className='border-t border-gray-100 mt-6 pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm'>
+				<div className='border-t border-blue-200 mt-6 pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm'>
 					<div>
 						<h3 className='font-semibold'>Contact Us</h3>
 						<p>
@@ -213,7 +213,7 @@ const Footer = () => {
 				</div>
 
 				{/* Footer Bottom */}
-				<div className='border-t border-gray-100 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
+				<div className='border-t border-blue-200 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
 					<div className='flex justify-center space-x-4'>
 						<Link href='#' className='hover:text-blue-500'>
 							Support Center

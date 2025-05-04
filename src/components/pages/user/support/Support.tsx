@@ -1,4 +1,5 @@
 import React from 'react'
+import ContactForm from './ContactForm'
 
 const Support = () => {
 	return (
@@ -6,8 +7,9 @@ const Support = () => {
 			<h1 className='text-2xl font-bold mb-4'>Support</h1>
 			<p className='text-gray-700'>
 				If you have any questions or need assistance, please contact our
-				support team at{' '}
+				support team
 			</p>
+			<ContactForm />
 		</div>
 	)
 }

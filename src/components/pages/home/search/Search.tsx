@@ -47,7 +47,7 @@ export default function Search() {
 	return (
 		<div className='bg-white rounded-xl shadow-lg p-4 w-full max-w-4xl mx-auto'>
 			{/* Top Tab Menu */}
-			<div className='flex gap-4 border-b pb-4 mb-4'>
+			<div className='flex justify-center gap-4 border-b pb-4 mb-4'>
 				{tabs.map(tab => (
 					<button
 						key={tab.key}

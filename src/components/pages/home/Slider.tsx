@@ -61,7 +61,7 @@ export default function CustomSlider({ slides = [] }: CustomSliderProps) {
 				{slides.length > 0 ? (
 					slides.map(slide => (
 						<SwiperSlide key={slide.id} className='relative group'>
-							<div className='relative h-48  w-full rounded-lg overflow-hidden cursor-pointer'>
+							<div className='relative h-56  w-full rounded-lg overflow-hidden cursor-pointer'>
 								<Link href={slide.link} target='_blank'>
 									<Image
 										src={slide.image}

@@ -8,8 +8,9 @@ import CustomSlider, { SlideItem } from '@/components/pages/home/Slider'
 const slides: SlideItem[] = [
 	{ id: 1, image: '/images/slider/slide-1.png', link: '/services/1' },
 	{ id: 2, image: '/images/slider/slide-2.jpg', link: '/services/2' },
-	{ id: 3, image: '/images/slider/slide-1.png', link: '/services/3' },
-	{ id: 4, image: '/images/slider/slide-2.jpg', link: '/services/4' }
+	{ id: 3, image: '/images/slider/slide1.webp', link: '/services/3' },
+	{ id: 4, image: '/images/slider/slide2.webp', link: '/services/4' },
+	{ id: 5, image: '/images/slider/slide3.webp', link: '/services/5' }
 ]
 
 const HomePage = () => {

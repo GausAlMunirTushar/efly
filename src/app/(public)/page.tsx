@@ -17,7 +17,7 @@ const HomePage = () => {
 	return (
 		<main className=''>
 			<section
-				className=' bg-cover bg-center bg-no-repeat p-4'
+				className=' bg-cover bg-center bg-no-repeat py-14'
 				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
 			>
 				<Search />

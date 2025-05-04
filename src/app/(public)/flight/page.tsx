@@ -1,10 +1,10 @@
 import Airlines from '@/components/pages/front-pages/flight/Airlines'
-import FlightSearch from '@/components/pages/home/FlightSearch'
+import Search from '@/components/pages/home/search/Search'
 
 const FlightPage = () => {
 	return (
 		<section>
-			<FlightSearch />
+			<Search />
 			<Airlines />
 		</section>
 	)

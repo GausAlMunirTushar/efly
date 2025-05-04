@@ -1,7 +1,7 @@
 import Airlines from '@/components/pages/front-pages/flight/Airlines'
 import HolidayHomeSlider from '@/components/pages/front-pages/holiday/HolidayHomeSlider'
 import UmrahSlider from '@/components/pages/front-pages/umrah/UmrahSlider'
-import FlightSearch from '@/components/pages/home/FlightSearch'
+import Search from '@/components/pages/home/search/Search'
 import HomePopularBlog from '@/components/pages/home/HomePopularBlog'
 import CustomSlider, { SlideItem } from '@/components/pages/home/Slider'
 
@@ -20,7 +20,7 @@ const HomePage = () => {
 				className=' bg-cover bg-center bg-no-repeat p-4'
 				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
 			>
-				<FlightSearch />
+				<Search />
 			</section>
 			<section className='container mx-auto my-3'>
 				<CustomSlider slides={slides} />

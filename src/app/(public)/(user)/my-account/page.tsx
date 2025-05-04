@@ -1,4 +1,4 @@
-import MyAccountForm from '@/components/pages/user/my-account/MyAccountForm'
+import UserProfile from '@/components/pages/user/my-booking/UserProfile'
 
 export const metadata = {
 	title: 'My Account'
@@ -7,7 +7,7 @@ export const metadata = {
 const UserMyAccount = () => {
 	return (
 		<section className='overflow-y-auto '>
-			<MyAccountForm />
+			<UserProfile />
 		</section>
 	)
 }

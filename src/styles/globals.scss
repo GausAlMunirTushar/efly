@@ -12,7 +12,7 @@ body {
 /* Custom thin scrollbar */
 ::-webkit-scrollbar {
 	width: 6px;
-	height: 6px;
+	height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -21,7 +21,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #137eff;
+	background: #2e89f7;
 	border-radius: 10px;
 }
 

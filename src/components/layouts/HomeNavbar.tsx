@@ -46,13 +46,13 @@ export default function HomeNavbar() {
 					) : (
 						<>
 							<Link
-								href='/login'
+								href='/signin'
 								className='px-4 py-2 bg-primary text-white rounded-full'
 							>
 								Sign In
 							</Link>
 							<Link
-								href='/register'
+								href='/signup'
 								className='px-4 py-2 border border-primary text-primary rounded-full'
 							>
 								Sign Up

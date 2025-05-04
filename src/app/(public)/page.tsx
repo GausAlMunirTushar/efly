@@ -3,7 +3,14 @@ import HolidayHomeSlider from '@/components/pages/front-pages/holiday/HolidayHom
 import UmrahSlider from '@/components/pages/front-pages/umrah/UmrahSlider'
 import FlightSearch from '@/components/pages/home/FlightSearch'
 import HomePopularBlog from '@/components/pages/home/HomePopularBlog'
-import Slider from '@/components/pages/home/Slider'
+import CustomSlider, { SlideItem } from '@/components/pages/home/Slider'
+
+const slides: SlideItem[] = [
+	{ id: 1, image: '/images/slider/slide-1.png', link: '/services/1' },
+	{ id: 2, image: '/images/slider/slide-2.jpg', link: '/services/2' },
+	{ id: 3, image: '/images/slider/slide-1.png', link: '/services/3' },
+	{ id: 4, image: '/images/slider/slide-2.jpg', link: '/services/4' }
+]
 
 const HomePage = () => {
 	return (
@@ -15,7 +22,7 @@ const HomePage = () => {
 				<FlightSearch />
 			</section>
 			<section className='container mx-auto my-3'>
-				<Slider />
+				<CustomSlider slides={slides} />
 			</section>
 			<section className='bg-gray-50'>
 				<div className='container mx-auto my-3'>

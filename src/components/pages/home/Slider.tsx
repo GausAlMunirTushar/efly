@@ -1,41 +1,32 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
-const slides = [
-	{
-		id: 1,
-		image: '/images/slider/slide-1.png',
-		title: 'Explore Community Tourism',
-		badge: 'স্বপ্নজয়'
-	},
-	{
-		id: 2,
-		image: '/images/slider/slide-2.jpg',
-		title: 'Enjoy Skylounge Exclusive Access',
-		price: 'BDT 2,500'
-	},
-	{
-		id: 3,
-		image: '/images/slider/slide-1.png',
-		title: '15% OFF with SkyTrip on Flights'
-	}
-]
+export type SlideItem = {
+	id: number
+	image: string
+	link: string
+}
 
-export default function Slider() {
-	const prevRef = useRef<HTMLButtonElement>(null)
-	const nextRef = useRef<HTMLButtonElement>(null)
+type CustomSliderProps = {
+	slides?: SlideItem[]
+}
+
+export default function CustomSlider({ slides = [] }: CustomSliderProps) {
+	const prevRef = useRef<HTMLButtonElement | null>(null)
+	const nextRef = useRef<HTMLButtonElement | null>(null)
+
+	useEffect(() => {}, [])
 
 	return (
 		<div className='relative w-full mx-auto'>
-			{/* Custom Navigation Buttons */}
 			<button
 				ref={prevRef}
 				className='absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full hidden md:flex focus:outline-none'
@@ -52,45 +43,51 @@ export default function Slider() {
 			</button>
 
 			<Swiper
-				modules={[Navigation, Pagination, Autoplay]}
+				modules={[Navigation, Autoplay]}
 				spaceBetween={20}
-				slidesPerView={1.2}
+				slidesPerView={1}
 				navigation={{
 					prevEl: prevRef.current,
 					nextEl: nextRef.current
 				}}
-				pagination={{ clickable: true }}
 				autoplay={{ delay: 3000, disableOnInteraction: false }}
 				breakpoints={{
-					640: { slidesPerView: 1.5 },
-					1024: { slidesPerView: 2.5 }
+					640: { slidesPerView: 1 },
+					768: { slidesPerView: 2 },
+					1024: { slidesPerView: 3 }
 				}}
 				className='rounded-lg overflow-hidden'
 			>
-				{slides.map(slide => (
-					<SwiperSlide key={slide.id} className='relative'>
-						<div className='relative h-56 md:h-64 lg:h-72 w-full rounded-lg'>
-							<Image
-								src={slide.image}
-								alt={slide.title}
-								layout='fill'
-								className='object-cover rounded-lg'
-								priority
-							/>
-							{/* Overlay for better readability */}
-							<div className='absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 rounded-lg flex flex-col justify-end p-4 text-white'>
-								<h3 className='text-lg font-semibold'>
-									{slide.title}
-								</h3>
-								{slide.price && (
-									<span className='text-sm bg-white text-black px-2 py-1 rounded-md mt-2 inline-block'>
-										{slide.price}
-									</span>
-								)}
+				{slides.length > 0 ? (
+					slides.map(slide => (
+						<SwiperSlide key={slide.id} className='relative group'>
+							<div className='relative h-48  w-full rounded-lg overflow-hidden cursor-pointer'>
+								<Link href={slide.link} target='_blank'>
+									<Image
+										src={slide.image}
+										alt={`Slide ${slide.id}`}
+										fill
+										className='object-cover transition-transform duration-300 group-hover:scale-110'
+										priority
+									/>
+									<Link
+										href={slide.link}
+										target='_blank'
+										className='absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-blue-500 text-white font-bold px-4 py-2 text-sm rounded-lg shadow-md'
+									>
+										<span className='flex items-center gap-1'>
+											Details <ArrowUpRight size={18} />
+										</span>
+									</Link>
+								</Link>
 							</div>
-						</div>
-					</SwiperSlide>
-				))}
+						</SwiperSlide>
+					))
+				) : (
+					<p className='text-center text-gray-500 py-8'>
+						No slides available.
+					</p>
+				)}
 			</Swiper>
 		</div>
 	)

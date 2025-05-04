@@ -3,16 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Cookies from 'js-cookie'
-import {
-	ListChecks,
-	LayoutList,
-	Wallet,
-	BookUser,
-	LockKeyhole,
-	Headset,
-	Component,
-	CalendarDays
-} from 'lucide-react'
+import { LockKeyhole, Headset, Component, CalendarDays } from 'lucide-react'
 
 interface MenuItem {
 	title: string

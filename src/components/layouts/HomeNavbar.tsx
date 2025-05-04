@@ -15,7 +15,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow'>
-			<div className='container mx-auto flex justify-between items-center py-4'>
+			<div className='container mx-auto flex justify-between items-center py-3'>
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>
 					<img

@@ -41,7 +41,7 @@ export default function FlightSearch() {
 	const isRoundTrip = tripType === 'round-trip'
 
 	return (
-		<div className=' rounded-lg px-6 w-full max-w-5xl mx-auto'>
+		<div className=' rounded-lg px-6 w-full max-w-6xl mx-auto'>
 			{/* Trip Type Toggle */}
 			<div className='flex gap-3 my-4'>
 				{tripTypes.map(({ label, value }) => (

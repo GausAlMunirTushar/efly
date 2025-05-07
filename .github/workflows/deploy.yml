@@ -9,17 +9,14 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            # Step 1: Checkout the repository
             - name: Checkout repository
               uses: actions/checkout@v3
 
-            # Step 2: Set up SSH with the private key from GitHub Secrets
             - name: Set up SSH key
               uses: webfactory/ssh-agent@v0.5.3
               with:
                   ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-            # Step 3: Deploy to VPS via SSH
             - name: Deploy to VPS via SSH
               uses: appleboy/ssh-action@master
               with:
@@ -28,26 +25,30 @@ jobs:
                   key: ${{ secrets.VPS_SSH_KEY }}
                   script: |
                       set -e
-                      echo "Deploying to VPS..."
+                      echo "Starting deployment..."
 
                       # Navigate to the project directory
                       cd /var/www/efly.com.bd || exit 1
 
-                      # Pull the latest code from GitHub
+                      # Load NVM and set the correct Node/Yarn path
+                      export NVM_DIR="$HOME/.nvm"
+                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+                      export PATH="$NVM_DIR/versions/node/v22.15.0/bin:$PATH"
+
+                      echo "Using Node: $(node -v)"
+                      echo "Using Yarn: $(yarn -v)"
+
+                      # Pull latest code
                       git pull origin main || exit 1
 
                       # Install dependencies
-                      # yarn install || exit 1
+                      yarn install || exit 1
 
-                      # Build the project
-                       # yarn build || exit 1
-                      # Install dependencies using full path to yarn
-                      /root/.nvm/versions/node/v22.15.0/bin/yarn install || exit 1
+                      # Build project
+                      yarn build || exit 1
 
-                      # Build the project using full path to yarn
-                      /root/.nvm/versions/node/v22.15.0/bin/yarn build || exit 1
-
-                      # Restart the app using PM2
+                      # Restart with PM2
                       pm2 restart efly-app || pm2 start npm --name "efly-app" -- start || exit 1
 
-                      echo "Deployment finished successfully."
+                      echo "✅ Deployment successful"

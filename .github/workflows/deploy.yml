@@ -37,10 +37,15 @@ jobs:
                       git pull origin main || exit 1
 
                       # Install dependencies
-                      yarn install || exit 1
+                      # yarn install || exit 1
 
                       # Build the project
-                      yarn build || exit 1
+                       # yarn build || exit 1
+                      # Install dependencies using full path to yarn
+                      /root/.nvm/versions/node/v22.15.0/bin/yarn install || exit 1
+
+                      # Build the project using full path to yarn
+                      /root/.nvm/versions/node/v22.15.0/bin/yarn build || exit 1
 
                       # Restart the app using PM2
                       pm2 restart efly-app || pm2 start npm --name "efly-app" -- start || exit 1

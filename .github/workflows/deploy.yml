@@ -31,7 +31,7 @@ jobs:
                       echo "Deploying to VPS..."
 
                       # Navigate to the project directory
-                      cd ~/efly.com.bd || exit 1
+                      cd //var/www/efly.com.bd || exit 1
 
                       # Pull the latest code from GitHub
                       git pull origin main || exit 1

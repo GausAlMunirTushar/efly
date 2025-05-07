@@ -44,7 +44,7 @@ const AdminLogin = () => {
 
 	return (
 		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-body_dark'>
-			<div className='w-full max-w-sm bg-white dark:bg-bg_dark dark:text-text-primary p-6 rounded-lg box-shadow'>
+			<div className='w-full max-w-sm bg-white dark:bg-bg_dark dark:text-text-primary p-6 rounded-lg shadow-md my-5'>
 				<div className='text-center'>
 					<img
 						src='/efly.png'
@@ -60,7 +60,7 @@ const AdminLogin = () => {
 				</div>
 				<form onSubmit={handleSubmit} className='mt-6'>
 					<Input
-						label='Email or Username'
+						label='Email or Phone'
 						type='text'
 						name='email'
 						placeholder='johndoe@email.com'

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Mail, Lock, User } from 'lucide-react'
+import { Mail, Lock, User, Phone } from 'lucide-react'
 import Link from 'next/link'
 import Input from '@/components/form/Input'
 import { useRouter } from 'next/navigation'
@@ -62,12 +62,17 @@ const Register: React.FC = () => {
 	}
 
 	return (
-		<div className='flex justify-center items-center min-h-screen bg-gray-100'>
-			<div className='bg-white p-6 rounded-lg shadow-md w-full max-w-sm'>
-				<h2 className='text-2xl font-semibold text-center mb-4'>
-					Create an Account
-				</h2>
-
+		<div className='flex justify-center items-center min-h-screen bg-gray-100 '>
+			<div className='bg-white p-6 rounded-xl shadow-md w-full max-w-sm my-5'>
+				{/* <img
+					src='/efly.png'
+					alt='eFly Logo'
+					className='py-4 h-20 mx-auto'
+				/> */}
+				<h2 className='text-2xl font-semibold text-center'>Sign up</h2>
+				<p className='text-gray-600 text-sm text-center'>
+					Create an account to get started
+				</p>
 				{error && (
 					<p className='text-red-500 text-sm text-center'>{error}</p>
 				)}
@@ -82,7 +87,7 @@ const Register: React.FC = () => {
 						label='Name'
 						name='name'
 						type='text'
-						placeholder='Munir Tushar'
+						placeholder='Gaus Al Munir Tushar'
 						icon={User}
 						fullWidth
 						onChange={handleChange}
@@ -93,11 +98,22 @@ const Register: React.FC = () => {
 						label='Email'
 						name='email'
 						type='email'
-						placeholder='tushar@email.com'
+						placeholder='gausalmunirtushar@email.com'
 						icon={Mail}
 						fullWidth
 						onChange={handleChange}
 						value={formData.email}
+						required
+					/>
+					<Input
+						label='Phone Number'
+						name='confirmPassword'
+						type='tel'
+						placeholder='01726814131'
+						icon={Phone}
+						fullWidth
+						onChange={handleChange}
+						value={formData.confirmPassword}
 						required
 					/>
 					<Input
@@ -109,17 +125,6 @@ const Register: React.FC = () => {
 						fullWidth
 						onChange={handleChange}
 						value={formData.password}
-						required
-					/>
-					<Input
-						label='Confirm Password'
-						name='confirmPassword'
-						type='password'
-						placeholder='********'
-						icon={Lock}
-						fullWidth
-						onChange={handleChange}
-						value={formData.confirmPassword}
 						required
 					/>
 
@@ -135,8 +140,8 @@ const Register: React.FC = () => {
 				<p className='text-sm text-center mt-4 space-x-3'>
 					Already have an account?{' '}
 					<Link
-						href='/login'
-						className='text-primary hover:underline'
+						href='/signin'
+						className='text-primary hover:underline rounded-xl	'
 					>
 						Login
 					</Link>

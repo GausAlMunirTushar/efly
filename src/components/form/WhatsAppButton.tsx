@@ -14,7 +14,7 @@ const WhatsAppButton = () => {
 			href={whatsappLink}
 			target='_blank'
 			rel='noopener noreferrer'
-			className='fixed z-50 bottom-5 right-32 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg flex items-center justify-center transition-all'
+			className='fixed z-50 bottom-24 right-7 sm:bottom-4 sm:right-32  bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg flex items-center justify-center transition-all'
 		>
 			<FaWhatsapp size={24} />
 		</Link>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const AboutPage = () => {
 	return (
-		<main className='max-w-4xl mx-auto p-6'>
+		<main className='container mx-auto p-6'>
 			<h1 className='text-3xl font-bold mb-6'>About efly</h1>
 
 			<section className='mb-6'>

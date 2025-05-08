@@ -46,7 +46,7 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='#'
+										href='/terms'
 										className='hover:text-blue-500'
 									>
 										Terms & Conditions
@@ -54,26 +54,18 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='#'
+										href='/privacy-policy'
+										className='hover:text-blue-500'
+									>
+										Privacy Policy
+									</Link>
+								</li>
+								<li>
+									<Link
+										href='faq'
 										className='hover:text-blue-500'
 									>
 										FAQ
-									</Link>
-								</li>
-								<li>
-									<Link
-										href='#'
-										className='hover:text-blue-500'
-									>
-										Hotel Sitemap
-									</Link>
-								</li>
-								<li>
-									<Link
-										href='#'
-										className='hover:text-blue-500'
-									>
-										Medical Tourism
 									</Link>
 								</li>
 							</ul>
@@ -221,7 +213,10 @@ const Footer = () => {
 						<Link href='#' className='hover:text-blue-500'>
 							Payment Security
 						</Link>
-						<Link href='#' className='hover:text-blue-500'>
+						<Link
+							href='/privacy-policy'
+							className='hover:text-blue-500'
+						>
 							Privacy Policy
 						</Link>
 						<Link href='#' className='hover:text-blue-500'>

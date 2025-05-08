@@ -6,6 +6,8 @@ import ToggleButton from '@/components/form/ToggleButton'
 import DateInput from '@/components/form/DateInput'
 import SelectDropdown from '@/components/form/SelectDropdown'
 import SelectSearchInput from '@/components/form/SelectSearchInput'
+import Button from '@/components/form/Button'
+import { ArrowRightLeft, Search } from 'lucide-react'
 
 // Types
 type TripType = 'one-way' | 'round-trip' | 'multi-city'
@@ -56,23 +58,52 @@ export default function FlightSearch() {
 
 			{/* Input Fields */}
 			<div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-				<SelectSearchInput
-					label='From'
-					value={from}
-					onChange={setFrom}
-					options={locations}
-				/>
-				<SelectSearchInput
-					label='To'
-					value={to}
-					onChange={setTo}
-					options={locations}
-				/>
+				<div className='w-full col-span-2 relative'>
+					<div className='flex gap-4'>
+						{/* From */}
+						<div className='flex-1'>
+							<SelectSearchInput
+								label='From'
+								value={from}
+								onChange={setFrom}
+								options={locations}
+							/>
+						</div>
+
+						{/* To */}
+						<div className='flex-1'>
+							<SelectSearchInput
+								label='To'
+								value={to}
+								onChange={setTo}
+								options={locations}
+							/>
+						</div>
+					</div>
+
+					{/* Centered Switch Button */}
+					<Button
+						type='button'
+						aria-label='Switch From and To locations'
+						onClick={() => {
+							const temp = from
+							setFrom(to)
+							setTo(temp)
+						}}
+						className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow-md hover:bg-gray-100 transition'
+					>
+						<ArrowRightLeft className='w-4 h-4 text-[#001858]' />
+					</Button>
+				</div>
+
+				{/* Departure Date */}
 				<DateInput
 					label='Departure'
 					value={departureDate}
 					onChange={setDepartureDate}
 				/>
+
+				{/* Return or Traveller/Class */}
 				{isRoundTrip ? (
 					<DateInput
 						label='Return'
@@ -125,9 +156,13 @@ export default function FlightSearch() {
 
 			{/* Search Button */}
 			<div className='mt-6 flex justify-end'>
-				<button className='bg-orange-500 text-white px-6 py-2 rounded-md flex items-center gap-2'>
-					🔍 Search Flights
-				</button>
+				<Button
+					variant='primary'
+					size='md'
+					leftIcon={<Search size={18} />}
+				>
+					Search Flights
+				</Button>
 			</div>
 		</div>
 	)

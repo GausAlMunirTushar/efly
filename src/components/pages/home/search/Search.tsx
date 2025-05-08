@@ -22,7 +22,7 @@ type Tab = 'flight' | 'hotel' | 'holiday' | 'visa' | 'umrah'
 const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
 	{ key: 'flight', label: 'Flight', icon: <FaPlane /> },
 	{ key: 'hotel', label: 'Hotel', icon: <FaHotel /> },
-	{ key: 'holiday', label: 'Holidays', icon: <FaUmbrellaBeach /> },
+	{ key: 'holiday', label: 'Holiday', icon: <FaUmbrellaBeach /> },
 	{ key: 'visa', label: 'Visa', icon: <FaPassport /> },
 	{ key: 'umrah', label: 'Umrah', icon: <FaKaaba /> }
 ]
@@ -51,20 +51,20 @@ export default function Search() {
 		<div className='relative z-10 w-full max-w-6xl mx-auto'>
 			{/* Tabs */}
 			<div className='relative flex justify-center'>
-				<div className='bg-white shadow-md rounded-xl flex gap-4 px-2 py-2 -mb-4 z-20'>
+				<div className='bg-white shadow-md rounded-xl flex gap-1 sm:gap-4 px-1 py-2 -mb-4 z-10 mx-2 sm:mx-0'>
 					{tabs.map(tab => (
 						<motion.button
 							key={tab.key}
 							onClick={() => setActiveTab(tab.key)}
 							whileTap={{ scale: 0.95 }}
 							whileHover={{ scale: 1.05 }}
-							className={`flex items-center w-28 gap-2 px-4 py-4 rounded transition-all duration-200 text-sm ${
+							className={`flex flex-col sm:flex-row items-center w-16 sm:w-28 gap-2 px-2 sm:px-4 py-2 sm:py-4 rounded transition-all duration-200 text-sm ${
 								activeTab === tab.key
 									? 'bg-blue-100 text-blue-600 font-semibold shadow'
 									: 'text-gray-500 hover:text-blue-500'
 							}`}
 						>
-							<span className='text-lg font-bold'>
+							<span className='text-sm font-normal sm:text-lg sm:font-bold'>
 								{tab.icon}
 							</span>
 							<span>{tab.label}</span>
@@ -74,7 +74,7 @@ export default function Search() {
 			</div>
 
 			{/* Animated Tab Content */}
-			<div className='bg-white rounded-xl shadow-md p-6 pt-10 mt-0'>
+			<div className='bg-white rounded-xl shadow-md p-6 pt-10 mt-0 mx-2 sm:mx-8 z-10'>
 				<AnimatePresence mode='wait'>
 					<motion.div
 						key={activeTab}

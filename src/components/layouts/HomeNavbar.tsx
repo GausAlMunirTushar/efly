@@ -14,7 +14,7 @@ export default function HomeNavbar() {
 	const [imgSrc, setImgSrc] = useState(fallbackImage)
 
 	return (
-		<nav className='bg-white shadow'>
+		<nav className='bg-white shadow z-50'>
 			<div className='container mx-auto flex justify-between items-center py-3'>
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>

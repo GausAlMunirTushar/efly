@@ -84,10 +84,10 @@ const ForgotPassword = () => {
 
 				<div className='mt-4 text-center'>
 					<Link
-						href={`/login`}
+						href={`/signin`}
 						className='text-primary-500 hover:underline text-sm'
 					>
-						← Back to login
+						← Back to Sign In
 					</Link>
 				</div>
 			</div>

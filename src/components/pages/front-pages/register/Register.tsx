@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Mail, Lock, User, Phone } from 'lucide-react'
+import { Mail, Lock, User, Phone, KeyRound } from 'lucide-react'
 import Link from 'next/link'
 import Input from '@/components/form/Input'
 import { useRouter } from 'next/navigation'
@@ -13,10 +13,13 @@ const Register: React.FC = () => {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
+		phone: '',
 		password: '',
-		confirmPassword: ''
+		confirmPassword: '',
+		otp: ''
 	})
 
+	const [showOtp, setShowOtp] = useState(false)
 	const [error, setError] = useState('')
 	const [success, setSuccess] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -31,7 +34,19 @@ const Register: React.FC = () => {
 		setSuccess('')
 		setLoading(true)
 
-		const { name, email, password, confirmPassword } = formData
+		const { name, email, phone, password, confirmPassword } = formData
+
+		if (!name || !email || !phone || !password || !confirmPassword) {
+			setError('All fields are required')
+			setLoading(false)
+			return
+		}
+
+		if (!/^01[0-9]{9}$/.test(phone)) {
+			setError('Invalid Bangladeshi phone number')
+			setLoading(false)
+			return
+		}
 
 		if (password !== confirmPassword) {
 			setError('Passwords do not match')
@@ -43,7 +58,7 @@ const Register: React.FC = () => {
 			const res = await fetch('/api/auth/register', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ name, email, password })
+				body: JSON.stringify({ name, email, password, phone })
 			})
 
 			const data = await res.json()
@@ -51,8 +66,8 @@ const Register: React.FC = () => {
 			if (!res.ok) {
 				setError(data.error || 'Registration failed')
 			} else {
-				setSuccess('Registration successful! Redirecting to login...')
-				setTimeout(() => router.push('/admin/login'), 2000)
+				setSuccess('OTP sent to your phone')
+				setShowOtp(true)
 			}
 		} catch (err) {
 			setError('Something went wrong')
@@ -61,18 +76,46 @@ const Register: React.FC = () => {
 		}
 	}
 
+	const handleOtpVerify = async () => {
+		setLoading(true)
+		const { name, email, phone, password, otp } = formData
+
+		if (!otp || otp.length !== 6) {
+			setError('OTP must be 6 digits')
+			setLoading(false)
+			return
+		}
+
+		try {
+			const res = await fetch('/api/auth/verify-otp', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ name, email, password, phone, otp })
+			})
+
+			const data = await res.json()
+
+			if (!res.ok) {
+				setError(data.error || 'OTP verification failed')
+			} else {
+				setSuccess('Registration complete! Redirecting to login...')
+				setTimeout(() => router.push('/signin'), 2000)
+			}
+		} catch (err) {
+			setError('Something went wrong during OTP verification')
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	return (
-		<div className='flex justify-center items-center min-h-screen bg-gray-100 '>
+		<div className='flex justify-center items-center min-h-screen bg-gray-100'>
 			<div className='bg-white p-6 rounded-xl shadow-md w-full max-w-sm my-5'>
-				{/* <img
-					src='/efly.png'
-					alt='eFly Logo'
-					className='py-4 h-20 mx-auto'
-				/> */}
 				<h2 className='text-2xl font-semibold text-center'>Sign up</h2>
 				<p className='text-gray-600 text-sm text-center'>
 					Create an account to get started
 				</p>
+
 				{error && (
 					<p className='text-red-500 text-sm text-center'>{error}</p>
 				)}
@@ -87,7 +130,6 @@ const Register: React.FC = () => {
 						label='Full Name'
 						name='name'
 						type='text'
-						placeholder='Gaus Al Munir Tushar'
 						icon={User}
 						fullWidth
 						onChange={handleChange}
@@ -98,7 +140,6 @@ const Register: React.FC = () => {
 						label='Email'
 						name='email'
 						type='email'
-						placeholder='gausalmunirtushar@email.com'
 						icon={Mail}
 						fullWidth
 						onChange={handleChange}
@@ -107,41 +148,74 @@ const Register: React.FC = () => {
 					/>
 					<Input
 						label='Phone Number'
-						name='confirmPassword'
+						name='phone'
 						type='tel'
-						placeholder='01726814131'
 						icon={Phone}
 						fullWidth
 						onChange={handleChange}
-						value={formData.confirmPassword}
+						value={formData.phone}
 						required
 					/>
 					<Input
 						label='Password'
 						name='password'
 						type='password'
-						placeholder='********'
 						icon={Lock}
 						fullWidth
 						onChange={handleChange}
 						value={formData.password}
 						required
 					/>
+					<Input
+						label='Confirm Password'
+						name='confirmPassword'
+						type='password'
+						icon={Lock}
+						fullWidth
+						onChange={handleChange}
+						value={formData.confirmPassword}
+						required
+					/>
 
-					<Button
-						type='submit'
-						disabled={loading}
-						className='w-full bg-primary text-white py-2 rounded-md hover:bg-primary transition-all disabled:opacity-50'
-					>
-						{loading ? 'Registering...' : 'Register'}
-					</Button>
+					{showOtp && (
+						<Input
+							label='Enter OTP'
+							name='otp'
+							type='text'
+							icon={KeyRound}
+							fullWidth
+							onChange={handleChange}
+							value={formData.otp}
+							maxLength={6}
+							required
+						/>
+					)}
+
+					{!showOtp ? (
+						<Button
+							type='submit'
+							disabled={loading}
+							className='w-full'
+						>
+							{loading ? 'Sending OTP...' : 'Register & Send OTP'}
+						</Button>
+					) : (
+						<Button
+							type='button'
+							disabled={loading}
+							className='w-full'
+							onClick={handleOtpVerify}
+						>
+							{loading ? 'Verifying...' : 'Verify OTP & Register'}
+						</Button>
+					)}
 				</form>
 
 				<p className='text-sm text-center mt-4 space-x-3'>
 					Already have an account?{' '}
 					<Link
 						href='/signin'
-						className='text-primary hover:underline rounded-xl	'
+						className='text-primary hover:underline rounded-xl'
 					>
 						Login
 					</Link>

@@ -12,11 +12,14 @@ export async function sendSms({ phone, message }: SendSmsOptions) {
 	const ClientId = process.env.SMS_CLIENT_ID
 	const SenderId = process.env.SMS_SENDER_ID
 
+	if (!ApiKey || !ClientId || !SenderId) {
+		throw new Error('SMS API credentials are not set')
+	}
 	const payload = {
 		SenderId,
 		Is_Unicode: false,
 		Is_Flash: false,
-		DataCoding: '0', // Default GSM
+		DataCoding: '0',
 		SchedTime: '',
 		GroupId: '',
 		Message: message,

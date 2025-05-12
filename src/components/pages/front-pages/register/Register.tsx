@@ -84,7 +84,7 @@ const Register: React.FC = () => {
 
 				<form onSubmit={handleSubmit} className='space-y-4 mt-2'>
 					<Input
-						label='Name'
+						label='Full Name'
 						name='name'
 						type='text'
 						placeholder='Gaus Al Munir Tushar'

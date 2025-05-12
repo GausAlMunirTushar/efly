@@ -29,10 +29,17 @@ export async function POST(req: Request) {
 			)
 		}
 
-		const otp = generateOtp()
-		console.log('🔐 Generated OTP:', otp)
+		// ✅ Normalize phone to international format
+		const normalizedPhone = phone.startsWith('880')
+			? phone
+			: phone.replace(/^0/, '880')
 
-		await sendSms({ phone, message: `Your OTP code is: ${otp}` })
+		const otp = generateOtp()
+		const smsText = `Your OTP code is: ${otp}`
+		console.log('📝 SMS Text:', smsText)
+
+		// ✅ Send using normalized phone number
+		await sendSms({ phone: normalizedPhone, message: smsText })
 
 		await Otp.create({
 			phone,

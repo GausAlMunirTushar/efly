@@ -1,15 +1,26 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Input from '@/components/form/Input'
+import Button from '@/components/form/Button'
 
 const ResetPassword = () => {
 	const router = useRouter()
+	const searchParams = useSearchParams()
 	const [newPassword, setNewPassword] = useState('')
 	const [error, setError] = useState('')
 	const [success, setSuccess] = useState('')
 	const [loading, setLoading] = useState(false)
+
+	const token = searchParams.get('token')
+
+	useEffect(() => {
+		if (!token) {
+			setError('Invalid or missing token.')
+		}
+	}, [token])
 
 	const handlePasswordReset = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -17,10 +28,14 @@ const ResetPassword = () => {
 		setError('')
 		setSuccess('')
 
-		const { token } = router.query
-
 		if (!newPassword) {
 			setError('Password cannot be empty')
+			setLoading(false)
+			return
+		}
+
+		if (!token) {
+			setError('Reset token is missing.')
 			setLoading(false)
 			return
 		}
@@ -38,7 +53,7 @@ const ResetPassword = () => {
 				setError(data.error || 'Failed to reset password')
 			} else {
 				setSuccess('Password reset successfully! You can now log in.')
-				setTimeout(() => router.push('/login'), 2000) // Redirect after success
+				setTimeout(() => router.push('/signin'), 2000)
 			}
 		} catch (err) {
 			setError('Something went wrong')
@@ -66,7 +81,7 @@ const ResetPassword = () => {
 				)}
 
 				<form onSubmit={handlePasswordReset} className='mt-4 space-y-4'>
-					<input
+					<Input
 						type='password'
 						placeholder='Enter new password'
 						value={newPassword}
@@ -74,13 +89,13 @@ const ResetPassword = () => {
 						required
 						className='w-full p-2 border rounded-md'
 					/>
-					<button
+					<Button
 						type='submit'
 						className='w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 rounded-md transition'
 						disabled={loading}
 					>
 						{loading ? 'Resetting...' : 'Reset Password'}
-					</button>
+					</Button>
 				</form>
 
 				<div className='mt-4 text-center'>

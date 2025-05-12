@@ -7,11 +7,37 @@ import Link from 'next/link'
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState('')
+	const [error, setError] = useState('')
+	const [success, setSuccess] = useState('')
+	const [loading, setLoading] = useState(false)
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		// Handle forgot password logic here
-		console.log('Reset link sent to:', email)
+		setLoading(true)
+		setError('')
+		setSuccess('')
+
+		try {
+			const res = await fetch('/api/auth/forgot-password', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email })
+			})
+
+			const data = await res.json()
+
+			if (!res.ok) {
+				setError(data.error || 'Failed to send reset email')
+			} else {
+				setSuccess('Password reset link sent! Check your inbox.')
+			}
+		} catch (err) {
+			setError('Something went wrong')
+		} finally {
+			setLoading(false)
+		}
 	}
 
 	return (
@@ -21,9 +47,19 @@ const ForgotPassword = () => {
 					Forgot Password 🔒
 				</h2>
 				<p className='text-center text-sm text-gray-600 dark:text-gray-400 mt-2'>
-					{`Enter your email and we'll send you instructions to reset
-					your password.`}
+					{`Enter your email and we'll send you instructions to reset your password.`}
 				</p>
+
+				{error && (
+					<p className='text-red-500 text-sm text-center mt-2'>
+						{error}
+					</p>
+				)}
+				{success && (
+					<p className='text-green-500 text-sm text-center mt-2'>
+						{success}
+					</p>
+				)}
 
 				<form onSubmit={handleSubmit} className='mt-4 space-y-4'>
 					<Input
@@ -40,8 +76,9 @@ const ForgotPassword = () => {
 					<button
 						type='submit'
 						className='w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 rounded-md transition'
+						disabled={loading}
 					>
-						Send Reset Link
+						{loading ? 'Sending reset link...' : 'Send Reset Link'}
 					</button>
 				</form>
 

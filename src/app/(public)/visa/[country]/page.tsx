@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { notFound } from 'next/navigation'
+import VisaHeader from '@/components/pages/front-pages/visa/VisaHeader'
 
 export default function VisaDetailPage({
 	params
@@ -86,7 +87,8 @@ export default function VisaDetailPage({
 	}
 
 	return (
-		<div className='p-6 space-y-4'>
+		<section className='container mx-auto py-4'>
+			<VisaHeader country={visa.country} imageUrl={visa.imageUrl} />
 			<h1 className='text-3xl font-bold'>{visa.country} Visa</h1>
 			<p>
 				<strong>Visa Type:</strong> {visa.visaType}
@@ -110,6 +112,6 @@ export default function VisaDetailPage({
 				<strong>Description:</strong> {visa.description}
 			</p>
 			<div dangerouslySetInnerHTML={{ __html: visa.content || '' }} />
-		</div>
+		</section>
 	)
 }

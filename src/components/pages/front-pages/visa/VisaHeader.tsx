@@ -6,10 +6,10 @@ type VisaHeaderProps = {
 export default function VisaHeader({ country, imageUrl }: VisaHeaderProps) {
 	return (
 		<div
-			className='relative w-full h-60 bg-cover bg-center'
+			className='relative w-full h-60 bg-cover bg-center rounded-lg'
 			style={{ backgroundImage: `url(${imageUrl})` }}
 		>
-			<div className='absolute inset-0 bg-black opacity-50'></div>
+			<div className='absolute inset-0 bg-black opacity-50 rounded-lg'></div>
 			<div className='relative z-10 flex items-center justify-center h-full'>
 				<h1 className='text-4xl text-white font-semibold'>
 					Visa Requirements for {country}

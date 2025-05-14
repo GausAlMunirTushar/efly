@@ -3,10 +3,11 @@ import Gallery from '@/models/gallery.model'
 
 export async function GET(
 	request: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const gallery = await Gallery.findById(params.id)
+		const { id } = await params
+		const gallery = await Gallery.findById(id)
 		if (!gallery)
 			return NextResponse.json(
 				{ message: 'Gallery not found' },
@@ -23,15 +24,14 @@ export async function GET(
 
 export async function PUT(
 	request: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
+		const { id } = await params
 		const body = await request.json()
-		const updatedGallery = await Gallery.findByIdAndUpdate(
-			params.id,
-			body,
-			{ new: true }
-		)
+		const updatedGallery = await Gallery.findByIdAndUpdate(id, body, {
+			new: true
+		})
 		if (!updatedGallery)
 			return NextResponse.json(
 				{ message: 'Gallery not found' },
@@ -48,10 +48,11 @@ export async function PUT(
 
 export async function DELETE(
 	request: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const deletedGallery = await Gallery.findByIdAndDelete(params.id)
+		const { id } = await params
+		const deletedGallery = await Gallery.findByIdAndDelete(id)
 		if (!deletedGallery)
 			return NextResponse.json(
 				{ message: 'Gallery not found' },

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { notFound } from 'next/navigation'
 import VisaHeader from '@/components/pages/front-pages/visa/VisaHeader'
+import VisaAssistanceForm from '@/components/pages/front-pages/visa/VisaAssistanceForm'
 
 export default function VisaDetailPage({
 	params
@@ -87,31 +88,47 @@ export default function VisaDetailPage({
 	}
 
 	return (
-		<section className='container mx-auto py-4'>
-			<VisaHeader country={visa.country} imageUrl={visa.imageUrl} />
-			<h1 className='text-3xl font-bold'>{visa.country} Visa</h1>
-			<p>
-				<strong>Visa Type:</strong> {visa.visaType}
-			</p>
-			<p>
-				<strong>Visa Mode:</strong> {visa.visaMode}
-			</p>
-			<p>
-				<strong>Entry Type:</strong> {visa.entryType}
-			</p>
-			<p>
-				<strong>Processing Time:</strong> {visa.processingTime}
-			</p>
-			<p>
-				<strong>Visa Validity:</strong> {visa.visaValidity}
-			</p>
-			<p>
-				<strong>Maximum Stay:</strong> {visa.maxStay}
-			</p>
-			<p>
-				<strong>Description:</strong> {visa.description}
-			</p>
-			<div dangerouslySetInnerHTML={{ __html: visa.content || '' }} />
+		<section className=' bg-gray-100'>
+			<div className='container mx-auto py-4'>
+				<VisaHeader country={visa.country} imageUrl={visa.imageUrl} />
+				<div className='w-full flex flex-wrap py-4'>
+					<div className='w-full sm:w-9/12'>
+						<h1 className='text-3xl font-bold'>
+							{visa.country} Visa
+						</h1>
+						<p>
+							<strong>Visa Type:</strong> {visa.visaType}
+						</p>
+						<p>
+							<strong>Visa Mode:</strong> {visa.visaMode}
+						</p>
+						<p>
+							<strong>Entry Type:</strong> {visa.entryType}
+						</p>
+						<p>
+							<strong>Processing Time:</strong>{' '}
+							{visa.processingTime}
+						</p>
+						<p>
+							<strong>Visa Validity:</strong> {visa.visaValidity}
+						</p>
+						<p>
+							<strong>Maximum Stay:</strong> {visa.maxStay}
+						</p>
+						<p>
+							<strong>Description:</strong> {visa.description}
+						</p>
+						<div
+							dangerouslySetInnerHTML={{
+								__html: visa.content || ''
+							}}
+						/>
+					</div>
+					<div className='w-full sm:w-3/12'>
+						<VisaAssistanceForm />
+					</div>
+				</div>
+			</div>
 		</section>
 	)
 }

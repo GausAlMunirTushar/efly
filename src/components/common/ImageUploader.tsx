@@ -5,7 +5,11 @@ import { useDropzone } from 'react-dropzone'
 import { X, UploadCloud } from 'lucide-react'
 import Image from 'next/image'
 
-const ImageUploader = () => {
+const ImageUploader = ({
+	onImageUpload
+}: {
+	onImageUpload: (imageUrl: string) => void
+}) => {
 	const [images, setImages] = useState<File[]>([])
 
 	const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -22,22 +26,41 @@ const ImageUploader = () => {
 		multiple: true
 	})
 
+	const handleImageUpload = async () => {
+		if (images.length === 0) return
+
+		const formData = new FormData()
+		formData.append('file', images[0]) // Assume uploading the first image
+
+		try {
+			const res = await fetch('/api/upload-image', {
+				method: 'POST',
+				body: formData
+			})
+			const data = await res.json()
+
+			if (data?.imageUrl) {
+				onImageUpload(data.imageUrl)
+			} else {
+				console.error('Image upload failed')
+			}
+		} catch (error) {
+			console.error('Error uploading image:', error)
+		}
+	}
+
 	return (
 		<div className='max-w-lg mx-auto p-4'>
 			{/* Drag & Drop Box */}
 			<div
 				{...getRootProps()}
-				className={`border-2 border-dashed p-6 rounded-lg text-center transition-all cursor-pointer ${
-					isDragActive
-						? 'border-primary-500 bg-primary-100 dark:bg-gray-800'
-						: 'border-gray-300 dark:border-gray-600'
-				}`}
+				className={`border-2 border-dashed p-6 rounded-lg text-center transition-all cursor-pointer ${isDragActive ? 'border-primary-500 bg-primary-100' : 'border-gray-300'}`}
 			>
 				<input {...getInputProps()} />
 				<UploadCloud className='w-10 h-10 mx-auto text-gray-500' />
-				<p className='text-gray-600 dark:text-gray-300'>
+				<p className='text-gray-600'>
 					{isDragActive
-						? 'Drop the images here...'
+						? 'Drop the image here...'
 						: 'Drag & drop images here or click to upload'}
 				</p>
 				<span className='text-sm text-gray-400'>
@@ -69,6 +92,15 @@ const ImageUploader = () => {
 					))}
 				</div>
 			)}
+
+			{/* Upload Button */}
+			<button
+				type='button'
+				onClick={handleImageUpload}
+				className='w-full mt-4 py-2 bg-blue-600 text-white rounded-md'
+			>
+				Upload Image
+			</button>
 		</div>
 	)
 }

@@ -90,7 +90,10 @@ export default function VisaDetailPage({
 	return (
 		<section className=' bg-gray-100'>
 			<div className='container mx-auto py-4'>
-				<VisaHeader country={visa.country} imageUrl={visa.imageUrl} />
+				<VisaHeader
+					country={visa.country}
+					imageUrl={visa.countryImage}
+				/>
 				<div className='w-full flex flex-wrap py-4'>
 					<div className='w-full sm:w-9/12'>
 						<h1 className='text-3xl font-bold'>

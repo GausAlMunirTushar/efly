@@ -4,11 +4,12 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
 	_: Request,
-	{ params }: { params: { country: string } }
+	{ params }: { params: Promise<{ country: string }> }
 ) {
+	const { country } = await params
 	await connectDatabase()
 
-	const countryName = params.country.replace(/-/g, ' ')
+	const countryName = country.replace(/-/g, ' ')
 	const regex = new RegExp(`^${countryName}$`, 'i')
 	const visa = await Visa.findOne({ country: regex })
 

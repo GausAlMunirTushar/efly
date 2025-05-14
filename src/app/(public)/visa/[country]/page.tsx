@@ -1,30 +1,89 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import { notFound } from 'next/navigation'
 
-export default async function VisaDetailPage({
+export default function VisaDetailPage({
 	params
 }: {
-	params: { country: string }
+	params: Promise<{ country: string }>
 }) {
-	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+	// State to store the resolved params
+	const [resolvedParams, setResolvedParams] = useState<{
+		country: string
+	} | null>(null)
 
-	// Step 1: Get visa by country slug
-	const resSlug = await fetch(
-		`${baseUrl}/api/visa/by-country/${params.country}`,
-		{ cache: 'no-cache' }
-	)
+	// State to manage loading state and error state
+	const [visa, setVisa] = useState<any>(null)
+	const [loading, setLoading] = useState<boolean>(true)
+	const [error, setError] = useState<string | null>(null)
 
-	if (!resSlug.ok) return notFound()
+	useEffect(() => {
+		// Resolving the params promise
+		params
+			.then(resolved => {
+				setResolvedParams(resolved)
+			})
+			.catch(err => {
+				console.error('Error resolving params:', err)
+				setError('Failed to resolve params')
+			})
+	}, [params])
 
-	const { _id } = await resSlug.json()
+	useEffect(() => {
+		// Fetching the visa data once params are resolved
+		const fetchVisaData = async () => {
+			if (resolvedParams?.country) {
+				const { country } = resolvedParams
+				const baseUrl =
+					process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
-	// Step 2: Now fetch by ID (reliable and safe)
-	const res = await fetch(`${baseUrl}/api/visa/${_id}`, {
-		cache: 'no-cache'
-	})
+				// Step 1: Fetch visa data by country slug
+				const resSlug = await fetch(
+					`${baseUrl}/api/visa/by-country/${country}`,
+					{
+						cache: 'no-cache'
+					}
+				)
 
-	if (!res.ok) return notFound()
+				if (!resSlug.ok) {
+					setError('Visa not found')
+					setLoading(false)
+					return
+				}
 
-	const visa = await res.json()
+				const { _id } = await resSlug.json()
+
+				// Step 2: Fetch visa data by ID
+				const res = await fetch(`${baseUrl}/api/visa/${_id}`, {
+					cache: 'no-cache'
+				})
+
+				if (!res.ok) {
+					setError('Failed to fetch visa data')
+					setLoading(false)
+					return
+				}
+
+				const visaData = await res.json()
+				setVisa(visaData)
+				setLoading(false)
+			}
+		}
+
+		// Only fetch the visa data if params are resolved
+		if (resolvedParams) {
+			fetchVisaData()
+		}
+	}, [resolvedParams])
+
+	if (loading) {
+		return <div>Loading...</div>
+	}
+
+	if (error) {
+		return <div className='text-center text-red-500'>{error}</div>
+	}
 
 	return (
 		<div className='p-6 space-y-4'>

@@ -5,6 +5,9 @@ import { NextResponse } from 'next/server'
 export async function GET(_: Request, { params }: { params: { id: string } }) {
 	await connectDatabase()
 	const visa = await Visa.findById(params.id)
+	if (!visa) {
+		return NextResponse.json({ message: 'Visa not found' }, { status: 404 })
+	}
 	return NextResponse.json(visa)
 }
 

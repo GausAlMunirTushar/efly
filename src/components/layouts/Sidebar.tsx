@@ -56,6 +56,21 @@ const menuItems: MenuItem[] = [
 		title: 'Visa',
 		icon: <Circle className='w-5 h-5' />,
 		href: `/admin/visa`
+	},
+	{
+		title: 'Umrah',
+		icon: <Circle className='w-5 h-5' />,
+		href: `/admin/umrah`
+	},
+	{
+		title: 'Gallery',
+		icon: <Circle className='w-5 h-5' />,
+		href: `/admin/gallery`
+	},
+	{
+		title: 'Holiday',
+		icon: <Circle className='w-5 h-5' />,
+		href: `/admin/holiday`
 	}
 ]
 

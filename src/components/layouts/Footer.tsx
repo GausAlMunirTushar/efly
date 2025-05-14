@@ -38,7 +38,7 @@ const Footer = () => {
 							<ul className='mt-2 space-y-1 text-sm'>
 								<li>
 									<Link
-										href='#'
+										href='/about'
 										className='hover:text-blue-500'
 									>
 										About Us
@@ -77,7 +77,7 @@ const Footer = () => {
 							<ul className='mt-2 space-y-1 text-sm'>
 								<li>
 									<Link
-										href='#'
+										href='/flight'
 										className='hover:text-blue-500'
 									>
 										Flight
@@ -85,7 +85,7 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='#'
+										href='/visa'
 										className='hover:text-blue-500'
 									>
 										Visa
@@ -93,7 +93,7 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='#'
+										href='/holiday'
 										className='hover:text-blue-500'
 									>
 										Holiday
@@ -101,7 +101,7 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='#'
+										href='/umrah'
 										className='hover:text-blue-500'
 									>
 										Umrah

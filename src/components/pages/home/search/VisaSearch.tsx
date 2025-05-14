@@ -1,6 +1,8 @@
 'use client'
 
+import Button from '@/components/form/Button'
 import SelectSearchInput from '@/components/form/SelectSearchInput'
+import { Search } from 'lucide-react'
 import { useState } from 'react'
 
 const visaCountries = [
@@ -14,18 +16,20 @@ export default function VisaSearch() {
 	const [country, setCountry] = useState<string>('USA')
 
 	return (
-		<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-			<SelectSearchInput
-				label='Visa for Country'
-				value={country}
-				onChange={setCountry}
-				options={visaCountries}
-			/>
-			<div className='flex items-end justify-end'>
-				<button className='bg-orange-500 text-white px-6 py-2 rounded-md'>
-					🛂 Check Visa Info
-				</button>
+		<section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+			<div className=''>
+				<SelectSearchInput
+					label='Visa for Country'
+					value={country}
+					onChange={setCountry}
+					options={visaCountries}
+				/>
 			</div>
-		</div>
+			<div className='flex items-end justify-end'>
+				<Button className=''>
+					<Search size={20} className='mr-2' /> Visa
+				</Button>
+			</div>
+		</section>
 	)
 }

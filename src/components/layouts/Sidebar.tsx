@@ -51,6 +51,11 @@ const menuItems: MenuItem[] = [
 			{ title: 'Home Slide', href: `/admin/home-slide` },
 			{ title: 'Blog Slide', href: `/admin/blog-slide` }
 		]
+	},
+	{
+		title: 'Visa',
+		icon: <Circle className='w-5 h-5' />,
+		href: `/admin/visa`
 	}
 ]
 

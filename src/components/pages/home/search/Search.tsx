@@ -1,13 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import {
-	FaPlane,
-	FaHotel,
-	FaUmbrellaBeach,
-	FaPassport,
-	FaKaaba
-} from 'react-icons/fa'
+import { FaUmbrellaBeach, FaPassport, FaKaaba } from 'react-icons/fa'
 
 import FlightSearch from './FlightSearch'
 import HotelSearch from './HotelSearch'
@@ -16,12 +10,13 @@ import VisaSearch from './VisaSearch'
 import UmrahSearch from './UmrahSearch'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import { Plane } from 'lucide-react'
 
 type Tab = 'flight' | 'hotel' | 'holiday' | 'visa' | 'umrah'
 
 const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-	{ key: 'flight', label: 'Flight', icon: <FaPlane /> },
-	{ key: 'hotel', label: 'Hotel', icon: <FaHotel /> },
+	{ key: 'flight', label: 'Flight', icon: <Plane /> },
+	// { key: 'hotel', label: 'Hotel', icon: <FaHotel /> },
 	{ key: 'holiday', label: 'Holiday', icon: <FaUmbrellaBeach /> },
 	{ key: 'visa', label: 'Visa', icon: <FaPassport /> },
 	{ key: 'umrah', label: 'Umrah', icon: <FaKaaba /> }
@@ -34,8 +29,8 @@ export default function Search() {
 		switch (activeTab) {
 			case 'flight':
 				return <FlightSearch />
-			case 'hotel':
-				return <HotelSearch />
+			// case 'hotel':
+			// 	return <HotelSearch />
 			case 'holiday':
 				return <HolidaySearch />
 			case 'visa':
@@ -48,7 +43,7 @@ export default function Search() {
 	}
 
 	return (
-		<div className='relative z-10 w-full max-w-6xl mx-auto'>
+		<div className='relative z-10 w-full max-w-5xl mx-auto'>
 			{/* Tabs */}
 			<div className='relative flex justify-center'>
 				<div className='bg-white shadow-md rounded-xl flex gap-1 sm:gap-4 px-2 py-2 -mb-4 z-10 mx-2 sm:mx-0'>

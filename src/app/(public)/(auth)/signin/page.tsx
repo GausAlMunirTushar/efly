@@ -1,10 +1,10 @@
-import AdminLogin from '@/components/pages/dashboard/admin/Login'
+import Login from '@/components/pages/front-pages/login/Login'
 import React from 'react'
 
 const AdminLoginPage = () => {
 	return (
 		<section>
-			<AdminLogin />
+			<Login />
 		</section>
 	)
 }

@@ -1,21 +1,20 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Mail, Lock, User, Phone, KeyRound } from 'lucide-react'
 import Link from 'next/link'
 import Input from '@/components/form/Input'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/form/Button'
+import OtpInput from '@/components/form/OtpInput'
 
 const Register: React.FC = () => {
 	const router = useRouter()
-
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
 		phone: '',
 		password: '',
-		confirmPassword: '',
 		otp: ''
 	})
 
@@ -24,8 +23,23 @@ const Register: React.FC = () => {
 	const [success, setSuccess] = useState('')
 	const [loading, setLoading] = useState(false)
 
+	const otpInputRef = useRef<HTMLInputElement>(null)
+
+	useEffect(() => {
+		if (showOtp && otpInputRef.current) {
+			otpInputRef.current.focus()
+		}
+	}, [showOtp])
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value })
+		const { name, value } = e.target
+		// For OTP, restrict non-numeric chars
+		if (name === 'otp') {
+			const numericValue = value.replace(/\D/g, '')
+			setFormData({ ...formData, [name]: numericValue })
+		} else {
+			setFormData({ ...formData, [name]: value })
+		}
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -34,9 +48,14 @@ const Register: React.FC = () => {
 		setSuccess('')
 		setLoading(true)
 
-		const { name, email, phone, password, confirmPassword } = formData
+		const { name, email, phone, password } = formData
 
-		if (!name || !email || !phone || !password || !confirmPassword) {
+		if (
+			!name.trim() ||
+			!email.trim() ||
+			!phone.trim() ||
+			!password.trim()
+		) {
 			setError('All fields are required')
 			setLoading(false)
 			return
@@ -48,8 +67,8 @@ const Register: React.FC = () => {
 			return
 		}
 
-		if (password !== confirmPassword) {
-			setError('Passwords do not match')
+		if (password.length < 6) {
+			setError('Password must be at least 6 characters')
 			setLoading(false)
 			return
 		}
@@ -69,7 +88,7 @@ const Register: React.FC = () => {
 				setSuccess('OTP sent to your phone')
 				setShowOtp(true)
 			}
-		} catch (err) {
+		} catch {
 			setError('Something went wrong')
 		} finally {
 			setLoading(false)
@@ -77,7 +96,10 @@ const Register: React.FC = () => {
 	}
 
 	const handleOtpVerify = async () => {
+		setError('')
+		setSuccess('')
 		setLoading(true)
+
 		const { name, email, phone, password, otp } = formData
 
 		if (!otp || otp.length !== 6) {
@@ -101,93 +123,123 @@ const Register: React.FC = () => {
 				setSuccess('Registration complete! Redirecting to login...')
 				setTimeout(() => router.push('/signin'), 2000)
 			}
-		} catch (err) {
+		} catch {
 			setError('Something went wrong during OTP verification')
 		} finally {
 			setLoading(false)
 		}
 	}
 
+	// Optional: auto-submit OTP when 6 digits entered
+	useEffect(() => {
+		if (showOtp && formData.otp.length === 6 && !loading) {
+			handleOtpVerify()
+		}
+	}, [formData.otp]) // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
-		<div className='flex justify-center items-center min-h-screen bg-gray-100'>
-			<div className='bg-white p-6 rounded-xl shadow-md w-full max-w-sm my-5'>
-				<h2 className='text-2xl font-semibold text-center'>Sign up</h2>
-				<p className='text-gray-600 text-sm text-center'>
+		<main
+			className='flex justify-center items-center min-h-screen bg-gray-100 p-4'
+			aria-live='polite'
+		>
+			<section
+				className='bg-white p-6 rounded-xl shadow-md w-full max-w-sm'
+				aria-label='Registration form'
+			>
+				<h1 className='text-2xl font-semibold text-center mb-2'>
+					Sign Up
+				</h1>
+				<p className='text-gray-600 text-sm text-center mb-4'>
 					Create an account to get started
 				</p>
 
 				{error && (
-					<p className='text-red-500 text-sm text-center'>{error}</p>
+					<p
+						role='alert'
+						className='text-red-600 text-sm text-center mb-2'
+						aria-live='assertive'
+					>
+						{error}
+					</p>
 				)}
 				{success && (
-					<p className='text-green-600 text-sm text-center'>
+					<p
+						role='status'
+						className='text-green-600 text-sm text-center mb-2'
+						aria-live='polite'
+					>
 						{success}
 					</p>
 				)}
 
-				<form onSubmit={handleSubmit} className='space-y-4 mt-2'>
-					<Input
-						label='Full Name'
-						name='name'
-						type='text'
-						icon={User}
-						fullWidth
-						onChange={handleChange}
-						value={formData.name}
-						required
-					/>
-					<Input
-						label='Email'
-						name='email'
-						type='email'
-						icon={Mail}
-						fullWidth
-						onChange={handleChange}
-						value={formData.email}
-						required
-					/>
-					<Input
-						label='Phone Number'
-						name='phone'
-						type='tel'
-						icon={Phone}
-						fullWidth
-						onChange={handleChange}
-						value={formData.phone}
-						required
-					/>
-					<Input
-						label='Password'
-						name='password'
-						type='password'
-						icon={Lock}
-						fullWidth
-						onChange={handleChange}
-						value={formData.password}
-						required
-					/>
-					<Input
-						label='Confirm Password'
-						name='confirmPassword'
-						type='password'
-						icon={Lock}
-						fullWidth
-						onChange={handleChange}
-						value={formData.confirmPassword}
-						required
-					/>
+				<form
+					onSubmit={showOtp ? e => e.preventDefault() : handleSubmit}
+					noValidate
+					aria-describedby={error ? 'error-msg' : undefined}
+					className='space-y-2'
+				>
+					{!showOtp && (
+						<>
+							<Input
+								label='Full Name'
+								name='name'
+								type='text'
+								icon={User}
+								fullWidth
+								onChange={handleChange}
+								value={formData.name}
+								required
+								autoComplete='name'
+								placeholder='John Doe'
+							/>
+							<Input
+								label='Email'
+								name='email'
+								type='email'
+								icon={Mail}
+								fullWidth
+								onChange={handleChange}
+								value={formData.email}
+								required
+								autoComplete='email'
+								placeholder='mail@efly.com.bd'
+							/>
+							<Input
+								label='Phone Number'
+								name='phone'
+								type='tel'
+								icon={Phone}
+								fullWidth
+								onChange={handleChange}
+								value={formData.phone}
+								required
+								autoComplete='tel'
+								pattern='01[0-9]{9}'
+								title='Bangladeshi phone number'
+								placeholder='01XXXXXXXXX'
+							/>
+							<Input
+								label='Password'
+								name='password'
+								type='password'
+								icon={Lock}
+								fullWidth
+								onChange={handleChange}
+								value={formData.password}
+								required
+								autoComplete='new-password'
+								minLength={6}
+								placeholder='********'
+							/>
+						</>
+					)}
 
 					{showOtp && (
-						<Input
-							label='Enter OTP'
-							name='otp'
-							type='text'
-							icon={KeyRound}
-							fullWidth
-							onChange={handleChange}
+						<OtpInput
+							length={6}
 							value={formData.otp}
-							maxLength={6}
-							required
+							onChange={otp => setFormData({ ...formData, otp })}
+							autoFocus
 						/>
 					)}
 
@@ -195,23 +247,25 @@ const Register: React.FC = () => {
 						<Button
 							type='submit'
 							disabled={loading}
-							className='w-full'
+							className='w-full mt-4 transition-colors duration-300'
+							aria-disabled={loading}
 						>
-							{loading ? 'Sending OTP...' : 'Register & Send OTP'}
+							{loading ? 'Sending OTP...' : 'Register'}
 						</Button>
 					) : (
 						<Button
 							type='button'
 							disabled={loading}
-							className='w-full'
+							className='w-full mt-4 transition-colors duration-300'
 							onClick={handleOtpVerify}
+							aria-disabled={loading}
 						>
-							{loading ? 'Verifying...' : 'Verify OTP & Register'}
+							{loading ? 'Verifying...' : 'Verify OTP'}
 						</Button>
 					)}
 				</form>
 
-				<p className='text-sm text-center mt-4 space-x-3'>
+				<p className='text-sm text-center mt-4'>
 					Already have an account?{' '}
 					<Link
 						href='/signin'
@@ -220,8 +274,8 @@ const Register: React.FC = () => {
 						Login
 					</Link>
 				</p>
-			</div>
-		</div>
+			</section>
+		</main>
 	)
 }
 

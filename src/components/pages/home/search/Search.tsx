@@ -46,14 +46,14 @@ export default function Search() {
 		<div className='relative z-10 w-full max-w-5xl mx-auto'>
 			{/* Tabs */}
 			<div className='relative flex justify-center'>
-				<div className='bg-white shadow-md rounded-xl flex gap-1 sm:gap-4 px-2 py-2 -mb-4 z-10 mx-2 sm:mx-0'>
+				<div className='bg-white shadow-md rounded-xl flex gap-2 sm:gap-4 px-4 py-2 -mb-4 z-10 mx-1 sm:mx-0'>
 					{tabs.map(tab => (
 						<motion.button
 							key={tab.key}
 							onClick={() => setActiveTab(tab.key)}
 							whileTap={{ scale: 0.95 }}
 							whileHover={{ scale: 1.05 }}
-							className={`flex flex-col sm:flex-row items-center w-16 sm:w-28 gap-2 px-2 sm:px-4 py-2 sm:py-4 rounded transition-all duration-200 text-sm ${
+							className={`flex flex-col sm:flex-row items-center w-16 sm:w-28 gap-2 px-2 sm:px-4 py-1 justify-between sm:justify-normal sm:py-3.5 rounded transition-all duration-200 text-sm ${
 								activeTab === tab.key
 									? 'bg-blue-100 text-blue-600 font-semibold shadow'
 									: 'text-gray-500 hover:text-blue-500'

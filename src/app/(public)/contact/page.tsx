@@ -5,6 +5,7 @@ import Input from '@/components/form/Input'
 import TextArea from '@/components/form/TextArea'
 import { FaWhatsapp, FaPhoneAlt, FaEnvelope } from 'react-icons/fa'
 import Link from 'next/link'
+import Button from '@/components/form/Button'
 
 const ContactPage = () => {
 	const [formData, setFormData] = useState({
@@ -103,18 +104,19 @@ const ContactPage = () => {
 							<TextArea
 								name='message'
 								placeholder='Message'
-								rows={4}
+								rows={8}
 								value={formData.message}
 								onChange={handleChange}
 								required
+								className='sm:max-h-44 2xl:max-h-32'
 							/>
-							<button
+							<Button
 								type='submit'
 								className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
 								disabled={loading}
 							>
 								{loading ? 'Sending...' : 'Send Now'}
-							</button>
+							</Button>
 						</form>
 					</div>
 

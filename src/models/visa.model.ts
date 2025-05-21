@@ -13,7 +13,7 @@ const VisaSchema = new Schema(
 		visaMode: { type: String, enum: ['E-Visa'], default: 'E-Visa' },
 		entryType: {
 			type: String,
-			enum: ['Single Entry'],
+			enum: ['Single Entry', 'Double Entry', 'Multiple Entry'],
 			default: 'Single Entry'
 		},
 		processingTime: { type: String, default: '45 Working Days' },

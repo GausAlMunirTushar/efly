@@ -51,7 +51,7 @@ export default function VisaSearch() {
 			</div>
 			<div className='flex items-end justify-end'>
 				<Button className='' onClick={handleSearch}>
-					<Search size={20} className='mr-2' /> Visa
+					<Search size={20} className='mr-2' /> Search Visa
 				</Button>
 			</div>
 		</section>

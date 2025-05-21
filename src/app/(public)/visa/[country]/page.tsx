@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation'
 import VisaHeader from '@/components/pages/front-pages/visa/VisaHeader'
 import VisaAssistanceForm from '@/components/pages/front-pages/visa/VisaAssistanceForm'
 
+const entryTypes = ['Single Entry', 'Double Entry', 'Multiple Entry']
+
 export default function VisaDetailPage({
 	params
 }: {
@@ -19,6 +21,8 @@ export default function VisaDetailPage({
 	const [visa, setVisa] = useState<any>(null)
 	const [loading, setLoading] = useState<boolean>(true)
 	const [error, setError] = useState<string | null>(null)
+
+	const [activeTab, setActiveTab] = useState<string>('Single Entry')
 
 	useEffect(() => {
 		// Resolving the params promise
@@ -99,6 +103,9 @@ export default function VisaDetailPage({
 						<h1 className='text-3xl font-bold'>
 							{visa.country} Visa
 						</h1>
+						{/* <h1 className='text-3xl font-bold'>
+							{visa.country} Visa
+						</h1>
 						<p>
 							<strong>Visa Type:</strong> {visa.visaType}
 						</p>
@@ -125,7 +132,69 @@ export default function VisaDetailPage({
 							dangerouslySetInnerHTML={{
 								__html: visa.content || ''
 							}}
-						/>
+						/> */}
+						<div className='w-full flex flex-wrap py-4'>
+							<div className='w-full sm:w-9/12'>
+								{/* Tabs */}
+								<div className='mb-4 flex border-b'>
+									{entryTypes.map(type => (
+										<button
+											key={type}
+											className={`px-4 py-2 font-semibold transition border-b-2 ${
+												activeTab === type
+													? 'border-primary text-primary'
+													: 'border-transparent text-gray-500 hover:text-primary'
+											}`}
+											onClick={() => setActiveTab(type)}
+										>
+											{type}
+										</button>
+									))}
+								</div>
+
+								{/* Visa Data Based on Tab */}
+								{visa.entryType === activeTab && (
+									<>
+										<h1 className='text-3xl font-bold'>
+											{visa.country} Visa
+										</h1>
+										<p>
+											<strong>Visa Type:</strong>{' '}
+											{visa.visaType}
+										</p>
+										<p>
+											<strong>Visa Mode:</strong>{' '}
+											{visa.visaMode}
+										</p>
+										<p>
+											<strong>Entry Type:</strong>{' '}
+											{visa.entryType}
+										</p>
+										<p>
+											<strong>Processing Time:</strong>{' '}
+											{visa.processingTime}
+										</p>
+										<p>
+											<strong>Visa Validity:</strong>{' '}
+											{visa.visaValidity}
+										</p>
+										<p>
+											<strong>Maximum Stay:</strong>{' '}
+											{visa.maxStay}
+										</p>
+										<p>
+											<strong>Description:</strong>{' '}
+											{visa.description}
+										</p>
+										<div
+											dangerouslySetInnerHTML={{
+												__html: visa.content || ''
+											}}
+										/>
+									</>
+								)}
+							</div>
+						</div>
 					</div>
 					<div className='w-full sm:w-3/12'>
 						<VisaAssistanceForm />

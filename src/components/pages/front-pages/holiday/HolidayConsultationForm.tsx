@@ -10,7 +10,6 @@ import SelectInput from '@/components/form/SelectInput'
 import Button from '@/components/form/Button'
 
 interface HolidayConsultationFormProps {
-	onSubmit: (data: FormData) => void
 	isLoading?: boolean
 }
 
@@ -32,7 +31,6 @@ const countryOptions = [
 ]
 
 const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
-	onSubmit,
 	isLoading
 }) => {
 	const [formData, setFormData] = useState<FormData>({
@@ -86,7 +84,7 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault()
 		if (validate()) {
-			onSubmit(formData)
+			// onSubmit(formData)
 		}
 	}
 

@@ -9,9 +9,21 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const images = ['/images/slider/slide-1.png', '/images/slider/slide-2.jpg']
+interface PackageDetails {
+	title: string
+	description: string
+	location: string
+	nightsInfo: string
+	price: number
+}
 
-export default function TourPackageCard() {
+export default function HolidaySlider({
+	images,
+	packageDetails
+}: {
+	images: string[]
+	packageDetails: PackageDetails
+}) {
 	const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
 	return (
@@ -48,12 +60,11 @@ export default function TourPackageCard() {
 			<div className='md:w-1/3 space-y-4'>
 				<div>
 					<h2 className='text-xl font-semibold text-primary'>
-						{`Honeymoon at Cox's Bazar - Package Tour with Flight and
-						Hotel`}
+						{packageDetails.title}
 					</h2>
 					<div className='flex items-center text-muted-foreground text-sm mt-1'>
 						<MapPin className='w-4 h-4 mr-1' />
-						{`Cox's Bazar, Bangladesh`}
+						{packageDetails.location}
 					</div>
 				</div>
 
@@ -79,7 +90,8 @@ export default function TourPackageCard() {
 
 				<ul className='space-y-2 text-sm text-muted-foreground'>
 					<li className='flex items-center'>
-						<CalendarDays className='w-4 h-4 mr-2' />3 days
+						<CalendarDays className='w-4 h-4 mr-2' />{' '}
+						{packageDetails.nightsInfo}
 					</li>
 					<li className='flex items-center'>
 						<Users className='w-4 h-4 mr-2' />

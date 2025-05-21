@@ -1,33 +1,63 @@
-'use client'
-import HolidayConsultationForm from '@/components/pages/front-pages/holiday/HolidayConsultationForm'
-import HolidayDetails from '@/components/pages/front-pages/holiday/HolidayDetails'
+import { notFound } from 'next/navigation'
 import HolidaySlider from '@/components/pages/front-pages/holiday/HolidaySlider'
+import HolidayDetails from '@/components/pages/front-pages/holiday/HolidayDetails'
+import HolidayConsultationForm from '@/components/pages/front-pages/holiday/HolidayConsultationForm'
+import { Metadata } from 'next'
 
-const HolidayDetailsPage = () => {
-	const onSubmit = (data: FormData) => {
-		// Handle form submission
-		console.log(data)
+interface HolidayDetailsPageProps {
+	params: {
+		id: string
 	}
+}
+
+export async function generateMetadata({
+	params
+}: HolidayDetailsPageProps): Promise<Metadata> {
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_APP_URL}/api/holiday/${params.id}`,
+		{ cache: 'no-store' }
+	)
+	if (!res.ok) return {}
+	const pkg = await res.json()
+
+	return {
+		title: `${pkg.title} | eFly Travel`,
+		description:
+			pkg.description || 'Explore this exclusive holiday package on eFly.'
+	}
+}
+
+export default async function HolidayDetailsPage({
+	params
+}: HolidayDetailsPageProps) {
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_APP_URL}/api/holiday/${params.id}`,
+		{ cache: 'no-store' }
+	)
+
+	if (!res.ok) notFound()
+
+	const pkg = await res.json()
+
 	return (
 		<main className='bg-gray-100'>
 			<section className='container mx-auto'>
 				<div className='py-6'>
-					<HolidaySlider />
+					<HolidaySlider
+						images={[pkg.imageUrl]}
+						packageDetails={pkg}
+					/>
 				</div>
+
 				<div className='w-full flex bg-white py-3 rounded-t-lg'>
 					<div className='w-9/12'>
 						<HolidayDetails />
 					</div>
 					<div className='w-3/12 flex'>
-						<HolidayConsultationForm
-							onSubmit={data => console.log(data)}
-							isLoading={false}
-						/>
+						<HolidayConsultationForm isLoading={false} />
 					</div>
 				</div>
 			</section>
 		</main>
 	)
 }
-
-export default HolidayDetailsPage

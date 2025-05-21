@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import HolidayPackage from '@/models/holiday.model'
+import Holiday from '@/models/holiday.model'
 import { connectDatabase } from '@/configs/database'
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
 	try {
 		await connectDatabase()
-		const found = await HolidayPackage.findById(params.id)
+		const found = await Holiday.findById(params.id)
 
 		if (!found) {
 			return NextResponse.json(
@@ -29,14 +29,10 @@ export async function PUT(
 		await connectDatabase()
 		const body = await req.json()
 
-		const updated = await HolidayPackage.findByIdAndUpdate(
-			params.id,
-			body,
-			{
-				new: true,
-				runValidators: true
-			}
-		)
+		const updated = await Holiday.findByIdAndUpdate(params.id, body, {
+			new: true,
+			runValidators: true
+		})
 
 		if (!updated) {
 			return NextResponse.json(
@@ -62,7 +58,7 @@ export async function DELETE(
 	try {
 		await connectDatabase()
 
-		const deleted = await HolidayPackage.findByIdAndDelete(params.id)
+		const deleted = await Holiday.findByIdAndDelete(params.id)
 
 		if (!deleted) {
 			return NextResponse.json(

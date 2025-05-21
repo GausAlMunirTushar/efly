@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import HolidayPackage from '@/models/holiday.model'
+import Holiday from '@/models/holiday.model'
 import { connectDatabase } from '@/configs/database'
 
 export async function GET() {
 	try {
 		await connectDatabase()
-		const packages = await HolidayPackage.find().sort({ createdAt: -1 })
+		const packages = await Holiday.find().sort({ createdAt: -1 })
 		return NextResponse.json(packages)
 	} catch (error) {
 		console.error('GET /holiday error:', error)
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 			)
 		}
 
-		const created = await HolidayPackage.create(body)
+		const created = await Holiday.create(body)
 		return NextResponse.json(created, { status: 201 })
 	} catch (error) {
 		console.error('POST /holiday error:', error)

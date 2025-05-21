@@ -13,7 +13,11 @@ import {
 	ChevronDown,
 	ChevronRight,
 	Rss,
-	FileUser
+	FileUser,
+	TentTree,
+	Images,
+	University,
+	BookOpenCheck
 } from 'lucide-react'
 
 interface MenuItem {
@@ -54,22 +58,22 @@ const menuItems: MenuItem[] = [
 	},
 	{
 		title: 'Visa',
-		icon: <Circle className='w-5 h-5' />,
+		icon: <BookOpenCheck className='w-5 h-5' />,
 		href: `/admin/visa`
 	},
 	{
 		title: 'Umrah',
-		icon: <Circle className='w-5 h-5' />,
+		icon: <University className='w-5 h-5' />,
 		href: `/admin/umrah`
 	},
 	{
 		title: 'Gallery',
-		icon: <Circle className='w-5 h-5' />,
+		icon: <Images className='w-5 h-5' />,
 		href: `/admin/gallery`
 	},
 	{
 		title: 'Holiday',
-		icon: <Circle className='w-5 h-5' />,
+		icon: <TentTree className='w-5 h-5' />,
 		href: `/admin/holiday`
 	}
 ]

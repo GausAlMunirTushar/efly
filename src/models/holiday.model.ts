@@ -2,7 +2,7 @@
 
 import mongoose, { Schema, Document, models } from 'mongoose'
 
-export interface IHolidayPackage extends Document {
+export interface IHoliday extends Document {
 	title: string
 	description?: string
 	imageUrl: string
@@ -14,7 +14,7 @@ export interface IHolidayPackage extends Document {
 	updatedAt: Date
 }
 
-const HolidayPackageSchema: Schema<IHolidayPackage> = new Schema(
+const HolidaySchema: Schema<IHoliday> = new Schema(
 	{
 		title: { type: String, required: true },
 		description: { type: String },
@@ -29,8 +29,7 @@ const HolidayPackageSchema: Schema<IHolidayPackage> = new Schema(
 	}
 )
 
-const HolidayPackage =
-	models.HolidayPackage ||
-	mongoose.model<IHolidayPackage>('HolidayPackage', HolidayPackageSchema)
+const Holiday =
+	models.Holiday || mongoose.model<IHoliday>('Holiday', HolidaySchema)
 
-export default HolidayPackage
+export default Holiday

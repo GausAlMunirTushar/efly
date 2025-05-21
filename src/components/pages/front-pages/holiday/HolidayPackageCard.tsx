@@ -1,5 +1,6 @@
 'use client'
 
+import Button from '@/components/form/Button'
 import {
 	Camera,
 	CreditCard,
@@ -9,9 +10,11 @@ import {
 	Utensils
 } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { FC, ReactNode, useState } from 'react'
 
 interface HolidayPackageCardProps {
+	id: string
 	imageUrl?: string
 	title: string
 	description?: string
@@ -33,6 +36,7 @@ const iconMapper: { [key: string]: ReactNode } = {
 const fallbackImage = '/images/placeholder.webp'
 
 const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
+	id,
 	imageUrl,
 	title,
 	description,
@@ -93,9 +97,11 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 					</div>
 				</div>
 
-				<button className='bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded mt-2'>
-					{buttonText}
-				</button>
+				<Link href={`/holiday/${id}`}>
+					<Button className='bg-blue-600 w-full hover:bg-blue-700 text-white text-sm py-2 px-4 rounded mt-2'>
+						{buttonText}
+					</Button>
+				</Link>
 			</div>
 		</div>
 	)

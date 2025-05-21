@@ -4,6 +4,7 @@ import UmrahSlider from '@/components/pages/front-pages/umrah/UmrahSlider'
 import Search from '@/components/pages/home/search/Search'
 import HomePopularBlog from '@/components/pages/home/HomePopularBlog'
 import CustomSlider, { SlideItem } from '@/components/pages/home/Slider'
+import VisaSlider from '@/components/pages/front-pages/visa/VisaSlider'
 
 const slides: SlideItem[] = [
 	{ id: 1, image: '/images/slider/slide-1.png', link: '/services/1' },
@@ -41,6 +42,18 @@ const HomePage = () => {
 					{`Plan your perfect escape with efly! Discover top holiday deals for unforgettable international adventures.`}
 				</p>
 				<HolidayHomeSlider />
+			</section>
+			<section className='container mx-auto my-3'>
+				<h2
+					id='holiday-heading'
+					className='text-2xl md:text-3xl font-bold my-3  text-gray-800'
+				>
+					Visa for You
+				</h2>
+				<p className='text-gray-600 w-1/2'>
+					{`Plan your perfect escape with efly! Discover top holiday deals for unforgettable international adventures.`}
+				</p>
+				<VisaSlider />
 			</section>
 			<section className='container mx-auto my-3'>
 				<h2

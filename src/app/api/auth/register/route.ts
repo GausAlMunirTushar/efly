@@ -35,8 +35,14 @@ export async function POST(req: Request) {
 			: phone.replace(/^0/, '880')
 
 		const otp = generateOtp()
-		const smsText = `Your OTP code is: ${otp}`
-		console.log('📝 SMS Text:', smsText)
+		const smsText = `
+Welcome to eFly
+
+Your One-Time Password (OTP) is: ${otp}
+
+This OTP will expire in 2 minutes.
+Thank you for registering with eFly.
+`
 
 		// ✅ Send using normalized phone number
 		await sendSms({ phone: normalizedPhone, message: smsText })

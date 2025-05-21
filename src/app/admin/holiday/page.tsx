@@ -26,6 +26,7 @@ const AdminHolidayPage = () => {
 	const [imageUploading, setImageUploading] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [editingId, setEditingId] = useState<string | null>(null)
+	const [imageUploaded, setImageUploaded] = useState(false)
 	const router = useRouter()
 
 	const fetchPackages = async () => {
@@ -43,14 +44,17 @@ const AdminHolidayPage = () => {
 	}
 
 	const onDrop = useCallback((acceptedFiles: File[]) => {
-		setImages(prev => [...prev, ...acceptedFiles])
+		setImages(acceptedFiles)
 		const previews = acceptedFiles.map(file => URL.createObjectURL(file))
-		setImagePreviews(prev => [...prev, ...previews])
+		setImagePreviews(previews)
+		setImageUploaded(false)
 	}, [])
 
-	const removeImage = (index: number) => {
-		setImages(prev => prev.filter((_, i) => i !== index))
-		setImagePreviews(prev => prev.filter((_, i) => i !== index))
+	const removeImage = () => {
+		setImages([])
+		setImagePreviews([])
+		setForm(prev => ({ ...prev, imageUrl: '' }))
+		setImageUploaded(false)
 	}
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -60,7 +64,7 @@ const AdminHolidayPage = () => {
 	})
 
 	const uploadImages = async () => {
-		if (!images.length) return ''
+		if (!images.length) return
 		setImageUploading(true)
 		const formData = new FormData()
 		images.forEach(file => formData.append('file', file))
@@ -72,14 +76,14 @@ const AdminHolidayPage = () => {
 			})
 			const data = await res.json()
 			if (data?.imageUrl) {
-				setForm(prev => ({ ...prev, countryImage: data.imageUrl }))
+				setForm(prev => ({ ...prev, imageUrl: data.imageUrl }))
+				setImageUploaded(true)
 				toast.success('Image uploaded successfully!')
 			} else {
 				toast.error('Image upload failed.')
 			}
 		} catch (error) {
 			toast.error('Image upload error')
-			return ''
 		} finally {
 			setImageUploading(false)
 		}
@@ -87,13 +91,10 @@ const AdminHolidayPage = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
+		if (!form.imageUrl) return toast.error('Please upload an image first.')
 		setLoading(true)
 
 		try {
-			const uploadedImage = await uploadImages()
-			if (!uploadedImage && !form.imageUrl)
-				throw new Error('Image is required')
-
 			const res = await fetch(
 				editingId ? `/api/holiday/${editingId}` : '/api/holiday',
 				{
@@ -101,7 +102,6 @@ const AdminHolidayPage = () => {
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
 						...form,
-						imageUrl: uploadedImage || form.imageUrl,
 						price: parseFloat(form.price),
 						tags: form.tags.split(',')
 					})
@@ -125,6 +125,7 @@ const AdminHolidayPage = () => {
 			setImages([])
 			setImagePreviews([])
 			setEditingId(null)
+			setImageUploaded(false)
 			fetchPackages()
 		} catch (error) {
 			toast.error((error as Error).message)
@@ -144,6 +145,8 @@ const AdminHolidayPage = () => {
 			tags: pkg.tags.join(','),
 			imageUrl: pkg.imageUrl
 		})
+		setImageUploaded(true)
+		setImagePreviews([pkg.imageUrl])
 	}
 
 	const handleDelete = async (id: string) => {
@@ -238,7 +241,7 @@ const AdminHolidayPage = () => {
 								<button
 									type='button'
 									className='absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition'
-									onClick={() => removeImage(index)}
+									onClick={() => removeImage()}
 									aria-label='Remove image'
 								>
 									<X className='w-4 h-4' />
@@ -246,10 +249,20 @@ const AdminHolidayPage = () => {
 							</div>
 						))}
 					</div>
+
+					{!imageUploaded && (
+						<Button
+							type='button'
+							onClick={uploadImages}
+							disabled={imageUploading || !images.length}
+						>
+							{imageUploading ? 'Uploading...' : 'Upload Image'}
+						</Button>
+					)}
 				</div>
 
-				<Button type='submit' disabled={loading || imageUploading}>
-					{loading || imageUploading
+				<Button type='submit' disabled={loading || !imageUploaded}>
+					{loading
 						? 'Saving...'
 						: editingId
 							? 'Update Package'

@@ -51,7 +51,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 					src={imgSrc || fallbackImage}
 					alt={title}
 					fill
-					className='object-cover'
+					className='object-cover h-40'
 					onError={() => setImgSrc(fallbackImage)}
 				/>
 			</div>

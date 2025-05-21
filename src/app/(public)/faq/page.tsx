@@ -23,11 +23,11 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: I have a debit card. May I use my debit card to
-							book a flight from ShareTrip?
+							book a flight from efly?
 						</strong>
 						<br />
 						<b>প্রশ্ন:</b> আমার ডেবিট কার্ড আছে। আমি কি ডেবিট কার্ড
-						ব্যবহার করে শেয়ারট্রিপ থেকে ফ্লাইট বুক করতে পারব?
+						ব্যবহার করে efly থেকে ফ্লাইট বুক করতে পারব?
 					</>
 				),
 				answer: (
@@ -40,8 +40,8 @@ const categories: FAQCategory[] = [
 						<p>
 							<b>উত্তর:</b> হ্যাঁ, আপনি আপনার লোকাল কিংবা
 							ইন্টারন্যাশনাল কার্ড, ডেবিট অথবা ক্রেডিট কার্ডই
-							ব্যবহার করে শেয়ারট্রিপ থেকে খুব সহজেই ফ্লাইট বুক
-							করতে পারবেন।
+							ব্যবহার করে efly থেকে খুব সহজেই ফ্লাইট বুক করতে
+							পারবেন।
 						</p>
 					</>
 				)
@@ -50,11 +50,11 @@ const categories: FAQCategory[] = [
 				question: (
 					<>
 						<strong>
-							Q. Can you book a domestic flight on ShareTrip?
+							Q. Can you book a domestic flight on efly?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> আমি কি শেয়ারট্রিপ থেকে ডোমেস্টিক ফ্লাইট
-						বুক করতে পারব?
+						<b>প্রশ্ন:</b> আমি কি efly থেকে ডোমেস্টিক ফ্লাইট বুক
+						করতে পারব?
 					</>
 				),
 				answer: (
@@ -79,7 +79,7 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: Can I make the payment later for an online
-							booking on ShareTrip?
+							booking on efly?
 						</strong>
 						<br />
 						<b>প্রশ্ন:</b> অনলাইন বুকিং -এর ক্ষেত্রে আমি কি পেমেন্ট
@@ -139,11 +139,11 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: Will it cost any extra charge if I purchase
-							through a card from ShareTrip?
+							through a card from efly?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> শেয়ারট্রিপ-এ কার্ডের মাধ্যমে বুকিং দিলে
-						কি বাড়তি চার্জ পরিশোধ করতে হবে?
+						<b>প্রশ্ন:</b> efly-এ কার্ডের মাধ্যমে বুকিং দিলে কি
+						বাড়তি চার্জ পরিশোধ করতে হবে?
 					</>
 				),
 				answer: (
@@ -152,14 +152,14 @@ const categories: FAQCategory[] = [
 							<strong>A:</strong> During an online or an offline
 							transaction there is a convenience fee that
 							customers have to pay. However, there is no extra
-							charge on anything you purchase from ShareTrip be it
+							charge on anything you purchase from efly be it
 							online or offline.
 						</p>
 						<p>
 							<b>উত্তর:</b> অনলাইন বা অফলাইন বুকিংয়ের সময়
 							প্রতিটি কনজিউমারিং ফি আছে যা গ্রাহকদের দিতে হবে।
-							তবে, শেয়ারট্রিপ-এ থেকে, অনলাইন বা অফলাইন বুকিংয়ে,
-							কিছু কিনলে কোন অতিরিক্ত চার্জ নেই।
+							তবে, efly-এ থেকে, অনলাইন বা অফলাইন বুকিংয়ে, কিছু
+							কিনলে কোন অতিরিক্ত চার্জ নেই।
 						</p>
 					</>
 				)
@@ -167,24 +167,23 @@ const categories: FAQCategory[] = [
 			{
 				question: (
 					<>
-						<strong>Q: What is ST Convenience Fee?</strong>
+						<strong>Q: What is efly Convenience Fee?</strong>
 						<br />
-						<b>প্রশ্ন:</b> শেয়ারট্রিপ কনভিনিয়েন্স ফি কী?
+						<b>প্রশ্ন:</b> efly কনভিনিয়েন্স ফি কী?
 					</>
 				),
 				answer: (
 					<>
 						<p>
-							<strong>A:</strong> ST Convenience fee is the charge
-							that the customer needs to pay for the support,
-							convenience and service that he/she is availing from
-							the online platforms.
+							<strong>A:</strong> efly Convenience fee is the
+							charge that the customer needs to pay for the
+							support, convenience and service that he/she is
+							availing from the online platforms.
 						</p>
 						<p>
-							<b>উত্তর:</b> কাস্টমাররা শেয়ারট্রিপ থেকে অনলাইন,
-							যেসব সহযোগিতা, কনভিনিয়েন্স ও সেবা উপভোগ করেন, তার
-							জন্য প্রদেয় চার্জকে শেয়ারট্রিপ কনভিনিয়েন্স ফি বলা
-							হয়।
+							<b>উত্তর:</b> কাস্টমাররা efly থেকে অনলাইন, যেসব
+							সহযোগিতা, কনভিনিয়েন্স ও সেবা উপভোগ করেন, তার জন্য
+							প্রদেয় চার্জকে efly কনভিনিয়েন্স ফি বলা হয়।
 						</p>
 					</>
 				)
@@ -193,21 +192,21 @@ const categories: FAQCategory[] = [
 				question: (
 					<>
 						<strong>
-							Q: Is the ST Convenience Fee refundable?
+							Q: Is the efly Convenience Fee refundable?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> শেয়ারট্রিপ কনভিনিয়েন্স ফি কী ফেরতযোগ্য?
+						<b>প্রশ্ন:</b> efly কনভিনিয়েন্স ফি কী ফেরতযোগ্য?
 					</>
 				),
 				answer: (
 					<>
 						<p>
-							<strong>A:</strong> ST Convenience Fee is
+							<strong>A:</strong> efly Convenience Fee is
 							non-refundable.
 						</p>
 						<p>
-							<b>উত্তর:</b> দুঃখিত, শেয়ারট্রিপ কনভিনিয়েন্স ফি
-							ফেরতযোগ্য নয়।
+							<b>উত্তর:</b> দুঃখিত, efly কনভিনিয়েন্স ফি ফেরতযোগ্য
+							নয়।
 						</p>
 					</>
 				)

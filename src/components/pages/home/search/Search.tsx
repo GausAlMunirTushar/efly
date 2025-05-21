@@ -46,7 +46,7 @@ export default function Search() {
 		<div className='relative z-10 w-full max-w-5xl mx-auto'>
 			{/* Tabs */}
 			<div className='relative flex justify-center'>
-				<div className='bg-white shadow-md rounded-xl flex gap-2 sm:gap-4 px-4 py-2 -mb-4 z-10 mx-1 sm:mx-0'>
+				<div className='bg-white shadow-md rounded-xl flex gap-2 sm:gap-4 px-2 py-2 -mb-4 z-10 mx-1 sm:mx-0'>
 					{tabs.map(tab => (
 						<motion.button
 							key={tab.key}

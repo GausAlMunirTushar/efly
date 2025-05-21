@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--font-heading: var(--font-poppins);
+	--font-body: var(--font-open-sans);
+}
+
 body {
-	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	font-family: var(--font-body), sans-serif;
 }
 
 .box-shadow {

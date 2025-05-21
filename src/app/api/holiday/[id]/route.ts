@@ -2,10 +2,14 @@ import { NextResponse } from 'next/server'
 import Holiday from '@/models/holiday.model'
 import { connectDatabase } from '@/configs/database'
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+	_: Request,
+	{ params }: { params: Promise<{ id: string }> }
+) {
 	try {
+		const { id } = await params
 		await connectDatabase()
-		const found = await Holiday.findById(params.id)
+		const found = await Holiday.findById(id)
 
 		if (!found) {
 			return NextResponse.json(
@@ -23,13 +27,14 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 
 export async function PUT(
 	req: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
+		const { id } = await params
 		await connectDatabase()
 		const body = await req.json()
 
-		const updated = await Holiday.findByIdAndUpdate(params.id, body, {
+		const updated = await Holiday.findByIdAndUpdate(id, body, {
 			new: true,
 			runValidators: true
 		})
@@ -53,12 +58,13 @@ export async function PUT(
 
 export async function DELETE(
 	_: Request,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
+		const { id } = await params
 		await connectDatabase()
 
-		const deleted = await Holiday.findByIdAndDelete(params.id)
+		const deleted = await Holiday.findByIdAndDelete(id)
 
 		if (!deleted) {
 			return NextResponse.json(

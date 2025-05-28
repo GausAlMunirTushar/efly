@@ -1,164 +1,195 @@
-import UmrahForm from '@/components/pages/front-pages/umrah/UmrahForm'
 import React from 'react'
+import Image from 'next/image'
+import UmrahForm from '@/components/pages/front-pages/umrah/UmrahForm'
+import { notFound } from 'next/navigation'
+import Head from 'next/head'
 
-const UmrahDetailsPage = () => {
+interface UmrahPackage {
+	_id: string
+	packagename: string
+	description?: string
+	price: number
+	duration?: string
+	images?: string[]
+	includedServices?: string[]
+	isFeatured?: boolean
+	termsAndConditions?: string
+	refundAndReissuePolicy?: string
+	pricingDetails?: string
+}
+
+interface PageProps {
+	params: { id: string }
+}
+
+async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_APP_URL}/api/umrah/${id}`,
+		{
+			// Important: Next.js fetch caching
+			cache: 'no-store'
+		}
+	)
+
+	if (!res.ok) return null
+	return res.json()
+}
+
+const UmrahDetailsPage = async ({ params }: PageProps) => {
+	const packageData = await fetchUmrahPackage(params.id)
+	console.log(`iddddddddddddddddddddddddddddd`, params.id)
+	if (!packageData) {
+		notFound()
+	}
+
+	const {
+		packagename,
+		description,
+		price,
+		duration,
+		images,
+		termsAndConditions,
+		refundAndReissuePolicy
+	} = packageData
+
+	const imageUrl =
+		images && images.length > 0 ? images[0] : '/images/placeholder.webp'
+
 	const handleSubmit = () => {
 		console.log('Form submitted')
 	}
+
 	return (
-		<div className='container mx-auto px-4 py-6'>
-			<div>
-				<img
-					src='/path-to-image.jpg'
-					alt='Umrah Package'
-					className='w-full h-96 object-cover rounded-lg'
+		<>
+			<Head>
+				<title>{packagename} | Umrah Packages</title>
+				<meta
+					name='description'
+					content={
+						description || `${packagename} details and booking.`
+					}
 				/>
-			</div>
-			<div className='w-full flex '>
-				<div className='w-full md:w-9/12 grid grid-cols-1 md:grid-cols-2 gap-6'>
-					<div>
-						<h1 className='text-3xl font-semibold text-gray-800 mb-4'>
-							Standard Umrah Package
-						</h1>
-						<p className='text-lg text-gray-600'>
-							Mecca, Saudi Arabia
-						</p>
+				<meta name='robots' content='index, follow' />
+			</Head>
 
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Package Includes
-							</h3>
-							<ul className='list-disc list-inside text-gray-700 mt-2'>
-								<li>Round-trip airfare</li>
-								<li>Hotel accommodations</li>
-							</ul>
-						</div>
+			<main className='container mx-auto px-4 py-6'>
+				<article>
+					<div className='flex flex-col md:flex-row gap-4'>
+						{/* Left big image */}
+						<section
+							aria-labelledby='package-image'
+							className='md:w-9/12'
+						>
+							<Image
+								src={imageUrl}
+								alt={`${packagename} image`}
+								width={1200}
+								height={480}
+								className='w-full h-96 rounded-lg object-cover'
+								priority
+							/>
+						</section>
 
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Pricing
-							</h3>
-							<div className='mt-2'>
-								<p className='text-lg text-gray-700'>
-									Adult:{' '}
-									<span className='font-semibold'>
-										BDT 1,35,000
-									</span>
-								</p>
-								<p className='text-lg text-gray-700'>
-									Child:{' '}
-									<span className='font-semibold'>
-										BDT 12,500
-									</span>
-								</p>
-								<p className='text-lg text-gray-700'>
-									Infant:{' '}
-									<span className='font-semibold'>
-										BDT 45,000
-									</span>
-								</p>
-							</div>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Stay Plan
-							</h3>
-							<p className='text-lg text-gray-700'>
-								Duration: 14 Days, 13 Nights
-							</p>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Tour Plan
-							</h3>
-							<p className='text-gray-700 mt-2'>
-								The package is available if you pre-book only
-								10000 Taka.
-								<br />
-								<strong>Flight Schedule:</strong>
-								<ul className='list-disc list-inside mt-2 text-gray-700'>
-									<li>
-										Package 1: Before 5th of Ramadan to 10th
-										Ramadan
-									</li>
-									<li>
-										Package 2: 01st Ramadan to 15th Ramadan
-									</li>
-									<li>
-										Package 3: 05th Ramadan to 20th Ramadan
-									</li>
-									<li>
-										Package 4: 10th Ramadan to 25th Ramadan
-									</li>
-									<li>
-										Package 5: 15th Ramadan to 30th Ramadan
-									</li>
-								</ul>
-							</p>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Inclusions
-							</h3>
-							<ul className='list-disc list-inside text-gray-700 mt-2'>
-								<li>Airport transfers</li>
-								<li>Guided city tours</li>
-							</ul>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Exclusions
-							</h3>
-							<ul className='list-disc list-inside text-gray-700 mt-2'>
-								<li>Entrance fees to attractions</li>
-								<li>Multilingual tour guides</li>
-							</ul>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Refund & Reissue Policy
-							</h3>
-							<p className='text-gray-700 mt-2'>
-								Once the package is booked, the advance payment
-								will be non-refundable.
-							</p>
-						</div>
-
-						<div className='mt-6'>
-							<h3 className='text-xl font-semibold text-gray-800'>
-								Terms & Conditions
-							</h3>
-							<ul className='list-disc list-inside text-gray-700 mt-2'>
-								<li>
-									Hotel check-in time is at 4 PM and check-out
-									time is at 12 PM.
-								</li>
-								<li>
-									In case you do not like the room, we will
-									assist with the room change.
-								</li>
-								<li>
-									Shared bus transport for Ziyarat and private
-									transport on request.
-								</li>
-								<li>
-									80% advance payment and 20% payment before
-									the flight.
-								</li>
-							</ul>
-						</div>
+						{/* Right smaller images stacked vertically */}
+						<aside className='md:w-3/12 flex flex-col gap-4'>
+							{images && images.length > 1
+								? images
+										.slice(1)
+										.map((imgUrl, idx) => (
+											<Image
+												key={idx}
+												src={imgUrl}
+												alt={`${packagename} image ${idx + 2}`}
+												width={400}
+												height={200}
+												className='rounded-lg h-28 object-cover'
+												priority={idx === 0}
+											/>
+										))
+								: null}
+						</aside>
 					</div>
-				</div>
-				<div className='w-full md:w-1/3'>
-					<UmrahForm />
-				</div>
-			</div>
-		</div>
+
+					<div className='flex flex-col md:flex-row gap-8'>
+						<section
+							aria-labelledby='package-info'
+							className='w-full md:w-8/12 space-y-6'
+						>
+							<header>
+								<h1
+									id='package-info'
+									className='text-3xl font-semibold text-gray-800'
+								>
+									{packagename}
+								</h1>
+								{duration && (
+									<p className='text-lg text-gray-600'>
+										Duration: {duration}
+									</p>
+								)}
+								<p className='text-lg text-gray-700 font-bold'>
+									Price: BDT {price.toLocaleString()}
+								</p>
+							</header>
+
+							{description && (
+								<section aria-labelledby='description-heading'>
+									<h2
+										id='description-heading'
+										className='text-xl font-semibold text-gray-800'
+									>
+										Description
+									</h2>
+									<p className='text-gray-700'>
+										{description}
+									</p>
+								</section>
+							)}
+
+							{termsAndConditions && (
+								<section
+									aria-labelledby='terms-conditions-heading'
+									className='space-y-2'
+								>
+									<h2
+										id='terms-conditions-heading'
+										className='text-xl font-semibold text-gray-800'
+									>
+										Terms &amp; Conditions
+									</h2>
+									<p className='text-gray-700'>
+										{termsAndConditions}
+									</p>
+								</section>
+							)}
+
+							{refundAndReissuePolicy && (
+								<section
+									aria-labelledby='refund-policy-heading'
+									className='space-y-2'
+								>
+									<h2
+										id='refund-policy-heading'
+										className='text-xl font-semibold text-gray-800'
+									>
+										Refund &amp; Reissue Policy
+									</h2>
+									<p className='text-gray-700'>
+										{refundAndReissuePolicy}
+									</p>
+								</section>
+							)}
+
+							{/* You can add more sections like includedServices, exclusions, etc. here */}
+						</section>
+
+						<aside className='w-full md:w-4/12'>
+							<UmrahForm />
+						</aside>
+					</div>
+				</article>
+			</main>
+		</>
 	)
 }
 

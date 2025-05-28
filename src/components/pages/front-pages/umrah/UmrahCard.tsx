@@ -1,55 +1,58 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { CalendarDays, Clock } from 'lucide-react'
 import { useState } from 'react'
+import Button from '@/components/form/Button'
 
 interface UmrahCardProps {
+	id: string
 	imageUrl: string
-	discount: string
-	title: string
+	discount?: string
+	packagename: string
 	description: string
 	duration: string
-	oldPrice: string
-	newPrice: string
+	price: string
 }
 
 const fallbackImage = '/images/placeholder.webp'
 
 const UmrahCard: React.FC<UmrahCardProps> = ({
+	id,
 	imageUrl,
 	discount,
-	title,
+	packagename,
 	description,
 	duration,
-	oldPrice,
-	newPrice
+	price
 }) => {
 	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
+
 	return (
 		<article
 			role='group'
-			aria-label={`Umrah package: ${title}`}
+			aria-label={`Umrah package: ${packagename}`}
 			className='rounded-xl min-w-72 max-w-sm border bg-white p-3 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 			tabIndex={0}
 		>
 			<div className='relative h-48 w-full overflow-hidden rounded-lg'>
 				<Image
 					src={imgSrc || fallbackImage}
-					alt={title || 'Umrah package image'}
+					alt={packagename || 'Umrah package image'}
 					fill
 					className='object-cover'
 					onError={() => setImgSrc(fallbackImage)}
 					sizes='(max-width: 768px) 100vw, 33vw'
 				/>
-				<span className='absolute top-2 right-2 rounded bg-blue-700 px-2 py-1 text-sm font-semibold text-white'>
+				{/* <span className='absolute top-2 right-2 rounded bg-blue-700 px-2 py-1 text-sm font-semibold text-white'>
 					{discount} OFF
-				</span>
+				</span> */}
 			</div>
 
 			<div className='mt-4 space-y-2'>
 				<h3 className='text-lg font-semibold leading-tight text-gray-800 line-clamp-1'>
-					{title}
+					{packagename}
 				</h3>
 				<p className='text-sm text-gray-500 line-clamp-2'>
 					{description}
@@ -67,20 +70,17 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 				</div>
 
 				<div className='mt-2 flex items-baseline gap-2'>
-					<span className='text-sm text-gray-400 line-through'>
-						{oldPrice}
-					</span>
-					<span className='text-lg font-bold text-black'>
-						{newPrice}
-					</span>
+					<span className='text-sm text-gray-400 '>{price}</span>
 				</div>
 
-				<button
-					className='mt-3 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
-					aria-label={`View details for ${title}`}
-				>
-					View Details
-				</button>
+				<Link href={`/umrah/${id}`} passHref legacyBehavior>
+					<Button
+						className='mt-3 block w-full rounded bg-blue-500 px-4 py-2 text-center text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+						aria-label={`View details for ${packagename}`}
+					>
+						View Details
+					</Button>
+				</Link>
 			</div>
 		</article>
 	)

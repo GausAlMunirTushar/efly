@@ -8,7 +8,10 @@ const UmrahSchema = new Schema(
 		duration: { type: String },
 		images: [{ type: String }],
 		includedServices: [String],
-		isFeatured: { type: Boolean, default: false }
+		isFeatured: { type: Boolean, default: false },
+		termsAndConditions: { type: String },
+		refundAndReissuePolicy: { type: String },
+		pricingDetails: { type: String }
 	},
 	{ timestamps: true }
 )

@@ -15,27 +15,31 @@ export default function AdminUmrahPage() {
 		price: '',
 		description: '',
 		duration: '',
-		images: [] as string[], // Store image URLs
+		images: [] as string[], // image URLs from server
 		isFeatured: false
 	})
 	const [loading, setLoading] = useState(false)
-	const [images, setImages] = useState<File[]>([]) // Store selected files for upload
-	const [imagePreviews, setImagePreviews] = useState<string[]>([]) // Store image preview URLs
-	const [imageUploading, setImageUploading] = useState<boolean>(false)
+	const [images, setImages] = useState<File[]>([]) // local files for upload
+	const [imagePreviews, setImagePreviews] = useState<string[]>([]) // preview URLs
+	const [imageUploading, setImageUploading] = useState(false)
 	const router = useRouter()
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setForm({ ...form, [e.target.name]: e.target.value })
+		const { name, value, type, checked } = e.target
+		if (type === 'checkbox') {
+			setForm({ ...form, [name]: checked })
+		} else {
+			setForm({ ...form, [name]: value })
+		}
 	}
 
-	// Image upload handling using Dropzone
+	// Dropzone handlers
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setImages(prev => [...prev, ...acceptedFiles])
-
-		// Create image preview URLs
 		const previews = acceptedFiles.map(file => URL.createObjectURL(file))
 		setImagePreviews(prev => [...prev, ...previews])
 	}, [])
+
 	const removeImage = (index: number) => {
 		setImages(prev => prev.filter((_, i) => i !== index))
 		setImagePreviews(prev => prev.filter((_, i) => i !== index))
@@ -47,30 +51,34 @@ export default function AdminUmrahPage() {
 		multiple: true
 	})
 
+	// Upload multiple images sequentially (or parallel)
 	const handleImageUpload = async () => {
-		if (images.length === 0) return
-
+		if (images.length === 0) {
+			toast.error('No images selected for upload.')
+			return
+		}
 		setImageUploading(true)
-		const formData = new FormData()
-		images.forEach(image => formData.append('file', image)) // Append files to FormData
 
 		try {
-			const res = await fetch('/api/upload', {
-				method: 'POST',
-				body: formData
+			// Parallel upload for speed:
+			const uploadPromises = images.map(async image => {
+				const formData = new FormData()
+				formData.append('file', image)
+				const res = await fetch('/api/upload', {
+					method: 'POST',
+					body: formData
+				})
+				const data = await res.json()
+				if (!res.ok || !data.imageUrl)
+					throw new Error(data.error || 'Image upload failed')
+				return data.imageUrl
 			})
 
-			const data = await res.json()
-			console.log(data) // Log the response to check if the image URLs are returned properly
-
-			if (data?.imageUrls) {
-				setForm({ ...form, images: data.imageUrls }) // Set the image URLs in the form state
-				toast.success('Images uploaded successfully!')
-			} else {
-				toast.error('Image upload failed: No URLs returned.')
-			}
-		} catch (error) {
-			toast.error('Error uploading images.')
+			const uploadedUrls = await Promise.all(uploadPromises)
+			setForm(prev => ({ ...prev, images: uploadedUrls }))
+			toast.success('Images uploaded successfully!')
+		} catch (error: any) {
+			toast.error(`Image upload failed: ${error.message || error}`)
 			console.error(error)
 		} finally {
 			setImageUploading(false)
@@ -79,15 +87,12 @@ export default function AdminUmrahPage() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-
-		// Validation before submission
 		if (!form.packagename || !form.price || form.images.length === 0) {
-			toast.error('Please fill all fields and upload images.')
+			toast.error('Please fill all required fields and upload images.')
 			return
 		}
 
 		setLoading(true)
-
 		try {
 			const res = await fetch('/api/umrah', {
 				method: 'POST',
@@ -97,27 +102,28 @@ export default function AdminUmrahPage() {
 
 			if (res.ok) {
 				toast.success('Umrah package created successfully!')
-				router.push('/admin/umrah') // Redirect after successful package creation
+				router.push('/admin/umrah')
 			} else {
 				toast.error('Failed to create Umrah package.')
 			}
 		} catch (error) {
 			toast.error('Error while creating Umrah package.')
+			console.error(error)
 		} finally {
 			setLoading(false)
 		}
 	}
 
 	return (
-		<div className='p-6 space-y-6'>
+		<div className='p-6 space-y-6 max-w-3xl mx-auto'>
 			<h1 className='text-2xl font-bold'>Create Umrah Package</h1>
 
-			{/* Input fields for Umrah package details */}
 			<Input
 				name='packagename'
 				placeholder='Package Name'
 				value={form.packagename}
 				onChange={handleInputChange}
+				required
 			/>
 			<Input
 				name='price'
@@ -125,6 +131,7 @@ export default function AdminUmrahPage() {
 				type='number'
 				value={form.price}
 				onChange={handleInputChange}
+				required
 			/>
 			<Input
 				name='duration'
@@ -138,40 +145,58 @@ export default function AdminUmrahPage() {
 				value={form.description}
 				onChange={handleInputChange}
 			/>
+			<label className='inline-flex items-center space-x-2'>
+				<input
+					type='checkbox'
+					name='isFeatured'
+					checked={form.isFeatured}
+					onChange={handleInputChange}
+					className='form-checkbox'
+				/>
+				<span>Featured Package</span>
+			</label>
 
 			{/* Image Upload Section */}
 			<div className='mb-4'>
-				<label className='block text-sm font-medium text-gray-700'>
+				<label className='block text-sm font-medium text-gray-700 mb-2'>
 					Upload Images
 				</label>
 				<div
 					{...getRootProps()}
-					className={`border-2 border-dashed p-6 rounded-lg text-center transition-all cursor-pointer ${isDragActive ? 'border-primary-500 bg-primary-100' : 'border-gray-300'}`}
+					className={`border-2 border-dashed p-6 rounded-lg text-center cursor-pointer transition ${
+						isDragActive
+							? 'border-blue-500 bg-blue-100'
+							: 'border-gray-300 bg-white'
+					}`}
 				>
 					<input {...getInputProps()} />
 					<UploadCloud className='w-10 h-10 mx-auto text-gray-500' />
-					<p className='text-gray-600'>
+					<p className='text-gray-600 mt-2'>
 						{isDragActive
-							? 'Drop the image here...'
-							: 'Drag & drop images here or click to upload'}
+							? 'Drop the images here...'
+							: 'Drag & drop images here or click to select'}
 					</p>
 				</div>
 
-				{/* Show previews of uploaded images */}
+				{/* Previews */}
 				<div className='mt-4 grid grid-cols-3 gap-4'>
-					{imagePreviews.map((preview, index) => (
-						<div key={index} className='relative group'>
+					{imagePreviews.map((preview, idx) => (
+						<div
+							key={idx}
+							className='relative group rounded overflow-hidden'
+						>
 							<Image
 								src={preview}
-								alt={`Image Preview ${index}`}
+								alt={`Preview ${idx + 1}`}
 								width={100}
 								height={100}
 								className='object-cover rounded-lg'
+								unoptimized
 							/>
 							<button
 								type='button'
-								className='absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition'
-								onClick={() => removeImage(index)}
+								onClick={() => removeImage(idx)}
+								className='absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition'
 								aria-label='Remove image'
 							>
 								<X className='w-4 h-4' />
@@ -181,17 +206,19 @@ export default function AdminUmrahPage() {
 				</div>
 			</div>
 
-			{/* Button to trigger image upload */}
 			<button
 				type='button'
 				onClick={handleImageUpload}
-				className='w-full mt-4 py-2 bg-blue-600 text-white rounded-md'
-				disabled={imageUploading} // Disable button while images are being uploaded
+				disabled={imageUploading || images.length === 0}
+				className={`w-full py-2 rounded-md text-white ${
+					imageUploading || images.length === 0
+						? 'bg-gray-400 cursor-not-allowed'
+						: 'bg-blue-600 hover:bg-blue-700'
+				}`}
 			>
 				{imageUploading ? 'Uploading...' : 'Upload Images'}
 			</button>
 
-			{/* Submit Umrah package */}
 			<Button
 				onClick={handleSubmit}
 				disabled={loading || form.images.length === 0}

@@ -2,10 +2,15 @@ import { NextResponse } from 'next/server'
 import Holiday from '@/models/holiday.model'
 import { connectDatabase } from '@/configs/database'
 
-export async function GET() {
+export async function GET(req: Request) {
 	try {
 		await connectDatabase()
-		const packages = await Holiday.find().sort({ createdAt: -1 })
+		const url = new URL(req.url)
+		const location = url.searchParams.get('location')
+
+		const query = location ? { location } : {}
+
+		const packages = await Holiday.find(query).sort({ createdAt: -1 })
 		return NextResponse.json(packages)
 	} catch (error) {
 		console.error('GET /holiday error:', error)

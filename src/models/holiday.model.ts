@@ -1,5 +1,3 @@
-// app/models/holiday.model.ts
-
 import mongoose, { Schema, Document, models } from 'mongoose'
 
 export interface IHoliday extends Document {
@@ -10,6 +8,10 @@ export interface IHoliday extends Document {
 	nightsInfo: string
 	price: number
 	tags: string[]
+	termsAndConditions?: string
+	refundCondition?: string
+	paymentSchedule?: string
+	additionalInfo?: string
 	createdAt: Date
 	updatedAt: Date
 }
@@ -22,10 +24,15 @@ const HolidaySchema: Schema<IHoliday> = new Schema(
 		location: { type: String, required: true },
 		nightsInfo: { type: String, required: true },
 		price: { type: Number, required: true },
-		tags: { type: [String], required: true }
+		tags: { type: [String], required: true },
+		termsAndConditions: { type: String },
+		refundCondition: { type: String },
+		paymentSchedule: { type: String },
+		additionalInfo: { type: String }
 	},
 	{
-		timestamps: true
+		timestamps: true,
+		versionKey: false
 	}
 )
 

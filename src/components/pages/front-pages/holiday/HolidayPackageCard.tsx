@@ -44,7 +44,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 	nightsInfo,
 	price,
 	tags,
-	buttonText = 'Book Now'
+	buttonText = 'View Details'
 }) => {
 	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
 

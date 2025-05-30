@@ -29,6 +29,7 @@ export default function HolidaySearch() {
 				if (!res.ok) throw new Error('Failed to fetch holidays')
 				const data: HolidayPackage[] = await res.json()
 
+				// Get unique locations
 				const uniqueDestinations: Destination[] = Array.from(
 					new Map(
 						data.map(pkg => [
@@ -49,14 +50,12 @@ export default function HolidaySearch() {
 		fetchDestinations()
 	}, [])
 
-	const handleSearch = async () => {
-		try {
-			const res = await fetch(`/api/holiday?country=${destination}`)
-			if (!res.ok) throw new Error('No holiday packages found')
-			const results: HolidayPackage[] = await res.json()
-		} catch (err) {
-			console.error(err)
-		}
+	const handleSearch = () => {
+		// Navigate to the filtered holiday list page with location query param
+		// For example: /holidays?location=selectedDestination
+		if (!destination) return
+
+		router.push(`/holiday?location=${encodeURIComponent(destination)}`)
 	}
 
 	return (
@@ -71,8 +70,11 @@ export default function HolidaySearch() {
 				}))}
 			/>
 
-			<div className=''>
-				<Button className='flex justify-center items-center'>
+			<div>
+				<Button
+					onClick={handleSearch}
+					className='flex justify-center items-center'
+				>
 					<Search size={16} className='mr-2' /> Search Holiday
 				</Button>
 			</div>

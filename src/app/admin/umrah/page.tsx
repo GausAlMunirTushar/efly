@@ -115,8 +115,8 @@ export default function AdminUmrahPage() {
 	}
 
 	return (
-		<div className='p-6 space-y-6 max-w-3xl mx-auto'>
-			<h1 className='text-2xl font-bold'>Create Umrah Package</h1>
+		<div className='w-full bg-white p-6 space-y-6 mx-auto rounded-lg'>
+			<h1 className='text-2xl font-bold'>Umrah Package</h1>
 
 			<Input
 				name='packagename'

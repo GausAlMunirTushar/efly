@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import { UploadCloud, X } from 'lucide-react'
+import JoditEditor from 'jodit-react'
 
 export default function AdminUmrahPage() {
 	const [form, setForm] = useState({
@@ -139,11 +140,15 @@ export default function AdminUmrahPage() {
 				value={form.duration}
 				onChange={handleInputChange}
 			/>
-			<Input
+			<JoditEditor
 				name='description'
-				placeholder='Description'
 				value={form.description}
-				onChange={handleInputChange}
+				onChange={newContent =>
+					setForm(prevForm => ({
+						...prevForm,
+						description: newContent
+					}))
+				}
 			/>
 			<label className='inline-flex items-center space-x-2'>
 				<input

@@ -36,12 +36,12 @@ export async function POST(req: Request) {
 
 		const otp = generateOtp()
 		const smsText = `
-Welcome to eFly
+Welcome to efly
 
 Your One-Time Password (OTP) is: ${otp}
 
 This OTP will expire in 2 minutes.
-Thank you for registering with eFly.
+Thank you for registering with efly.
 `
 
 		// ✅ Send using normalized phone number

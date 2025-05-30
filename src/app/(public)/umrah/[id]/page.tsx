@@ -19,7 +19,7 @@ interface UmrahPackage {
 }
 
 interface PageProps {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }
 
 async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
@@ -36,8 +36,10 @@ async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
 }
 
 const UmrahDetailsPage = async ({ params }: PageProps) => {
-	const packageData = await fetchUmrahPackage(params.id)
-	console.log(`iddddddddddddddddddddddddddddd`, params.id)
+	const paramsId = await params
+
+	const packageData = await fetchUmrahPackage(paramsId.id)
+	console.log(`iddddddddddddddddddddddddddddd`, paramsId.id)
 	if (!packageData) {
 		notFound()
 	}

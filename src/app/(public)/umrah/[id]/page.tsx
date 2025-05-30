@@ -80,20 +80,22 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 						{/* Left big image */}
 						<section
 							aria-labelledby='package-image'
-							className='md:w-9/12'
+							className='w-full md:w-9/12'
 						>
 							<Image
 								src={imageUrl}
 								alt={`${packagename} image`}
 								width={1200}
 								height={480}
-								className='w-full h-96 rounded-lg object-cover'
+								className='w-full h-auto max-h-[24rem] md:max-h-[30rem] rounded-lg object-cover'
 								priority
+								sizes='(max-width: 768px) 100vw, 50vw'
+								style={{ maxWidth: '100%', height: 'auto' }}
 							/>
 						</section>
 
 						{/* Right smaller images stacked vertically */}
-						<aside className='md:w-3/12 flex flex-col gap-4'>
+						<aside className='hidden sm:w-3/12 sm:flex flex-col gap-4'>
 							{images && images.length > 1
 								? images
 										.slice(1)
@@ -120,18 +122,21 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 							<header>
 								<h1
 									id='package-info'
-									className='text-3xl font-semibold text-gray-800'
+									className='text-2xl  py-2 font-semibold text-gray-800'
 								>
 									{packagename}
 								</h1>
-								{duration && (
-									<p className='text-lg text-gray-600'>
-										Duration: {duration}
+								<div className='flex flex-wrap flex-col sm:flex-row sm:justify-between gap-2'>
+									{duration && (
+										<p className='text-lg text-gray-600'>
+											<strong>Duration:</strong>{' '}
+											{duration}
+										</p>
+									)}
+									<p className='text-lg text-gray-700 font-bold'>
+										Price: BDT {price.toLocaleString()}
 									</p>
-								)}
-								<p className='text-lg text-gray-700 font-bold'>
-									Price: BDT {price.toLocaleString()}
-								</p>
+								</div>
 							</header>
 
 							{description && (

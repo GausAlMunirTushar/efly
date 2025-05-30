@@ -33,10 +33,10 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 		<article
 			role='group'
 			aria-label={`Umrah package: ${packagename}`}
-			className='rounded-xl min-w-72 max-w-sm border bg-white p-3 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+			className='rounded-xl min-w-72 max-w-sm border bg-white shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400 hover:bg-gray-50'
 			tabIndex={0}
 		>
-			<div className='relative h-48 w-full overflow-hidden rounded-lg'>
+			<div className='relative h-48 w-full overflow-hidden rounded-t-lg'>
 				<Image
 					src={imgSrc || fallbackImage}
 					alt={packagename || 'Umrah package image'}
@@ -50,14 +50,10 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 				</span> */}
 			</div>
 
-			<div className='mt-4 space-y-2'>
-				<h3 className='text-lg font-semibold leading-tight text-gray-800 line-clamp-1'>
+			<div className='mt-2 space-y-2 p-3 '>
+				<h3 className='text-md font-semibold leading-tight text-gray-800 line-clamp-1'>
 					{packagename}
 				</h3>
-				<p className='text-sm text-gray-500 line-clamp-2'>
-					{description}
-				</p>
-
 				<div className='flex items-center justify-between text-sm text-gray-600 mt-2'>
 					<div className='flex items-center gap-1'>
 						<CalendarDays className='h-4 w-4' />
@@ -70,7 +66,7 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 				</div>
 
 				<div className='mt-2 flex items-baseline gap-2'>
-					<span className='text-sm text-gray-400 '>{price}</span>
+					<span className='text-sm text-blue-400 '>BDT {price}</span>
 				</div>
 
 				<Link href={`/umrah/${id}`} passHref legacyBehavior>

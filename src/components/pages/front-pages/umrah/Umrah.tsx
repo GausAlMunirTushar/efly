@@ -40,7 +40,6 @@ export const Umrah = () => {
 		fetchPackages()
 	}, [])
 
-	if (loading) return <p>Loading Umrah packages...</p>
 	if (error) return <p className='text-red-600'>Error: {error}</p>
 
 	return (

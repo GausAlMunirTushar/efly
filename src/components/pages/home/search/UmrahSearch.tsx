@@ -6,7 +6,7 @@ import { Search } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
-const destinations = [{ code: 'UM', name: 'Umrah' }]
+const destinations = [{ code: 'UM', name: 'Umrah - Mecca,Medina' }]
 
 export default function UmrahSearch() {
 	const [destination, setDestination] = useState<string>('TH')

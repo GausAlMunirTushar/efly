@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 interface Destination {
-	code: string
+	id: string
 	name: string
 }
 
@@ -25,23 +25,12 @@ export default function HolidaySearch() {
 	useEffect(() => {
 		const fetchDestinations = async () => {
 			try {
-				const res = await fetch('/api/holiday')
-				if (!res.ok) throw new Error('Failed to fetch holidays')
-				const data: HolidayPackage[] = await res.json()
+				const res = await fetch('/api/location')
+				if (!res.ok) throw new Error('Failed to fetch locations')
+				const data: Destination[] = await res.json()
 
-				// Get unique locations
-				const uniqueDestinations: Destination[] = Array.from(
-					new Map(
-						data.map(pkg => [
-							pkg.location,
-							{ code: pkg.location, name: pkg.location }
-						])
-					).values()
-				)
-
-				setDestinations(uniqueDestinations)
-				if (uniqueDestinations.length)
-					setDestination(uniqueDestinations[0].code)
+				setDestinations(data)
+				if (data.length) setDestination(data[0].id)
 			} catch (error) {
 				console.error(error)
 			}
@@ -65,7 +54,7 @@ export default function HolidaySearch() {
 				value={destination}
 				onChange={setDestination}
 				options={destinations.map(d => ({
-					code: d.code,
+					code: d.name,
 					name: d.name
 				}))}
 			/>

@@ -1,10 +1,11 @@
-import mongoose, { Schema, Document, models } from 'mongoose'
+import mongoose, { Schema, Document, models, Types } from 'mongoose'
+import { ILocation } from './location.model'
 
 export interface IHoliday extends Document {
 	title: string
 	description?: string
 	imageUrl: string
-	location: string
+	location: Types.ObjectId | ILocation
 	nightsInfo: string
 	price: number
 	tags: string[]
@@ -21,7 +22,11 @@ const HolidaySchema: Schema<IHoliday> = new Schema(
 		title: { type: String, required: true },
 		description: { type: String },
 		imageUrl: { type: String, required: true },
-		location: { type: String, required: true },
+		location: {
+			type: Schema.Types.ObjectId,
+			ref: 'Location',
+			required: true
+		},
 		nightsInfo: { type: String, required: true },
 		price: { type: Number, required: true },
 		tags: { type: [String], required: true },

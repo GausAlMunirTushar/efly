@@ -21,7 +21,7 @@ interface HolidayPackageCardProps {
 	location: string
 	nightsInfo: string
 	price: number
-	tags: string[]
+	tags?: string[]
 	buttonText?: string
 }
 
@@ -62,7 +62,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 
 			<div className='px-4 py-6 flex flex-col gap-2 flex-grow'>
 				<div className='flex flex-wrap gap-2'>
-					{tags.map(tag => {
+					{tags?.map(tag => {
 						const icon = iconMapper[tag]
 						return (
 							<div

@@ -140,9 +140,6 @@ const SelectSearchInput = ({
 									<div className='text-sm font-semibold text-indigo-800'>
 										{opt.name}
 									</div>
-									<div className='text-xs text-gray-500'>
-										{opt.code}
-									</div>
 								</div>
 							))
 						) : (

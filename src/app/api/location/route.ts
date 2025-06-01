@@ -2,12 +2,22 @@ import { NextResponse } from 'next/server'
 import Location from '@/models/location.model'
 import { connectDatabase } from '@/configs/database'
 
+import { Types } from 'mongoose'
+
+interface LocationLean {
+	_id: Types.ObjectId
+	name: string
+}
+
 export async function GET() {
 	try {
 		await connectDatabase()
 
 		// Get all locations, sorted alphabetically by name
-		const locations = await Location.find().sort({ name: 1 }).select('name')
+		const locations = await Location.find()
+			.sort({ name: 1 })
+			.select('name')
+			.lean<LocationLean[]>()
 
 		// Simplify response to id and name
 		const response = locations.map(loc => ({

@@ -1,16 +1,20 @@
 import { NextResponse } from 'next/server'
 import Holiday from '@/models/holiday.model'
+import Location from '@/models/location.model' // ✅ Required for .populate()
 import { connectDatabase } from '@/configs/database'
 
 export async function GET(req: Request) {
 	try {
 		await connectDatabase()
 		const url = new URL(req.url)
-		const location = url.searchParams.get('location')
+		const location = url.searchParams.get('location') // this is now ID
 
-		const query = location ? { location } : {}
+		const query = location ? { location: location } : {}
 
-		const packages = await Holiday.find(query).sort({ createdAt: -1 })
+		const packages = await Holiday.find(query)
+			.populate('location', 'name') // ✅ Clean object with location.name
+			.sort({ createdAt: -1 })
+
 		return NextResponse.json(packages)
 	} catch (error) {
 		console.error('GET /holiday error:', error)

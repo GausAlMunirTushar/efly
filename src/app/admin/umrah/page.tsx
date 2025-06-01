@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useState, useCallback } from 'react'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
@@ -8,7 +9,8 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import { UploadCloud, X } from 'lucide-react'
-import JoditEditor from 'jodit-react'
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 export default function AdminUmrahPage() {
 	const [form, setForm] = useState({

@@ -15,13 +15,17 @@ const Footer = () => {
 
 	const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 	return (
-		<footer className=' text-gray-700 py-10 px-5 bg-blue-100 shadow-md'>
+		<footer className=' text-white py-10 px-5 bg-[#0058A8] shadow-md'>
 			<div className='container mx-auto'>
-				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-gray-800'>
+				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-white'>
 					{/* About Section */}
 					<div className='flex flex-col items-start'>
 						<Link href='/' className='cursor-pointer'>
-							<img src='/efly.png' alt='eFly' className='h-10' />
+							<img
+								src='/efly-white.svg'
+								alt='eFly'
+								className='h-10'
+							/>
 						</Link>
 						<p className='text-sm mt-2'>
 							efly - We Are The New Travel Agency (OTA) in Your
@@ -152,14 +156,14 @@ const Footer = () => {
 				</div>
 
 				{/* Contact Section */}
-				<div className='border-t border-blue-200 mt-6 pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm'>
+				<div className='border-t border-blue-600  mt-6 pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm'>
 					<div>
 						<h3 className='font-semibold'>Contact Us</h3>
 						<p>
 							Email:{' '}
 							<Link
 								href='mailto:help.efly@gmail.com'
-								className='text-blue-500'
+								className='text-white'
 							>
 								help.efly@gmail.com
 							</Link>
@@ -168,7 +172,7 @@ const Footer = () => {
 							Phone:{' '}
 							<Link
 								href='tel:+8801400054666'
-								className='text-blue-500'
+								className='text-white'
 							>
 								+880 1400-054666
 							</Link>
@@ -205,7 +209,7 @@ const Footer = () => {
 				</div>
 
 				{/* Footer Bottom */}
-				<div className='border-t border-blue-200 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
+				<div className='border-t border-blue-600 mt-6 pt-4 sm:flex  items-center justify-between text-sm'>
 					<div className='flex justify-center space-x-4'>
 						<Link href='#' className='hover:text-blue-500'>
 							Support Center

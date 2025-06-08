@@ -54,7 +54,7 @@ export default function HolidaySearch() {
 				value={destination}
 				onChange={setDestination}
 				options={destinations.map(d => ({
-					code: d.name,
+					code: d.id, // Use id here
 					name: d.name
 				}))}
 			/>

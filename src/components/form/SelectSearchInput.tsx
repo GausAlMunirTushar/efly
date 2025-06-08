@@ -31,6 +31,7 @@ const SelectSearchInput = ({
 			opt.code.toLowerCase().includes(query.toLowerCase())
 	)
 
+	// Find the selected option based on the value
 	const selectedOption = options.find(opt => opt.code === value)
 
 	// Close dropdown on outside click
@@ -49,7 +50,6 @@ const SelectSearchInput = ({
 		}
 	}, [])
 
-	// Keyboard support
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'ArrowDown') {
 			e.preventDefault()
@@ -76,7 +76,10 @@ const SelectSearchInput = ({
 		<div className='relative w-full' ref={containerRef}>
 			<div
 				className='border border-gray-300 bg-white rounded-lg px-4 py-3 cursor-pointer shadow-sm'
-				onClick={() => setIsOpen(!isOpen)}
+				onClick={() => {
+					setIsOpen(!isOpen)
+					setHighlightedIndex(0)
+				}}
 				role='combobox'
 				aria-expanded={isOpen}
 				aria-haspopup='listbox'
@@ -86,10 +89,14 @@ const SelectSearchInput = ({
 					{label}
 				</label>
 				<div className='text-base font-bold text-indigo-800'>
-					{selectedOption?.name.split(',')[0] || 'Select location'}
+					{selectedOption?.name
+						? selectedOption.name.split(',')[0]
+						: 'Select location'}
 				</div>
 				<div className='text-sm text-gray-600 truncate'>
-					{selectedOption?.name.split(',').slice(1).join(', ')}
+					{selectedOption?.name
+						? selectedOption.name.split(',').slice(1).join(', ')
+						: ''}
 				</div>
 				<div className='text-xs text-gray-500'>
 					{selectedOption?.name}

@@ -18,7 +18,7 @@ interface HolidayPackageCardProps {
 	imageUrl?: string
 	title: string
 	description?: string
-	location: string
+	location: string | { name: string }
 	nightsInfo: string
 	price: number
 	tags?: string[]
@@ -88,7 +88,13 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 
 				<div className='text-sm py-3 flex items-center gap-1 text-gray-600 mt-1'>
 					<MapPin />
-					<span>{location}</span>
+					<span>
+						{typeof location === 'object' &&
+						location !== null &&
+						'name' in location
+							? location.name
+							: location}
+					</span>
 				</div>
 
 				<div className='mt-auto flex justify-between items-center pt-2'>

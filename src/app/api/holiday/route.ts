@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import Location from '@/models/location.model' // ✅ Required for .populate()
+import '@/models/location.model'
 import Holiday from '@/models/holiday.model'
 import { connectDatabase } from '@/configs/database'
 

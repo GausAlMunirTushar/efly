@@ -8,7 +8,7 @@ import 'swiper/css'
 import HolidayPackageCard from './HolidayPackageCard'
 
 interface HolidayPackage {
-	id: string
+	_id: string
 	imageUrl: string
 	title: string
 	description?: string
@@ -71,8 +71,8 @@ const HolidayHomeSlider = () => {
 				}}
 			>
 				{packages.map(pkg => (
-					<SwiperSlide key={pkg.id}>
-						<HolidayPackageCard {...pkg} />
+					<SwiperSlide key={pkg._id}>
+						<HolidayPackageCard {...pkg} id={pkg._id} />
 					</SwiperSlide>
 				))}
 			</Swiper>

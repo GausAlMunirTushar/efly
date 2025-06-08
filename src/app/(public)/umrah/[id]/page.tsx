@@ -37,9 +37,8 @@ async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
 
 const UmrahDetailsPage = async ({ params }: PageProps) => {
 	const paramsId = await params
-
 	const packageData = await fetchUmrahPackage(paramsId.id)
-	console.log(`iddddddddddddddddddddddddddddd`, paramsId.id)
+
 	if (!packageData) {
 		notFound()
 	}

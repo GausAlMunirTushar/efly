@@ -56,10 +56,10 @@ export default async function HolidayDetailsPage({
 				</div>
 
 				<div className='w-full flex bg-white py-3 rounded-t-lg'>
-					<div className='w-9/12'>
+					<div className='w-full md:w-9/12'>
 						<HolidayDetails />
 					</div>
-					<div className='w-3/12 flex'>
+					<div className='w-full md:w-3/12 flex'>
 						<HolidayConsultationForm isLoading={false} />
 					</div>
 				</div>

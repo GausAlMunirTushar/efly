@@ -15,7 +15,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow z-50'>
-			<div className='container mx-auto flex justify-between items-center py-5 sm:py-3'>
+			<div className='container mx-auto flex justify-between items-center py-4'>
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>
 					<img
@@ -27,8 +27,8 @@ export default function HomeNavbar() {
 					/>
 				</Link>
 
-				{/* Desktop Right Side */}
-				<div className='hidden md:flex items-center space-x-4'>
+				{/* Right Side - Visible in all screen sizes */}
+				<div className='flex items-center space-x-4'>
 					{token ? (
 						<Image
 							src={imgSrc}
@@ -36,59 +36,26 @@ export default function HomeNavbar() {
 							width={40}
 							height={40}
 							className='rounded-full'
+							onError={() => setImgSrc(fallbackImage)}
 						/>
 					) : (
 						<>
 							<Link
 								href='/signin'
-								className='px-4 py-1 bg-primary border border-primary text-white rounded-full'
+								className='px-4 sm:py-1 py-2 bg-primary border border-primary text-white rounded-full text-sm'
 							>
 								Sign In
 							</Link>
 							<Link
 								href='/signup'
-								className='px-4 py-1 border border-primary text-primary rounded-full'
+								className='px-4 sm:py-1 py-2 border border-primary text-primary rounded-full text-sm'
 							>
 								Sign Up
 							</Link>
 						</>
 					)}
 				</div>
-
-				{/* Mobile Menu Icon */}
-				<button
-					className='md:hidden text-gray-600'
-					onClick={() => setMenuOpen(!isMenuOpen)}
-				>
-					{isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-				</button>
 			</div>
-
-			{/* Mobile Menu */}
-			{isMenuOpen && (
-				<div className='md:hidden px-4 py-4 space-y-2 bg-white shadow'>
-					{token ? (
-						<div className='px-4 py-2 text-primary'>
-							User Profile
-						</div>
-					) : (
-						<>
-							<Link
-								href='/signin'
-								className='block px-4 py-2 bg-primary text-white rounded-md text-center'
-							>
-								Sign In
-							</Link>
-							<Link
-								href='/signup'
-								className='block px-4 py-1.5 border border-primary text-primary rounded-md text-center'
-							>
-								Sign Up
-							</Link>
-						</>
-					)}
-				</div>
-			)}
 		</nav>
 	)
 }

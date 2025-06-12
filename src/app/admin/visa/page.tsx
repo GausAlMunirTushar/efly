@@ -240,7 +240,7 @@ export default function AdminVisaPage() {
 
 	return (
 		<div className='bg-white rounded-lg p-6 space-y-6 max-w-5xl mx-auto'>
-			<h1 className='text-2xl font-bold'>Visa Management</h1>
+			<h1 className='text-2xl font-bold'>Visa</h1>
 
 			<form onSubmit={handleSubmit} className='space-y-4'>
 				{/* Country Details */}

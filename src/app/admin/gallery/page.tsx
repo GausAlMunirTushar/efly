@@ -23,8 +23,8 @@ export default function AdminGalleryPage() {
 		galleryImage: ''
 	})
 	const [galleries, setGalleries] = useState<Gallery[]>([])
-	const [imagePreviews, setImagePreviews] = useState<string[]>([]) // Store image preview URLs
-	const [images, setImages] = useState<File[]>([]) // Store selected files for upload
+	const [imagePreviews, setImagePreviews] = useState<string[]>([])
+	const [images, setImages] = useState<File[]>([])
 	const [imageUploading, setImageUploading] = useState<boolean>(false)
 	const [loading, setLoading] = useState(false)
 	const [editingId, setEditingId] = useState<string | null>(null)
@@ -153,7 +153,7 @@ export default function AdminGalleryPage() {
 	}
 
 	return (
-		<div className='p-6 space-y-6'>
+		<div className='p-6 space-y-6 bg-white'>
 			<h1 className='text-2xl font-bold'>
 				{editingId ? 'Edit' : 'Create'} Gallery
 			</h1>

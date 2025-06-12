@@ -255,7 +255,7 @@ const AdminHolidayPage = () => {
 
 	return (
 		<div className='p-6 space-y-6 bg-white rounded-lg max-w-5xl mx-auto'>
-			<h1 className='text-2xl font-bold'>Manage Holiday Packages</h1>
+			<h1 className='text-2xl font-bold'>Holiday</h1>
 
 			{/* Add New Location */}
 			<section className='mb-6'>

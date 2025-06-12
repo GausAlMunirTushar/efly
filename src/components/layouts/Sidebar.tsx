@@ -19,6 +19,7 @@ import {
 	University,
 	BookOpenCheck
 } from 'lucide-react'
+import Image from 'next/image'
 
 interface MenuItem {
 	title: string
@@ -135,11 +136,14 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 
 			{/* Logo */}
 			<div className='flex items-center gap-1 my-2'>
-				{/* <Image src='/images/orbit_logo.svg' alt='Logo' width={32} height={32} className='w-14' /> */}
 				{isExpanded && (
-					<span className='text-3xl font-semibold text-primary px-4  dark:text-text-primary'>
-						eFly
-					</span>
+					<Image
+						src='/efly.png'
+						alt='Logo'
+						width={40}
+						height={40}
+						className='w-20 mx-4'
+					/>
 				)}
 			</div>
 
@@ -150,9 +154,9 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 						{item.href ? (
 							<Link
 								href={item.href}
-								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-primary dark:hover:bg-bg_secondary hover:text-white  text-gray-600 dark:text-text-primary font-semibold ${
+								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-[#0058A8] dark:hover:bg-bg_secondary hover:text-white  text-gray-600 dark:text-text-primary font-semibold ${
 									pathname === item.href
-										? 'bg-primary text-white dark:text-text-primary font-semibold'
+										? 'bg-[#0058A8] text-white dark:text-text-primary font-semibold'
 										: ''
 								}`}
 							>
@@ -162,7 +166,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 						) : (
 							<button
 								onClick={() => toggleSubMenu(item.title)}
-								className='flex justify-between items-center w-full p-2 rounded-md font-semibold dark:hover:bg-bg_secondary text-gray-500  dark:text-text-primary  hover:bg-primary  hover:text-white'
+								className='flex justify-between items-center w-full p-2 rounded-md font-semibold dark:hover:bg-bg_secondary text-gray-500  dark:text-text-primary  hover:bg-[#0058A8]  hover:text-white'
 							>
 								<div className='flex items-center gap-2'>
 									{item.icon}

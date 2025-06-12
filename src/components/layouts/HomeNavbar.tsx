@@ -42,13 +42,13 @@ export default function HomeNavbar() {
 						<>
 							<Link
 								href='/signin'
-								className='px-4 sm:py-1 py-2 bg-primary border border-primary text-white rounded-full text-sm'
+								className='px-4 sm:py-1 py-2 bg-[#0058A8] border border-[#0058A8] text-white rounded-full text-sm'
 							>
 								Sign In
 							</Link>
 							<Link
 								href='/signup'
-								className='px-4 sm:py-1 py-2 border border-primary text-primary rounded-full text-sm'
+								className='px-4 sm:py-1 py-2 border border-[#0058A8] text-[#0058A8]  rounded-full text-sm'
 							>
 								Sign Up
 							</Link>

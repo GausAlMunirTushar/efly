@@ -196,7 +196,7 @@ const Footer = () => {
 					<div>
 						<h3 className='font-semibold'>efly Lounge (Dhaka)</h3>
 						<p>
-							Mohakhali DOHS, Rode-30, Hous-437, 3rd
+							Mohakhali DOHS, Road-30, House-437, 3rd
 							Floor, Dhaka 1206.
 						</p>
 						<div className='flex items-center space-x-2 mt-2'>

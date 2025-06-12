@@ -252,59 +252,64 @@ const FAQPage = () => {
 	const category = categories.find(c => c.id === activeCategory)
 
 	return (
-		<main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen'>
-			<h1 className='text-3xl font-bold mb-6'>FAQ</h1>
-			<div className='flex flex-col md:flex-row gap-8'>
-				{/* Left sidebar */}
-				<nav className='flex flex-col w-full max-w-xs space-y-2 md:sticky md:top-20 md:h-[calc(100vh-80px)]'>
-					{categories.map(({ id, label }) => (
-						<button
-							key={id}
-							onClick={() => setActiveCategory(id)}
-							className={`text-left px-4 py-2 rounded border transition-colors ${
-								activeCategory === id
-									? 'bg-blue-600 text-white border-blue-600'
-									: 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
-							}`}
-						>
-							{label}
-						</button>
-					))}
-				</nav>
+		<main>
+			<div className='flex items-center justify-center bg-[#0058A8] h-36'>
+				<h1 className='text-4xl font-bold text-white mb-6'>FAQ</h1>
+			</div>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen'>
+				<div className='flex flex-col md:flex-row gap-8'>
+					{/* Left sidebar */}
+					<nav className='flex flex-col w-full max-w-xs space-y-2 md:sticky md:top-20 md:h-[calc(100vh-80px)]'>
+						{categories.map(({ id, label }) => (
+							<button
+								key={id}
+								onClick={() => setActiveCategory(id)}
+								className={`text-left px-4 py-2 rounded border transition-colors ${
+									activeCategory === id
+										? 'bg-[#0058A8] text-white border-blue-600'
+										: 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
+								}`}
+							>
+								{label}
+							</button>
+						))}
+					</nav>
 
-				{/* Right content */}
-				<section className='flex-1'>
-					<p className='mb-6 text-gray-700 max-w-prose'>
-						We have put together some of the most common questions
-						that we get asked a lot. Please check through the
-						categories to get your answer without any delay.
-					</p>
+					{/* Right content */}
+					<section className='flex-1'>
+						<p className='mb-6 text-gray-700 max-w-prose'>
+							We have put together some of the most common
+							questions that we get asked a lot. Please check
+							through the categories to get your answer without
+							any delay.
+						</p>
 
-					{category && (
-						<>
-							<h2 className='text-2xl font-bold mb-6'>
-								{category.label}
-							</h2>
-							<div className='space-y-8'>
-								{category.faqs.map(
-									({ question, answer }, idx) => (
-										<article
-											key={idx}
-											className='max-w-prose'
-										>
-											<div className='mb-2'>
-												{question}
-											</div>
-											<div className='text-gray-800 whitespace-pre-line'>
-												{answer}
-											</div>
-										</article>
-									)
-								)}
-							</div>
-						</>
-					)}
-				</section>
+						{category && (
+							<>
+								<h2 className='text-2xl font-bold mb-6'>
+									{category.label}
+								</h2>
+								<div className='space-y-8'>
+									{category.faqs.map(
+										({ question, answer }, idx) => (
+											<article
+												key={idx}
+												className='max-w-prose'
+											>
+												<div className='mb-2'>
+													{question}
+												</div>
+												<div className='text-gray-800 whitespace-pre-line'>
+													{answer}
+												</div>
+											</article>
+										)
+									)}
+								</div>
+							</>
+						)}
+					</section>
+				</div>
 			</div>
 		</main>
 	)

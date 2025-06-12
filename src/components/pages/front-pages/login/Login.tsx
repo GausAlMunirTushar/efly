@@ -43,7 +43,7 @@ const Login = () => {
 	}
 
 	return (
-		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-body_dark'>
+		<div className='flex  items-center justify-center bg-gray-100 dark:bg-body_dark'>
 			<div className='w-full max-w-sm bg-white dark:bg-bg_dark dark:text-text-primary p-6 rounded-lg shadow-md my-5'>
 				<div className='text-center'>
 					<img

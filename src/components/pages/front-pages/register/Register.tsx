@@ -135,11 +135,11 @@ const Register: React.FC = () => {
 		if (showOtp && formData.otp.length === 6 && !loading) {
 			handleOtpVerify()
 		}
-	}, [formData.otp]) // eslint-disable-line react-hooks/exhaustive-deps
+	}, [formData.otp])
 
 	return (
 		<main
-			className='flex justify-center items-center min-h-screen bg-gray-100 p-4'
+			className='flex justify-center items-center bg-gray-100 py-8'
 			aria-live='polite'
 		>
 			<section

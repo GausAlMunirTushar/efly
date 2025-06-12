@@ -38,7 +38,7 @@ const HomePage = () => {
 				>
 					Holiday Packages for You
 				</h2>
-				<p className='text-gray-600 w-1/2'>
+				<p className='text-gray-600 '>
 					{`Plan your perfect escape with efly! Discover top holiday deals for unforgettable international adventures.`}
 				</p>
 				<HolidayHomeSlider />
@@ -50,7 +50,7 @@ const HomePage = () => {
 				>
 					Visa for You
 				</h2>
-				<p className='text-gray-600 w-1/2'>
+				<p className='text-gray-600 '>
 					{`Plan your perfect escape with efly! Discover top holiday deals for unforgettable international adventures.`}
 				</p>
 				<VisaSlider />
@@ -62,11 +62,12 @@ const HomePage = () => {
 				>
 					Peaceful Umrah Journeys for You
 				</h2>
-				<p className='text-gray-600 w-1/2'>
+				<p className='text-gray-600'>
 					Embark on your spiritual journey with eFly. Find the best
 					Umrah packages designed for comfort, convenience, and peace
 					of mind.
 				</p>
+
 				<UmrahSlider />
 			</section>
 

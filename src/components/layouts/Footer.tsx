@@ -50,18 +50,18 @@ const Footer = () => {
 								</li>
 								<li>
 									<Link
-										href='/terms'
+										href='/contact'
 										className='hover:text-blue-500'
 									>
-										Terms & Conditions
+										Contact Us
 									</Link>
 								</li>
 								<li>
 									<Link
-										href='/privacy-policy'
+										href='/terms'
 										className='hover:text-blue-500'
 									>
-										Privacy Policy
+										Terms & Conditions
 									</Link>
 								</li>
 								<li>

@@ -15,7 +15,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow z-50'>
-			<div className='container mx-auto flex justify-between items-center py-5 sm:py-2.5'>
+			<div className='container mx-auto flex justify-between items-center py-5 sm:py-3'>
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>
 					<img
@@ -29,12 +29,6 @@ export default function HomeNavbar() {
 
 				{/* Desktop Right Side */}
 				<div className='hidden md:flex items-center space-x-4'>
-					<Link
-						href='/contact'
-						className='px-4 py-2 hover:text-primary'
-					>
-						Contact Us
-					</Link>
 					{token ? (
 						<Image
 							src={imgSrc}
@@ -73,12 +67,6 @@ export default function HomeNavbar() {
 			{/* Mobile Menu */}
 			{isMenuOpen && (
 				<div className='md:hidden px-4 py-4 space-y-2 bg-white shadow'>
-					<Link
-						href='/contact'
-						className='block px-4 py-2 border-l-4 border-transparent hover:border-primary hover:text-primary'
-					>
-						Contact Us
-					</Link>
 					{token ? (
 						<div className='px-4 py-2 text-primary'>
 							User Profile

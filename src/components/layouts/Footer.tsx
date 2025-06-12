@@ -200,8 +200,12 @@ const Footer = () => {
 							Floor, Dhaka 1206.
 						</p>
 						<div className='flex items-center space-x-2 mt-2'>
-							<FaLocationDot className='text-blue-500' />
-							<Link href='#' className='text-blue-500'>
+							<FaLocationDot className='text-white' />
+							<Link
+								href='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sefly%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'
+								target='_blank'
+								className='text-white'
+							>
 								View Map
 							</Link>
 						</div>
@@ -229,10 +233,10 @@ const Footer = () => {
 					</div>
 					<p className='mt-4 sm:mt-0'>
 						&copy; {new Date().getFullYear()}{' '}
-						<Link href='#' className='text-blue-500'>
-							efly
+						<Link href='/' className='text-white underline'>
+							<strong>efly</strong>
 						</Link>
-						. All rights reserved.
+						. All rights reserved./
 					</p>
 				</div>
 			</div>

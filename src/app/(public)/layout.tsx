@@ -14,7 +14,7 @@ export default function WebLayout({ children }: { children: React.ReactNode }) {
 			<footer className=''>
 				<DockMenu />
 				<WhatsAppButton />
-				<MessageButton />
+				{/* <MessageButton /> */}
 				<Footer />
 			</footer>
 		</section>

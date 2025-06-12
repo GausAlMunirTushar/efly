@@ -91,12 +91,8 @@ const ContactForm = () => {
 					required
 					className=''
 				/>
-				<Button
-					type='submit'
-					className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
-					disabled={loading}
-				>
-					{loading ? 'Sending...' : 'Send Now'}
+				<Button type='submit' className='w-full ' disabled={loading}>
+					{loading ? 'Sending...' : 'Send Message'}
 				</Button>
 			</form>
 		</section>

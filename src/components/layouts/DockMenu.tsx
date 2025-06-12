@@ -18,7 +18,7 @@ export default function DockMenu() {
 
 	return (
 		<nav
-			className='fixed bottom-0 sm:bottom-2 left-1/2 -translate-x-1/2 z-50 bg-white border border-gray-200 border-b-0 shadow-xl rounded-t-2xl sm:rounded-2xl px-2 py-2 flex flex-wrap items-center justify-center gap-1 md:gap-2 max-w-md w-full sm:w-auto overflow-x-auto backdrop-blur-md'
+			className='fixed sm:hidden bottom-0 sm:bottom-2 left-1/2 -translate-x-1/2 z-50 bg-white border border-gray-200 border-b-0 shadow-xl rounded-t-2xl sm:rounded-2xl px-2 py-2 flex flex-wrap items-center justify-center gap-1 md:gap-2 max-w-md w-full sm:w-auto overflow-x-auto backdrop-blur-md'
 			aria-label='Main navigation'
 		>
 			{navItems.map(({ name, href, icon: Icon }) => {

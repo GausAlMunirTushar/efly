@@ -37,7 +37,7 @@ export default function DockMenu() {
 							aria-label={name}
 							className={`group w-16 flex flex-col items-center justify-center px-3 py-2 rounded-xl focus:outline-none text-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary transition-colors duration-200 ${
 								isActive
-									? 'bg-primary text-white shadow-inner'
+									? 'bg-[#0058A8] text-white shadow-inner'
 									: 'text-gray-600 hover:bg-primary/90 hover:text-white'
 							}`}
 						>

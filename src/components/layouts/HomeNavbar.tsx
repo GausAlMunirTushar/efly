@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
+import Menus from './Menus'
 
 const fallbackImage = '/images/avatar.png'
 
@@ -15,7 +16,7 @@ export default function HomeNavbar() {
 
 	return (
 		<nav className='bg-white shadow z-50'>
-			<div className='container mx-auto flex justify-between items-center py-4'>
+			<div className='container mx-auto flex justify-between items-center py-3'>
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>
 					<img
@@ -26,7 +27,10 @@ export default function HomeNavbar() {
 						className='h-8 w-auto'
 					/>
 				</Link>
-
+				{/* Menus */}
+				<div className='hidden md:flex items-center space-x-4'>
+					<Menus />
+				</div>
 				{/* Right Side - Visible in all screen sizes */}
 				<div className='flex items-center space-x-4'>
 					{token ? (

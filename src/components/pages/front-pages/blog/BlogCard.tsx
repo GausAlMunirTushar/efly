@@ -22,7 +22,7 @@ export default function BlogCard({
 	})
 
 	return (
-		<article className='border rounded-lg'>
+		<article className='border w-full rounded-lg'>
 			<Link
 				href={`/${blog.slug}`} // Only using the blog slug for the link
 				className='cursor-pointer'

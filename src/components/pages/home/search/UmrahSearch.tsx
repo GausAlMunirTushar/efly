@@ -1,27 +1,19 @@
 'use client'
 
 import Button from '@/components/form/Button'
-import SelectSearchInput from '@/components/form/SelectSearchInput'
+import UmrahSearchInput from '@/components/form/input/UmrahSearchInput'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
-
-const destinations = [{ code: 'UM', name: 'Umrah - Mecca,Medina' }]
 
 export default function UmrahSearch() {
-	const [destination, setDestination] = useState<string>('TH')
-
 	return (
-		<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-			<SelectSearchInput
-				label='Destination'
-				value={destination}
-				onChange={setDestination}
-				options={destinations}
-			/>
-			<Link href={`/umrah`} className='flex items-end justify-end'>
-				<Button className=''>
-					<Search size={16} className='mr-2' /> Search Umrah
+		<div className='w-full flex gap-4'>
+			<UmrahSearchInput label='Destination' value='UM' />
+			<Link href={`/umrah`} className='flex'>
+				<Button>
+					<div className='flex items-center justify-center px-4'>
+						<Search size={18} className='' />
+					</div>
 				</Button>
 			</Link>
 		</div>

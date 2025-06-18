@@ -160,15 +160,17 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 
 			{/* Logo */}
 			<div className='flex items-center gap-1 my-2'>
-				{isExpanded && (
-					<Image
-						src='/efly.png'
-						alt='Logo'
-						width={40}
-						height={40}
-						className='w-20 mx-4'
-					/>
-				)}
+				<Link href='/'>
+					{isExpanded && (
+						<Image
+							src='/efly.png'
+							alt='Logo'
+							width={40}
+							height={40}
+							className='w-20 mx-4'
+						/>
+					)}
+				</Link>
 			</div>
 
 			{/* Navigation */}

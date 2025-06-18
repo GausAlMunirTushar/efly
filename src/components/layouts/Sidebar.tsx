@@ -17,7 +17,10 @@ import {
 	TentTree,
 	Images,
 	University,
-	BookOpenCheck
+	BookOpenCheck,
+	Settings,
+	UserRoundSearchIcon,
+	ListOrdered
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -38,8 +41,8 @@ const menuItems: MenuItem[] = [
 		title: 'Blog',
 		icon: <Rss className='w-5 h-5' />,
 		subMenu: [
-			{ title: 'Blog', href: `/admin/blog` },
-			{ title: 'Category', href: `/admin/categories` }
+			{ title: 'Category', href: `/admin/categories` },
+			{ title: 'Blog', href: `/admin/blog` }
 		]
 	},
 	{
@@ -53,6 +56,7 @@ const menuItems: MenuItem[] = [
 		subMenu: [
 			{ title: 'Contact', href: `/admin/contact` },
 			{ title: 'About Us', href: `/admin/about` },
+			{ title: 'FAQ', href: `/admin/faq` },
 			{ title: 'Home Slide', href: `/admin/home-slide` },
 			{ title: 'Blog Slide', href: `/admin/blog-slide` }
 		]
@@ -73,9 +77,29 @@ const menuItems: MenuItem[] = [
 		href: `/admin/gallery`
 	},
 	{
+		title: 'Events',
+		icon: <Images className='w-5 h-5' />,
+		href: `/admin/events`
+	},
+	{
 		title: 'Holiday',
 		icon: <TentTree className='w-5 h-5' />,
 		href: `/admin/holiday`
+	},
+	{
+		title: 'Orders',
+		icon: <ListOrdered className='w-5 h-5' />,
+		href: `/admin/orders`
+	},
+	{
+		title: 'Customers',
+		icon: <UserRoundSearchIcon className='w-5 h-5' />,
+		href: `/admin/customers`
+	},
+	{
+		title: 'Settings',
+		icon: <Settings className='w-5 h-5' />,
+		href: `/admin/settings`
 	}
 ]
 

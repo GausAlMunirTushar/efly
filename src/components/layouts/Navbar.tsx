@@ -59,8 +59,6 @@ const Navbar = () => {
 
 			{/* Icons and Profile */}
 			<div className='flex items-center gap-6'>
-				{/* Theme Switcher Component */}
-				<ThemeSwitcher />
 				{/* Notifications */}
 				<Notifications />
 

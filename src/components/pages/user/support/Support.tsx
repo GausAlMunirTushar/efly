@@ -1,6 +1,10 @@
 import React from 'react'
 import ContactForm from './ContactForm'
 
+export const metadata = {
+	title: 'Support',
+	description: 'Support page'
+}
 const Support = () => {
 	return (
 		<div className='w-full max-w-4xl bg-white p-4 rounded-lg mx-auto'>

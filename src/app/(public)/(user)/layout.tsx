@@ -9,9 +9,9 @@ export default function UserDashboardLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<section className='h-screen bg-gray-100  transition-all duration-300'>
+		<section className='min-h-screen bg-gray-100  transition-all duration-300'>
 			{/* Main Content - No extra spacing issues */}
-			<div className='md:flex max-w-6xl h-screen container mx-auto transition-all duration-300 bg-gray-100'>
+			<div className='md:flex max-w-6xl min-h-screen sm:mx-auto transition-all duration-300 bg-gray-100'>
 				<aside className='mt-4 hidden md:block'>
 					{/* Sidebar */}
 					<UserSidebar />

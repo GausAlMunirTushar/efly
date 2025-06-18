@@ -38,10 +38,9 @@ export default function VisaSearch() {
 			}
 		}
 	}
-
 	return (
-		<section className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-			<div>
+		<section className='w-full flex gap-4'>
+			<div className='w-full'>
 				<SelectSearchInput
 					label='Visa for Country'
 					value={country}
@@ -49,9 +48,11 @@ export default function VisaSearch() {
 					options={options}
 				/>
 			</div>
-			<div className='flex items-end justify-end'>
+			<div className='flex'>
 				<Button className='' onClick={handleSearch}>
-					<Search size={20} className='mr-2' /> Search Visa
+					<div className='px-4'>
+						<Search size={20} className='' />
+					</div>
 				</Button>
 			</div>
 		</section>

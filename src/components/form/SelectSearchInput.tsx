@@ -75,7 +75,7 @@ const SelectSearchInput = ({
 	return (
 		<div className='relative w-full' ref={containerRef}>
 			<div
-				className='border border-gray-300 bg-white rounded-lg px-4 py-3 cursor-pointer shadow-sm'
+				className='border border-gray-300 bg-white rounded-lg px-4 py-2 cursor-pointer shadow-sm'
 				onClick={() => {
 					setIsOpen(!isOpen)
 					setHighlightedIndex(0)
@@ -85,10 +85,10 @@ const SelectSearchInput = ({
 				aria-haspopup='listbox'
 				aria-owns='location-listbox'
 			>
-				<label className='block text-sm font-semibold text-gray-600 mb-1'>
+				<label className='block text-xs font-semibold text-gray-600 mb-1'>
 					{label}
 				</label>
-				<div className='text-base font-bold text-indigo-800'>
+				<div className='text-sm font-bold text-indigo-800'>
 					{selectedOption?.name
 						? selectedOption.name.split(',')[0]
 						: 'Select location'}

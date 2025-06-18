@@ -18,7 +18,7 @@ export default function DashboardLayout({
 	}
 
 	return (
-		<section className='h-screen flex bg-gray-100 dark:bg-body_dark transition-all duration-300'>
+		<section className='flex bg-gray-100 dark:bg-body_dark transition-all duration-300'>
 			{/* Sidebar */}
 			<Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 

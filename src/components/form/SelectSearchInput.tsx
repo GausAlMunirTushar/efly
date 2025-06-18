@@ -98,9 +98,9 @@ const SelectSearchInput = ({
 						? selectedOption.name.split(',').slice(1).join(', ')
 						: ''}
 				</div>
-				<div className='text-xs text-gray-500'>
+				{/* <div className='text-xs text-gray-500'>
 					{selectedOption?.name}
-				</div>
+				</div> */}
 			</div>
 
 			{isOpen && (

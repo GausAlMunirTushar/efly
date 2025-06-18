@@ -48,23 +48,22 @@ export default function HolidaySearch() {
 	}
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-2'>
+		<div className='flex gap-4'>
 			<SelectSearchInput
 				label='Destination'
 				value={destination}
 				onChange={setDestination}
 				options={destinations.map(d => ({
-					code: d.id, // Use id here
+					code: d.id,
 					name: d.name
 				}))}
 			/>
 
 			<div>
-				<Button
-					onClick={handleSearch}
-					className='flex justify-center items-center'
-				>
-					<Search size={16} className='mr-2' /> Search Holiday
+				<Button onClick={handleSearch} className=''>
+					<div className='px-4 py-2.5'>
+						<Search size={20} className='' />
+					</div>
 				</Button>
 			</div>
 		</div>

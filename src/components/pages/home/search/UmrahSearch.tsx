@@ -12,7 +12,7 @@ export default function UmrahSearch() {
 			<Link href={`/umrah`} className='flex'>
 				<Button>
 					<div className='flex items-center justify-center px-4'>
-						<Search size={18} className='' />
+						<Search size={20} className='' />
 					</div>
 				</Button>
 			</Link>

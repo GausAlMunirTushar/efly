@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import UmrahCard from './UmrahCard'
+import { getAllUmrah } from '@/services/umrahService'
 
 interface UmrahPackageFromDB {
 	_id: string
@@ -27,9 +28,7 @@ export const Umrah = () => {
 	useEffect(() => {
 		const fetchPackages = async () => {
 			try {
-				const res = await fetch('/api/umrah')
-				if (!res.ok) throw new Error('Failed to fetch Umrah packages')
-				const data: UmrahPackageFromDB[] = await res.json()
+				const data: UmrahPackageFromDB[] = await getAllUmrah()
 				setUmrahPackages(data)
 			} catch (err: any) {
 				setError(err.message || 'Unknown error')

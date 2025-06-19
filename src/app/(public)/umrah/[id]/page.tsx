@@ -3,6 +3,7 @@ import Image from 'next/image'
 import UmrahForm from '@/components/pages/front-pages/umrah/UmrahForm'
 import { notFound } from 'next/navigation'
 import Head from 'next/head'
+import { getUmrahById } from '@/services/umrahService'
 
 interface UmrahPackage {
 	_id: string
@@ -23,16 +24,12 @@ interface PageProps {
 }
 
 async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_APP_URL}/api/umrah/${id}`,
-		{
-			// Important: Next.js fetch caching
-			cache: 'no-store'
-		}
-	)
+	const packageData = await getUmrahById(id)
 
-	if (!res.ok) return null
-	return res.json()
+	if (!packageData) {
+		notFound()
+	}
+	return packageData
 }
 
 const UmrahDetailsPage = async ({ params }: PageProps) => {

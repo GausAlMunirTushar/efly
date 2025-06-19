@@ -9,21 +9,24 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import { UploadCloud, X } from 'lucide-react'
+import { createUmrah } from '@/services/umrahService'
+import type { UmrahPackage } from '@/services/umrahService'
+import apiClient from '@/configs/apiConfig'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 export default function AdminUmrahPage() {
-	const [form, setForm] = useState({
+	const [form, setForm] = useState<Omit<UmrahPackage, '_id'>>({
 		packagename: '',
 		price: '',
 		description: '',
 		duration: '',
-		images: [] as string[], // image URLs from server
+		images: [],
 		isFeatured: false
 	})
 	const [loading, setLoading] = useState(false)
-	const [images, setImages] = useState<File[]>([]) // local files for upload
-	const [imagePreviews, setImagePreviews] = useState<string[]>([]) // preview URLs
+	const [images, setImages] = useState<File[]>([])
+	const [imagePreviews, setImagePreviews] = useState<string[]>([])
 	const [imageUploading, setImageUploading] = useState(false)
 	const router = useRouter()
 
@@ -36,7 +39,6 @@ export default function AdminUmrahPage() {
 		}
 	}
 
-	// Dropzone handlers
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setImages(prev => [...prev, ...acceptedFiles])
 		const previews = acceptedFiles.map(file => URL.createObjectURL(file))
@@ -54,7 +56,6 @@ export default function AdminUmrahPage() {
 		multiple: true
 	})
 
-	// Upload multiple images sequentially (or parallel)
 	const handleImageUpload = async () => {
 		if (images.length === 0) {
 			toast.error('No images selected for upload.')
@@ -63,26 +64,35 @@ export default function AdminUmrahPage() {
 		setImageUploading(true)
 
 		try {
-			// Parallel upload for speed:
-			const uploadPromises = images.map(async image => {
+			const uploadedUrls: string[] = []
+
+			for (const image of images) {
 				const formData = new FormData()
 				formData.append('file', image)
-				const res = await fetch('/api/upload', {
-					method: 'POST',
-					body: formData
-				})
-				const data = await res.json()
-				if (!res.ok || !data.imageUrl)
-					throw new Error(data.error || 'Image upload failed')
-				return data.imageUrl
-			})
 
-			const uploadedUrls = await Promise.all(uploadPromises)
+				const response = await apiClient.post('/upload', formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				})
+
+				const data = response.data
+				if (!data?.imageUrl) {
+					throw new Error(data?.error || 'Upload failed.')
+				}
+
+				uploadedUrls.push(data.imageUrl)
+			}
+
 			setForm(prev => ({ ...prev, images: uploadedUrls }))
 			toast.success('Images uploaded successfully!')
 		} catch (error: any) {
-			toast.error(`Image upload failed: ${error.message || error}`)
 			console.error(error)
+			toast.error(
+				error?.response?.data?.message ||
+					error?.message ||
+					'Image upload failed.'
+			)
 		} finally {
 			setImageUploading(false)
 		}
@@ -90,36 +100,45 @@ export default function AdminUmrahPage() {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		if (!form.packagename || !form.price || form.images.length === 0) {
-			toast.error('Please fill all required fields and upload images.')
+
+		if (!form.packagename.trim() || !form.price.toString().trim()) {
+			toast.error('Package name and price are required.')
+			return
+		}
+		if (form.images.length === 0) {
+			toast.error('Please upload at least one image.')
 			return
 		}
 
 		setLoading(true)
-		try {
-			const res = await fetch('/api/umrah', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(form)
-			})
 
-			if (res.ok) {
-				toast.success('Umrah package created successfully!')
-				router.push('/admin/umrah')
-			} else {
-				toast.error('Failed to create Umrah package.')
+		try {
+			const payload: UmrahPackage = {
+				...form,
+				title: form.packagename, // Map packagename to title
+				price: Number(form.price),
+				description: form.description,
+				duration: form.duration,
+				hotelDetails: '', // Provide default or collect from form
+				transportDetails: '' // Provide default or collect from form
 			}
-		} catch (error) {
-			toast.error('Error while creating Umrah package.')
-			console.error(error)
+
+			await createUmrah(payload)
+			toast.success('Umrah package created successfully!')
+			router.push('/admin/umrah')
+		} catch (error: any) {
+			console.error('Create error:', error)
+			toast.error(
+				error?.response?.data?.message || 'Failed to create package.'
+			)
 		} finally {
 			setLoading(false)
 		}
 	}
 
 	return (
-		<div className=' bg-white p-6 space-y-6 rounded-lg'>
-			<h1 className='text-2xl font-bold'>Umrah</h1>
+		<div className='bg-white p-6 space-y-6 rounded-lg'>
+			<h1 className='text-2xl font-bold'>Create Umrah Package</h1>
 
 			<Input
 				name='packagename'
@@ -142,6 +161,7 @@ export default function AdminUmrahPage() {
 				value={form.duration}
 				onChange={handleInputChange}
 			/>
+
 			<JoditEditor
 				name='description'
 				value={form.description}
@@ -152,6 +172,7 @@ export default function AdminUmrahPage() {
 					}))
 				}
 			/>
+
 			<label className='inline-flex items-center space-x-2'>
 				<input
 					type='checkbox'

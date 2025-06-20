@@ -49,7 +49,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
 
 	return (
-		<div className='border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all bg-white flex flex-col h-[500px]'>
+		<div className='border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all bg-white flex flex-col h-96'>
 			<div className='relative h-48 w-full'>
 				<Image
 					src={imgSrc || fallbackImage}
@@ -81,30 +81,29 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 				</h2>
 
 				{description && (
-					<p className='text-xs text-gray-500 line-clamp-3'>
+					<p className='text-xs text-gray-500 line-clamp-3 truncate'>
 						{description}
 					</p>
 				)}
 
-				<div className='text-sm py-3 flex items-center gap-1 text-gray-600 mt-1'>
-					<MapPin />
-					<span>
-						{typeof location === 'object' &&
-						location !== null &&
-						'name' in location
-							? location.name
-							: location}
-					</span>
-				</div>
-
-				<div className='mt-auto flex justify-between items-center pt-2'>
-					<div className='text-primary font-bold text-lg'>
+				<div className=' flex justify-between items-center'>
+					<div className='text-xs flex items-center gap-1 text-gray-600 mt-1'>
+						<MapPin size={15} />
+						<span className='text-xs'>
+							{typeof location === 'object' &&
+							location !== null &&
+							'name' in location
+								? location.name
+								: location}
+						</span>
+					</div>
+					<div className='text-[#0058A8]  font-bold text-lg'>
 						BDT {price.toLocaleString()}
 					</div>
 				</div>
 
 				<Link href={`/holiday/${id}`}>
-					<Button className='bg-blue-600 w-full hover:bg-blue-700 text-white text-sm py-2 px-4 rounded mt-2'>
+					<Button className='bg-[#0058A8]  mt-2 w-full hover:bg-[#0058A8]  text-white text-sm py-2 px-4 rounded'>
 						{buttonText}
 					</Button>
 				</Link>

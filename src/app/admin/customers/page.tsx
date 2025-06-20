@@ -82,8 +82,8 @@ const CustomersPage = () => {
 	}
 
 	return (
-		<div className='p-6 max-w-4xl mx-auto'>
-			<h1 className='text-2xl font-bold mb-4'>Customer Management</h1>
+		<div className='p-6 bg-white mx-auto rounded-lg'>
+			<h1 className='text-2xl font-bold mb-4'>Customers</h1>
 
 			<div className='mb-6 space-y-2'>
 				<Input

@@ -10,6 +10,14 @@ import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import { UploadCloud, X } from 'lucide-react'
 import { IHoliday } from '@/types/IHoliday'
+import { getAllLocations, createLocation } from '@/services/locationService'
+import {
+	getAllHolidays,
+	createHoliday,
+	updateHoliday,
+	deleteHoliday
+} from '@/services/holidayService'
+import apiClient from '@/configs/apiConfig'
 
 type LocationOption = { label: string; value: string }
 
@@ -21,11 +29,6 @@ interface FormState {
 	description: string
 	tags: string
 	imageUrl: string
-}
-
-interface LocationPopulated {
-	_id: string
-	name: string
 }
 
 const AdminHolidayPage = () => {
@@ -50,67 +53,53 @@ const AdminHolidayPage = () => {
 	const router = useRouter()
 
 	useEffect(() => {
-		fetchLocations()
-		fetchPackages()
+		loadLocations()
+		loadPackages()
 	}, [])
 
-	async function fetchLocations() {
+	const loadLocations = async () => {
 		try {
-			const res = await fetch('/api/location')
-			if (!res.ok) throw new Error('Failed to fetch locations')
-			const data: { id: string; name: string }[] = await res.json()
-			setLocations(data.map(loc => ({ label: loc.name, value: loc.id })))
+			const data = await getAllLocations()
+			setLocations(
+				data.map((loc: any) => ({ label: loc.name, value: loc.id }))
+			)
 		} catch {
 			toast.error('Failed to load locations')
 		}
 	}
 
-	async function fetchPackages() {
+	const loadPackages = async () => {
 		try {
-			const res = await fetch('/api/holiday')
-			if (!res.ok) throw new Error('Failed to fetch packages')
-			const data = await res.json()
+			const data = await getAllHolidays()
 			setPackages(data)
 		} catch {
-			toast.error('Error fetching holiday packages')
+			toast.error('Failed to load holiday packages')
 		}
 	}
 
 	const addNewLocation = async () => {
 		const trimmed = newLocation.trim()
-		if (!trimmed) {
-			toast.error('Please enter a location name')
-			return
-		}
+		if (!trimmed) return toast.error('Please enter a location name')
+
 		if (
 			locations.find(
 				loc => loc.label.toLowerCase() === trimmed.toLowerCase()
 			)
 		) {
-			toast.error('Location already exists')
-			return
+			return toast.error('Location already exists')
 		}
 
 		try {
-			const res = await fetch('/api/location', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ name: trimmed })
-			})
-			if (res.status === 409) {
-				toast.error('Location already exists')
-				return
-			}
-			if (!res.ok) throw new Error('Failed to add location')
-
-			const newLoc = await res.json()
+			const newLoc = await createLocation(trimmed)
 			const newLocOption = { label: newLoc.name, value: newLoc.id }
 			setLocations(prev => [...prev, newLocOption])
 			setForm(prev => ({ ...prev, location: newLocOption }))
 			setNewLocation('')
 			toast.success('Location added and selected')
-		} catch (error) {
-			toast.error((error as Error).message)
+		} catch (error: any) {
+			toast.error(
+				error?.response?.data?.message || 'Error adding location'
+			)
 		}
 	}
 
@@ -146,22 +135,18 @@ const AdminHolidayPage = () => {
 		if (!images.length) return
 		setImageUploading(true)
 		const formData = new FormData()
-		images.forEach(file => formData.append('file', file))
+		formData.append('file', images[0])
 
 		try {
-			const res = await fetch('/api/upload', {
-				method: 'POST',
-				body: formData
-			})
-			if (!res.ok) throw new Error('Image upload failed')
-			const data = await res.json()
-			if (!data.imageUrl) throw new Error('No image URL returned')
+			const res = await apiClient.post('/upload', formData)
+			const { imageUrl } = res.data
+			if (!imageUrl) throw new Error('No image URL returned')
 
-			setForm(prev => ({ ...prev, imageUrl: data.imageUrl }))
+			setForm(prev => ({ ...prev, imageUrl }))
 			setImageUploaded(true)
 			toast.success('Image uploaded successfully!')
-		} catch {
-			toast.error('Image upload error')
+		} catch (error) {
+			toast.error('Image upload failed')
 		} finally {
 			setImageUploading(false)
 		}
@@ -169,39 +154,31 @@ const AdminHolidayPage = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		if (!form.imageUrl) {
-			toast.error('Please upload an image first.')
-			return
+
+		if (!form.imageUrl) return toast.error('Please upload an image.')
+		if (!form.location) return toast.error('Please select a location.')
+
+		const payload = {
+			...form,
+			price: parseFloat(form.price),
+			location: form.location.value,
+			tags: form.tags.split(',').map(t => t.trim())
 		}
-		if (!form.location) {
-			toast.error('Please select a location.')
-			return
-		}
+
 		setLoading(true)
 
 		try {
-			const res = await fetch(
-				editingId ? `/api/holiday/${editingId}` : '/api/holiday',
-				{
-					method: editingId ? 'PUT' : 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						...form,
-						price: parseFloat(form.price),
-						location: form.location.value,
-						tags: form.tags.split(',').map(t => t.trim())
-					})
-				}
-			)
-			if (!res.ok) throw new Error('Failed to save package')
-
-			toast.success(
-				`Holiday package ${editingId ? 'updated' : 'created'} successfully`
-			)
+			if (editingId) {
+				await updateHoliday(editingId, payload)
+				toast.success('Package updated successfully')
+			} else {
+				await createHoliday(payload)
+				toast.success('Package created successfully')
+			}
 			resetForm()
-			fetchPackages()
-		} catch (error) {
-			toast.error((error as Error).message)
+			loadPackages()
+		} catch (error: any) {
+			toast.error(error?.response?.data?.message || 'Submission failed')
 		} finally {
 			setLoading(false)
 		}
@@ -244,12 +221,11 @@ const AdminHolidayPage = () => {
 	const handleDelete = async (id: string) => {
 		if (!confirm('Are you sure you want to delete this package?')) return
 		try {
-			const res = await fetch(`/api/holiday/${id}`, { method: 'DELETE' })
-			if (!res.ok) throw new Error('Failed to delete')
+			await deleteHoliday(id)
 			toast.success('Deleted successfully')
-			fetchPackages()
-		} catch (error) {
-			toast.error((error as Error).message)
+			loadPackages()
+		} catch (error: any) {
+			toast.error(error?.response?.data?.message || 'Failed to delete')
 		}
 	}
 
@@ -289,7 +265,7 @@ const AdminHolidayPage = () => {
 				/>
 			</section>
 
-			{/* Holiday Package Form */}
+			{/* Form */}
 			<form
 				onSubmit={handleSubmit}
 				className='grid grid-cols-1 md:grid-cols-2 gap-4'
@@ -330,6 +306,7 @@ const AdminHolidayPage = () => {
 					required
 				/>
 
+				{/* Image Upload */}
 				<div className='mb-4 col-span-full'>
 					<label className='block text-sm font-medium text-gray-700'>
 						Upload Image
@@ -356,16 +333,15 @@ const AdminHolidayPage = () => {
 							<div key={index} className='relative group'>
 								<Image
 									src={preview}
-									alt={`Image Preview ${index}`}
+									alt={`Preview ${index}`}
 									width={100}
 									height={100}
 									className='object-cover rounded-lg'
 								/>
 								<button
 									type='button'
-									className='absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition'
 									onClick={removeImage}
-									aria-label='Remove image'
+									className='absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition'
 								>
 									<X className='w-4 h-4' />
 								</button>
@@ -393,7 +369,7 @@ const AdminHolidayPage = () => {
 				</Button>
 			</form>
 
-			{/* Display Packages */}
+			{/* List View */}
 			<section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8'>
 				{packages.map(pkg => (
 					<article

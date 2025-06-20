@@ -20,7 +20,7 @@ export default function HomePopularBlog({ title }: { title: string }) {
 	useEffect(() => {
 		const fetchLatestBlogs = async () => {
 			try {
-				const res = await fetch('/api/blog?limit=3')
+				const res = await fetch('/api/blog?limit=4')
 				if (!res.ok) throw new Error('Failed to fetch latest blogs')
 				const data = await res.json()
 				setLatestBlogs(data)
@@ -36,7 +36,7 @@ export default function HomePopularBlog({ title }: { title: string }) {
 
 	return (
 		<div className=' bg-white rounded-lg'>
-			<h2 className='text-xl text-center font-bold my-4'>
+			<h2 className='text-3xl text-center font-bold my-4'>
 				{title || 'Popular Blogs'}
 			</h2>
 

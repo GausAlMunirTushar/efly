@@ -72,7 +72,7 @@ const HomePage = () => {
 			</section>
 
 			<section className='container mx-auto my-3'>
-				<HomePopularBlog title='Popular Blogs' />
+				<HomePopularBlog title='Our Popular Blogs' />
 			</section>
 		</main>
 	)

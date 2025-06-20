@@ -1,4 +1,4 @@
-import { Clock5 } from 'lucide-react'
+import { Clock5, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 export default function PopularBlogCard({
@@ -23,10 +23,7 @@ export default function PopularBlogCard({
 
 	return (
 		<article className='w-80 border rounded-lg'>
-			<Link
-				href={`/${blog.slug}`} // Only using the blog slug for the link
-				className='cursor-pointer'
-			>
+			<Link href={`/${blog.slug}`} className='cursor-pointer'>
 				{blog.imageUrl && (
 					<img
 						src={blog.imageUrl}
@@ -45,12 +42,12 @@ export default function PopularBlogCard({
 					{blog.content.replace(/<\/?[^>]+(>|$)/g, '')}
 				</p>
 
-				<div className='flex justify-end'>
+				<div className='pb-2'>
 					<Link
 						href={`/${blog.slug}`} // Only using the blog slug for the link
-						className='bg-primary px-4 py-1.5 text-white rounded-lg cursor-pointer'
+						className='bg-[#0058A8] w-full text-center px-4 py-1.5 text-white rounded-lg cursor-pointer flex items-center justify-center gap-2'
 					>
-						Read More
+						<span>Read More</span> <ExternalLink size={13} />
 					</Link>
 				</div>
 			</div>

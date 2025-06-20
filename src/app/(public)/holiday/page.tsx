@@ -11,7 +11,7 @@ interface HolidayPackage {
 	imageUrl: string
 	title: string
 	description: string
-	location: { name: string }
+	location: { name: string; _id: string }
 	nightsInfo: string
 	price: number
 	tags: string[]
@@ -22,13 +22,14 @@ export default function HolidayPageClient() {
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState('')
 	const searchParams = useSearchParams()
-	const location = searchParams.get('location') || ''
+	const locationId = searchParams.get('location') || ''
 
 	useEffect(() => {
 		const fetchHolidayPackages = async () => {
 			try {
-				const data = await getAllHolidays()
-				// Map IHoliday[] to HolidayPackage[]
+				const queryParam = locationId ? `?location=${locationId}` : ''
+				const data = await getAllHolidays(queryParam)
+
 				const mappedPackages: HolidayPackage[] = data.map(
 					(item: any) => ({
 						_id: item._id,
@@ -41,16 +42,8 @@ export default function HolidayPageClient() {
 						tags: item.tags
 					})
 				)
-				setPackages(
-					location
-						? mappedPackages.filter(pkg =>
-								pkg.location?.name
-									?.toLowerCase()
-									.includes(location.toLowerCase())
-							)
-						: mappedPackages
-				)
-				console.log(mappedPackages)
+
+				setPackages(mappedPackages)
 			} catch (err: any) {
 				setError(err.message || 'Something went wrong')
 			} finally {
@@ -59,7 +52,7 @@ export default function HolidayPageClient() {
 		}
 
 		fetchHolidayPackages()
-	}, [location])
+	}, [locationId])
 
 	return (
 		<main>

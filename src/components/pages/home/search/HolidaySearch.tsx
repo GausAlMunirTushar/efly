@@ -1,10 +1,10 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/form/Button'
 import SelectSearchInput from '@/components/form/SelectSearchInput'
 import { Search } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { getAllLocations } from '@/services/locationService'
 
 interface Destination {
@@ -21,8 +21,15 @@ export default function HolidaySearch() {
 		const fetchDestinations = async () => {
 			try {
 				const data = await getAllLocations()
-				setDestinations(data)
-				if (data.length) setDestination(data[0].id)
+
+				// Convert _id to id to match the expected structure
+				const formatted = data.map((loc: any) => ({
+					id: loc._id,
+					name: loc.name
+				}))
+
+				setDestinations(formatted)
+				if (formatted.length) setDestination(formatted[0].id)
 			} catch (error) {
 				console.error('Failed to fetch destinations', error)
 			}

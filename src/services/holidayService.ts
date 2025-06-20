@@ -1,9 +1,9 @@
 import apiClient from '@/configs/apiConfig'
 import { IHoliday } from '@/types/IHoliday'
 
-export const getAllHolidays = async () => {
-	const res = await apiClient.get('/holiday')
-	return res.data as IHoliday[]
+export const getAllHolidays = async (query: string = '') => {
+	const res = await apiClient.get(`/holiday${query}`)
+	return res.data
 }
 
 export const getHolidayById = async (id: string) => {

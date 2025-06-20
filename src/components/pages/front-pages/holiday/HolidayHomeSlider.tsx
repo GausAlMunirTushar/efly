@@ -48,7 +48,7 @@ const HolidayHomeSlider = () => {
 		return <div className='text-center py-10'>No packages found.</div>
 
 	return (
-		<div className='w-full py-10'>
+		<div className='w-full py-10 -z-50'>
 			<Swiper
 				modules={[Autoplay, Keyboard, A11y]}
 				spaceBetween={30}

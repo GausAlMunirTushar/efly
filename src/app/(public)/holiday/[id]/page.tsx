@@ -8,10 +8,11 @@ import { getHolidayById } from '@/services/holidayService'
 export async function generateMetadata({
 	params
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }): Promise<Metadata> {
 	try {
-		const pkg = await getHolidayById(params.id)
+		const { id } = await params
+		const pkg = await getHolidayById(id)
 
 		return {
 			title: `${pkg.title} | eFly Travel`,
@@ -25,7 +26,7 @@ export async function generateMetadata({
 					'Explore this exclusive holiday package on eFly.',
 				images: [pkg.imageUrl],
 				type: 'website',
-				url: `${process.env.NEXT_PUBLIC_APP_URL}/holiday/${params.id}`
+				url: `${process.env.NEXT_PUBLIC_APP_URL}/holiday/${id}`
 			}
 		}
 	} catch {
@@ -39,10 +40,11 @@ export async function generateMetadata({
 export default async function HolidayDetailsPage({
 	params
 }: {
-	params: { id: string }
+	params: Promise<{ id: string }>
 }) {
+	const { id } = await params
 	try {
-		const pkg = await getHolidayById(params.id)
+		const pkg = await getHolidayById(id)
 		const cleanTags =
 			Array.isArray(pkg.tags) && pkg.tags.length
 				? pkg.tags.filter((t: string) => t.trim() !== '')
@@ -62,7 +64,7 @@ export default async function HolidayDetailsPage({
 
 					<div className='w-full flex bg-white py-3 rounded-t-lg'>
 						<div className='w-full md:w-9/12'>
-							<HolidayDetails />
+							<HolidayDetails packageDetails={cleanedPkg} />
 						</div>
 						<div className='w-full md:w-3/12 flex'>
 							<HolidayConsultationForm isLoading={false} />

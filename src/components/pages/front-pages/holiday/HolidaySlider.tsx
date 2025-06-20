@@ -12,7 +12,7 @@ import 'swiper/css/pagination'
 interface PackageDetails {
 	title: string
 	description: string
-	location: string
+	location: { name: string }
 	nightsInfo: string
 	price: number
 }
@@ -64,7 +64,7 @@ export default function HolidaySlider({
 					</h2>
 					<div className='flex items-center text-muted-foreground text-sm mt-1'>
 						<MapPin className='w-4 h-4 mr-1' />
-						{packageDetails.location}
+						{packageDetails.location?.name || 'Unknown'}
 					</div>
 				</div>
 

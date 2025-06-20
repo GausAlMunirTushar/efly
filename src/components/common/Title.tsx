@@ -29,7 +29,7 @@ const Title: React.FC<TitleProps> = ({
 	}
 
 	const colorClasses = {
-		primary: 'text-primary dark:text-text-primary',
+		primary: 'text-[#0058A8] dark:text-text-primary',
 		secondary: 'text-text-secondary dark:text-gray-300',
 		muted: 'text-text-muted dark:text-gray-400',
 		white: 'text-white',

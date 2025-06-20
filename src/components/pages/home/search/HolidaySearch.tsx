@@ -5,16 +5,11 @@ import SelectSearchInput from '@/components/form/SelectSearchInput'
 import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { getAllLocations } from '@/services/locationService'
 
 interface Destination {
 	id: string
 	name: string
-}
-
-interface HolidayPackage {
-	_id: string
-	location: string
-	[key: string]: any
 }
 
 export default function HolidaySearch() {
@@ -25,14 +20,11 @@ export default function HolidaySearch() {
 	useEffect(() => {
 		const fetchDestinations = async () => {
 			try {
-				const res = await fetch('/api/location')
-				if (!res.ok) throw new Error('Failed to fetch locations')
-				const data: Destination[] = await res.json()
-
+				const data = await getAllLocations()
 				setDestinations(data)
 				if (data.length) setDestination(data[0].id)
 			} catch (error) {
-				console.error(error)
+				console.error('Failed to fetch destinations', error)
 			}
 		}
 
@@ -40,10 +32,7 @@ export default function HolidaySearch() {
 	}, [])
 
 	const handleSearch = () => {
-		// Navigate to the filtered holiday list page with location query param
-		// For example: /holidays?location=selectedDestination
 		if (!destination) return
-
 		router.push(`/holiday?location=${encodeURIComponent(destination)}`)
 	}
 
@@ -60,9 +49,9 @@ export default function HolidaySearch() {
 			/>
 
 			<div>
-				<Button onClick={handleSearch} className=''>
+				<Button onClick={handleSearch}>
 					<div className='px-4 py-2.5'>
-						<Search size={20} className='' />
+						<Search size={20} />
 					</div>
 				</Button>
 			</div>

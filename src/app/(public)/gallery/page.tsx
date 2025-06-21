@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const GalleryPage = () => {
 	return (
 		<main className='py-12 bg-gray-50 min-h-screen'>
-			<div className='max-w-6xl mx-auto text-center px-4'>
+			<div className='max-w-7xl mx-auto text-center px-4'>
 				<h1 className='text-3xl font-bold text-gray-800 mb-4'>
 					efly Gallery
 				</h1>

@@ -59,7 +59,7 @@ const ContactPage = () => {
 			<div className='flex items-center justify-center bg-[#0058A8] h-40'>
 				<h1 className='text-4xl font-bold text-white'>Contact Us</h1>
 			</div>
-			<div className='container mx-auto p-6'>
+			<div className='max-w-7xl mx-auto p-6'>
 				<div className='grid md:grid-cols-2 gap-6'>
 					{/* Left Side - Contact Form */}
 					<div className='bg-white shadow-md p-6 rounded-lg'>
@@ -112,7 +112,7 @@ const ContactPage = () => {
 							/>
 							<Button
 								type='submit'
-								className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700'
+								className='w-full bg-[#0058A8] text-white py-2 rounded-md hover:bg-[#0058A8]'
 								disabled={loading}
 							>
 								{loading ? 'Sending...' : 'Send Now'}

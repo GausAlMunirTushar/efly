@@ -8,7 +8,7 @@ const PrivacyPolicyPage = () => {
 					Privacy Policy
 				</h1>
 			</div>
-			<div className='container mx-auto p-5'>
+			<div className='max-w-7xl mx-auto p-5'>
 				<section className='mb-6'>
 					<h2 className='text-xl font-semibold mb-2'>
 						1. Introduction

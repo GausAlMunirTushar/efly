@@ -5,6 +5,7 @@ import SelectSearchInput from '@/components/form/SelectSearchInput'
 import { Search } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { getCountries, Country } from '@/services/countryService'
 
 type VisaOption = { code: string; name: string }
 
@@ -15,14 +16,17 @@ export default function VisaSearch() {
 
 	useEffect(() => {
 		const fetchVisaCountries = async () => {
-			const res = await fetch('/api/visa')
-			const data = await res.json()
-			const countries = data.map((visa: any) => ({
-				name: visa.country,
-				code: visa.countryCode
-			}))
-			setOptions(countries)
-			setCountry(countries?.[0]?.code || '')
+			try {
+				const countries: Country[] = await getCountries()
+				const mappedCountries = countries.map(c => ({
+					name: c.name,
+					code: c.countryCode
+				}))
+				setOptions(mappedCountries)
+				setCountry(mappedCountries?.[0]?.code || '')
+			} catch (error) {
+				console.error('Failed to fetch countries:', error)
+			}
 		}
 		fetchVisaCountries()
 	}, [])
@@ -38,6 +42,7 @@ export default function VisaSearch() {
 			}
 		}
 	}
+
 	return (
 		<section className='w-full flex gap-4'>
 			<div className='w-full'>

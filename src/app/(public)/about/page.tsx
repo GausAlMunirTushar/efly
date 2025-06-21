@@ -8,7 +8,7 @@ const AboutPage = () => {
 					About efly
 				</h1>
 			</div>
-			<div className='container mx-auto p-6'>
+			<div className='max-w-7xl mx-auto p-6'>
 				<section className='mb-6'>
 					<p className='text-lg'>
 						{`Welcome to efly — your one-stop digital

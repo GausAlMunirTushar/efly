@@ -23,15 +23,15 @@ const HomePage = () => {
 			>
 				<Search />
 			</section>
-			<section className='container mx-auto my-3'>
+			<section className='max-w-7xl mx-auto my-3 px-4'>
 				<CustomSlider slides={slides} />
 			</section>
 			<section className='bg-gray-50'>
-				<div className='container mx-auto my-3'>
+				<div className='max-w-7xl mx-auto my-3 px-4'>
 					<Airlines />
 				</div>
 			</section>
-			<section className='container mx-auto my-3'>
+			<section className='max-w-7xl mx-auto my-3 px-4'>
 				<h2
 					id='holiday-heading'
 					className='text-2xl md:text-3xl font-bold my-3  text-gray-800'
@@ -43,7 +43,7 @@ const HomePage = () => {
 				</p>
 				<HolidayHomeSlider />
 			</section>
-			<section className='container mx-auto my-3'>
+			<section className='max-w-7xl mx-auto my-3 px-4'>
 				<h2
 					id='holiday-heading'
 					className='text-2xl md:text-3xl font-bold my-3  text-gray-800'
@@ -55,7 +55,7 @@ const HomePage = () => {
 				</p>
 				<VisaSlider />
 			</section>
-			<section className='container mx-auto my-3'>
+			<section className='max-w-7xl mx-auto my-3 px-4'>
 				<h2
 					id='umrah-heading'
 					className='text-2xl md:text-3xl font-bold my-3 text-gray-800'
@@ -71,7 +71,7 @@ const HomePage = () => {
 				<UmrahSlider />
 			</section>
 
-			<section className='container mx-auto my-3'>
+			<section className='max-w-7xl mx-auto my-3 px-4'>
 				<HomePopularBlog title='Our Popular Blogs' />
 			</section>
 		</main>

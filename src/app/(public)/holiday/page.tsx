@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import HolidayPackageCard from '@/components/pages/front-pages/holiday/HolidayPackageCard'
 import { getAllHolidays } from '@/services/holidayService'
 import Image from 'next/image'
+import Search from '@/components/pages/home/search/Search'
 
 interface HolidayPackage {
 	_id: string
@@ -56,8 +57,14 @@ export default function HolidayPageClient() {
 
 	return (
 		<main>
+			<section
+				className=' bg-cover bg-center bg-no-repeat py-14'
+				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+			>
+				<Search />
+			</section>
 			{/* Hero Banner */}
-			<section className='w-full relative h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh]'>
+			{/* <section className='w-full relative h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh]'>
 				<Image
 					src='/images/holiday/holiday.jpg'
 					alt='holiday Banner'
@@ -71,7 +78,7 @@ export default function HolidayPageClient() {
 				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-10 px-4 text-center'>
 					Best Holiday Packages from Bangladesh
 				</h1>
-			</section>
+			</section> */}
 
 			{/* Holiday Packages */}
 			<section className='container mx-auto'>

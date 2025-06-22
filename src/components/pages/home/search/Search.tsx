@@ -1,36 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaUmbrellaBeach, FaPassport, FaKaaba } from 'react-icons/fa'
 
 import FlightSearch from './FlightSearch'
-import HotelSearch from './HotelSearch'
 import HolidaySearch from './HolidaySearch'
 import VisaSearch from './VisaSearch'
 import UmrahSearch from './UmrahSearch'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plane } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 type Tab = 'flight' | 'hotel' | 'holiday' | 'visa' | 'umrah'
 
 const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
 	{ key: 'flight', label: 'Flight', icon: <Plane /> },
-	// { key: 'hotel', label: 'Hotel', icon: <FaHotel /> },
 	{ key: 'holiday', label: 'Holiday', icon: <FaUmbrellaBeach /> },
 	{ key: 'visa', label: 'Visa', icon: <FaPassport /> },
 	{ key: 'umrah', label: 'Umrah', icon: <FaKaaba /> }
 ]
 
 export default function Search() {
+	const pathname = usePathname()
+	const router = useRouter()
 	const [activeTab, setActiveTab] = useState<Tab>('flight')
+
+	// Update the active tab based on the pathname
+	useEffect(() => {
+		if (pathname.includes('holiday')) {
+			setActiveTab('holiday')
+		} else if (pathname.includes('visa')) {
+			setActiveTab('visa')
+		} else if (pathname.includes('umrah')) {
+			setActiveTab('umrah')
+		} else {
+			setActiveTab('flight')
+		}
+	}, [pathname])
 
 	const renderTabContent = () => {
 		switch (activeTab) {
 			case 'flight':
 				return <FlightSearch />
-			// case 'hotel':
-			// 	return <HotelSearch />
 			case 'holiday':
 				return <HolidaySearch />
 			case 'visa':
@@ -42,6 +54,12 @@ export default function Search() {
 		}
 	}
 
+	// Function to change the URL when a tab is clicked
+	const handleTabClick = (tab: Tab) => {
+		setActiveTab(tab)
+		router.push(`/${tab}`) // Change URL to reflect the active tab
+	}
+
 	return (
 		<div className='relative w-full max-w-5xl mx-auto'>
 			{/* Tabs */}
@@ -50,7 +68,7 @@ export default function Search() {
 					{tabs.map(tab => (
 						<motion.button
 							key={tab.key}
-							onClick={() => setActiveTab(tab.key)}
+							onClick={() => handleTabClick(tab.key)} // Trigger URL change and state update
 							whileTap={{ scale: 0.95 }}
 							whileHover={{ scale: 1.05 }}
 							className={`flex flex-col sm:flex-row items-center w-16 sm:w-28 gap-2 px-2 sm:px-4 py-1 justify-between sm:justify-normal sm:py-3.5 rounded transition-all duration-200 text-sm ${

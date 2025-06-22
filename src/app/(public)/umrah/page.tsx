@@ -1,4 +1,5 @@
 import { Umrah } from '@/components/pages/front-pages/umrah/Umrah'
+import Search from '@/components/pages/home/search/Search'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 
@@ -22,8 +23,14 @@ export const metadata: Metadata = {
 const UmrahPage = () => {
 	return (
 		<main>
+			<section
+				className=' bg-cover bg-center bg-no-repeat py-14'
+				style={{ backgroundImage: "url('/images/umrah/umrah.jpg')" }}
+			>
+				<Search />
+			</section>
 			{/* Smaller height responsive image */}
-			<section className='w-full relative h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh]'>
+			{/* <section className='w-full relative h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh]'>
 				<Image
 					src='/images/umrah/umrah.jpg'
 					alt='Umrah Banner'
@@ -40,7 +47,7 @@ const UmrahPage = () => {
 					Best Umrah Packages from Bangladesh {CURRENT_YEAR} -{' '}
 					{CURRENT_YEAR + 1}
 				</h1>
-			</section>
+			</section> */}
 
 			{/* Content container below image */}
 			<section className='container mx-auto'>

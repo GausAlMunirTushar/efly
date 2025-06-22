@@ -1,6 +1,7 @@
 'use client'
 
 import VisaCard from '@/components/pages/front-pages/visa/VisaCard'
+import Search from '@/components/pages/home/search/Search'
 import { useEffect, useState } from 'react'
 
 const VisaPage = () => {
@@ -27,36 +28,41 @@ const VisaPage = () => {
 		fetchVisaData() // Trigger the API request
 	}, [])
 
-	if (loading) {
-		return <div>Loading...</div> // Show loading text while fetching data
-	}
-
 	return (
-		<section className='container mx-auto'>
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4'>
-				{visas.length > 0 ? (
-					visas.map((visa: any) => (
-						<VisaCard
-							key={visa._id}
-							imageUrl={
-								visa.countryImage || '/images/placeholder.webp'
-							}
-							visaType={visa.visaType}
-							visaMode={visa.visaMode}
-							entryType={visa.entryType}
-							processingTime={visa.processingTime}
-							visaValidity={visa.visaValidity}
-							country={visa.country}
-							maxStay={visa.maxStay}
-							visaFee={visa.visaFee} // Assuming 'visaFee' field exists in the visa data
-							serviceCharge={visa.serviceCharge} // Assuming 'serviceCharge' field exists in the visa data
-						/>
-					))
-				) : (
-					<p>No visas available</p>
-				)}
-			</div>
-		</section>
+		<main>
+			<section
+				className=' bg-cover bg-center bg-no-repeat py-14'
+				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+			>
+				<Search />
+			</section>
+			<section className='max-w-7xl mx-auto'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4'>
+					{visas.length > 0 ? (
+						visas.map((visa: any) => (
+							<VisaCard
+								key={visa._id}
+								imageUrl={
+									visa.countryImage ||
+									'/images/placeholder.webp'
+								}
+								visaType={visa.visaType}
+								visaMode={visa.visaMode}
+								entryType={visa.entryType}
+								processingTime={visa.processingTime}
+								visaValidity={visa.visaValidity}
+								country={visa.country}
+								maxStay={visa.maxStay}
+								visaFee={visa.visaFee} // Assuming 'visaFee' field exists in the visa data
+								serviceCharge={visa.serviceCharge} // Assuming 'serviceCharge' field exists in the visa data
+							/>
+						))
+					) : (
+						<p>No visas available</p>
+					)}
+				</div>
+			</section>
+		</main>
 	)
 }
 

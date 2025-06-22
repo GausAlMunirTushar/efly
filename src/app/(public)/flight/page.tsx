@@ -4,7 +4,12 @@ import Search from '@/components/pages/home/search/Search'
 const FlightPage = () => {
 	return (
 		<section>
-			<Search />
+			<section
+				className=' bg-cover bg-center bg-no-repeat py-14'
+				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+			>
+				<Search />
+			</section>
 			<Airlines />
 		</section>
 	)

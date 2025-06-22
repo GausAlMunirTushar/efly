@@ -34,14 +34,16 @@ export default function HomeNavbar() {
 				{/* Right Side - Visible in all screen sizes */}
 				<div className='flex items-center space-x-4'>
 					{token ? (
-						<Image
-							src={imgSrc}
-							alt='Profile'
-							width={40}
-							height={40}
-							className='rounded-full'
-							onError={() => setImgSrc(fallbackImage)}
-						/>
+						<Link href='/my-account'>
+							<Image
+								src={imgSrc}
+								alt='Profile'
+								width={40}
+								height={40}
+								className='rounded-full'
+								onError={() => setImgSrc(fallbackImage)}
+							/>
+						</Link>
 					) : (
 						<>
 							<Link

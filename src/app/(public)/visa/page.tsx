@@ -32,7 +32,7 @@ const VisaPage = () => {
 		<main>
 			<section
 				className=' bg-cover bg-center bg-no-repeat py-14'
-				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+				style={{ backgroundImage: "url('/images/visa/visa.jpg')" }}
 			>
 				<Search />
 			</section>

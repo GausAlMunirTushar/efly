@@ -59,7 +59,9 @@ export default function HolidayPageClient() {
 		<main>
 			<section
 				className=' bg-cover bg-center bg-no-repeat py-14'
-				style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
+				style={{
+					backgroundImage: "url('/images/holiday/holiday.jpg')"
+				}}
 			>
 				<Search />
 			</section>
@@ -81,7 +83,7 @@ export default function HolidayPageClient() {
 			</section> */}
 
 			{/* Holiday Packages */}
-			<section className='container mx-auto'>
+			<section className='max-w-7xl mx-auto sm:px-8'>
 				{loading ? (
 					<p className='text-center mt-10'>Loading packages...</p>
 				) : error ? (

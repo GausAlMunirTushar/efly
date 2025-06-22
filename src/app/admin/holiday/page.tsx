@@ -27,9 +27,17 @@ interface FormState {
 	location: LocationOption | null
 	nightsInfo: string
 	description: string
-	tags: string
+	tags: string[]
 	imageUrl: string
 }
+
+const tagOptions = [
+	{ label: 'Hotel', value: 'Hotel' },
+	{ label: 'Transfer', value: 'Transfer' },
+	{ label: 'Meals', value: 'Meals' },
+	{ label: 'Visa', value: 'Visa' },
+	{ label: 'Tour', value: 'Tour' }
+]
 
 const AdminHolidayPage = () => {
 	const [locations, setLocations] = useState<LocationOption[]>([])
@@ -40,7 +48,7 @@ const AdminHolidayPage = () => {
 		location: null,
 		nightsInfo: '',
 		description: '',
-		tags: '',
+		tags: [],
 		imageUrl: ''
 	})
 	const [packages, setPackages] = useState<IHoliday[]>([])
@@ -108,6 +116,13 @@ const AdminHolidayPage = () => {
 		setForm(prev => ({ ...prev, [name]: value }))
 	}
 
+	const handleTagChange = (selectedTags: any) => {
+		const selectedValues = selectedTags
+			? selectedTags.map((item: any) => item.value)
+			: []
+		setForm(prev => ({ ...prev, tags: selectedValues }))
+	}
+
 	const handleLocationChange = (selected: SingleValue<LocationOption>) => {
 		setForm(prev => ({ ...prev, location: selected }))
 	}
@@ -162,7 +177,7 @@ const AdminHolidayPage = () => {
 			...form,
 			price: parseFloat(form.price),
 			location: form.location.value,
-			tags: form.tags.split(',').map(t => t.trim())
+			tags: form.tags
 		}
 
 		setLoading(true)
@@ -191,7 +206,7 @@ const AdminHolidayPage = () => {
 			location: null,
 			nightsInfo: '',
 			description: '',
-			tags: '',
+			tags: [],
 			imageUrl: ''
 		})
 		setImages([])
@@ -211,7 +226,7 @@ const AdminHolidayPage = () => {
 					: { label: pkg.location.name, value: pkg.location._id },
 			nightsInfo: pkg.nightsInfo,
 			description: pkg.description || '',
-			tags: pkg.tags.join(','),
+			tags: pkg.tags,
 			imageUrl: pkg.imageUrl
 		})
 		setImageUploaded(true)
@@ -292,20 +307,27 @@ const AdminHolidayPage = () => {
 					onChange={handleInputChange}
 					required
 				/>
-				<Input
-					name='description'
-					placeholder='Description'
-					value={form.description}
-					onChange={handleInputChange}
-				/>
-				<Input
-					name='tags'
-					placeholder='Tags (comma-separated)'
-					value={form.tags}
-					onChange={handleInputChange}
-					required
-				/>
 
+				{/* Tags Selection */}
+				<div className=''>
+					<Select
+						isMulti
+						options={tagOptions}
+						value={form.tags.map(tag =>
+							tagOptions.find(opt => opt.value === tag)
+						)}
+						onChange={handleTagChange}
+						placeholder='Select tags'
+					/>
+				</div>
+				<div className='col-span-full'>
+					<Input
+						name='description'
+						placeholder='Description'
+						value={form.description}
+						onChange={handleInputChange}
+					/>
+				</div>
 				{/* Image Upload */}
 				<div className='mb-4 col-span-full'>
 					<label className='block text-sm font-medium text-gray-700'>

@@ -9,11 +9,13 @@ export const metadata: Metadata = {
 
 const GalleryPage = () => {
 	return (
-		<main className='py-12 bg-gray-50 min-h-screen'>
-			<div className='max-w-7xl mx-auto text-center px-4'>
-				<h1 className='text-3xl font-bold text-gray-800 mb-4'>
+		<main className=''>
+			<div className='flex items-center justify-center bg-[#0058A8] h-36'>
+				<h1 className='text-2xl sm:text-4xl font-bold text-center text-white mb-6'>
 					efly Gallery
 				</h1>
+			</div>
+			<div className='max-w-7xl mx-auto text-center px-4 py-8'>
 				<p className='text-gray-600 mb-10 max-w-2xl mx-auto'>
 					A collection of our recent trips, pilgrim experiences, and
 					travel highlights.

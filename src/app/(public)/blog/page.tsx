@@ -6,7 +6,7 @@ export const metadata = {
 }
 export default function BlogPage() {
 	return (
-		<section>
+		<section className='max-w-7xl mx-auto'>
 			<BlogList />
 		</section>
 	)

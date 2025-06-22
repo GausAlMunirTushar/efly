@@ -1,16 +1,21 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
-import { UploadCloud, X } from 'lucide-react'
-import { createUmrah } from '@/services/umrahService'
-import type { UmrahPackage } from '@/services/umrahService'
+import { UploadCloud, X, Edit, Trash } from 'lucide-react'
+import {
+	createUmrah,
+	getAllUmrah,
+	deleteUmrah,
+	updateUmrah,
+	UmrahPackage
+} from '@/services/umrahService'
 import apiClient from '@/configs/apiConfig'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
@@ -24,12 +29,28 @@ export default function AdminUmrahPage() {
 		images: [],
 		isFeatured: false
 	})
+	const [umrahPackages, setUmrahPackages] = useState<UmrahPackage[]>([])
 	const [loading, setLoading] = useState(false)
 	const [images, setImages] = useState<File[]>([])
 	const [imagePreviews, setImagePreviews] = useState<string[]>([])
 	const [imageUploading, setImageUploading] = useState(false)
 	const router = useRouter()
 
+	// Fetch all Umrah packages
+	useEffect(() => {
+		const fetchUmrahPackages = async () => {
+			try {
+				const data = await getAllUmrah()
+				setUmrahPackages(data)
+			} catch (error) {
+				toast.error('Failed to fetch Umrah packages!')
+			}
+		}
+
+		fetchUmrahPackages()
+	}, [])
+
+	// Handle input change for the form
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value, type, checked } = e.target
 		if (type === 'checkbox') {
@@ -39,23 +60,27 @@ export default function AdminUmrahPage() {
 		}
 	}
 
+	// Handle drag and drop for images
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setImages(prev => [...prev, ...acceptedFiles])
 		const previews = acceptedFiles.map(file => URL.createObjectURL(file))
 		setImagePreviews(prev => [...prev, ...previews])
 	}, [])
 
+	// Remove an image from the selected list
 	const removeImage = (index: number) => {
 		setImages(prev => prev.filter((_, i) => i !== index))
 		setImagePreviews(prev => prev.filter((_, i) => i !== index))
 	}
 
+	// Configure the dropzone for image upload
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		accept: { 'image/*': [] },
 		multiple: true
 	})
 
+	// Handle image uploads to the server
 	const handleImageUpload = async () => {
 		if (images.length === 0) {
 			toast.error('No images selected for upload.')
@@ -98,6 +123,7 @@ export default function AdminUmrahPage() {
 		}
 	}
 
+	// Handle form submission for creating a new Umrah package
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
@@ -136,9 +162,32 @@ export default function AdminUmrahPage() {
 		}
 	}
 
+	// Handle the delete action for Umrah packages
+	const handleDelete = async (id: string) => {
+		try {
+			await deleteUmrah(id)
+			setUmrahPackages(umrahPackages.filter(pkg => pkg._id !== id))
+			toast.success('Umrah package deleted successfully!')
+		} catch (error) {
+			toast.error('Failed to delete Umrah package!')
+		}
+	}
+
+	// Handle the edit action
+	const handleEdit = (pkg: UmrahPackage) => {
+		// Pre-fill the form with the selected package details for editing
+		setForm({
+			...pkg,
+			price: pkg.price.toString(), // Ensure price is string for input
+			isFeatured: pkg.isFeatured || false
+		})
+	}
+
 	return (
-		<div className='bg-white p-6 space-y-6 rounded-lg'>
-			<h1 className='text-2xl font-bold'>Create Umrah Package</h1>
+		<div className='bg-white p-6 space-y-4 rounded-lg'>
+			<h1 className='text-2xl font-bold'>
+				{form._id ? 'Edit' : 'Create'} Umrah Package
+			</h1>
 
 			<Input
 				name='packagename'
@@ -251,8 +300,54 @@ export default function AdminUmrahPage() {
 				onClick={handleSubmit}
 				disabled={loading || form.images.length === 0}
 			>
-				{loading ? 'Creating Package...' : 'Create Package'}
+				{loading
+					? 'Saving...'
+					: form._id
+						? 'Update Package'
+						: 'Create Package'}
 			</Button>
+
+			{/* Umrah Packages Table */}
+			<h2 className='text-xl font-semibold mt-8'>
+				Existing Umrah Packages
+			</h2>
+			<table className='min-w-full table-auto mt-4'>
+				<thead>
+					<tr className='bg-gray-100'>
+						<th className='px-4 py-2 border text-left'>Title</th>
+						<th className='px-4 py-2 border text-left'>Price</th>
+						<th className='px-4 py-2 border text-left'>Duration</th>
+						<th className='px-4 py-2 border text-left'>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{umrahPackages.map(pkg => (
+						<tr key={pkg._id} className='border-b hover:bg-gray-50'>
+							<td className='px-4 py-2'>{pkg.title}</td>
+							<td className='px-4 py-2'>{pkg.price} BDT</td>
+							<td className='px-4 py-2'>{pkg.duration}</td>
+							<td className='px-4 py-2 flex items-center space-x-4'>
+								<button
+									className='text-blue-500 hover:text-blue-700'
+									title='Edit'
+									onClick={() => handleEdit(pkg)}
+								>
+									<Edit size={20} />
+								</button>
+								<button
+									className='text-red-500 hover:text-red-700'
+									title='Delete'
+									onClick={() =>
+										handleDelete(pkg._id as string)
+									}
+								>
+									<Trash size={20} />
+								</button>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
 		</div>
 	)
 }

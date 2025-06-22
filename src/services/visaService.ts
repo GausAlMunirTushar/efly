@@ -25,19 +25,19 @@ export interface Visa {
 
 // Get all visas
 export const getVisas = async (): Promise<Visa[]> => {
-	const response = await apiClient.get('/visa')
+	const response = await apiClient.get('/visas')
 	return response.data
 }
 
 // Get a single visa by ID
 export const getVisaById = async (id: string): Promise<Visa> => {
-	const response = await apiClient.get(`/visa/${id}`)
+	const response = await apiClient.get(`/visas/${id}`)
 	return response.data
 }
 
 // Create a new visa
 export const createVisa = async (visa: Partial<Visa>): Promise<Visa> => {
-	const response = await apiClient.post('/visa', visa)
+	const response = await apiClient.post('/visas', visa)
 	return response.data
 }
 
@@ -46,11 +46,11 @@ export const updateVisa = async (
 	id: string,
 	visa: Partial<Visa>
 ): Promise<Visa> => {
-	const response = await apiClient.put(`/visa/${id}`, visa)
+	const response = await apiClient.put(`/visas/${id}`, visa)
 	return response.data
 }
 
 // Delete a visa
 export const deleteVisa = async (id: string): Promise<void> => {
-	await apiClient.delete(`/visa/${id}`)
+	await apiClient.delete(`/visas/${id}`)
 }

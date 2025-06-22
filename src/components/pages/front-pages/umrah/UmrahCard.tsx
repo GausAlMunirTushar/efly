@@ -45,28 +45,22 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 					onError={() => setImgSrc(fallbackImage)}
 					sizes='(max-width: 768px) 100vw, 33vw'
 				/>
-				{/* <span className='absolute top-2 right-2 rounded bg-blue-700 px-2 py-1 text-sm font-semibold text-white'>
-					{discount} OFF
-				</span> */}
 			</div>
 
 			<div className='mt-2 space-y-2 p-3 '>
 				<h3 className='text-md font-semibold leading-tight text-gray-800 line-clamp-1'>
 					{packagename}
 				</h3>
-				<div className='flex items-center justify-between text-sm text-gray-600 mt-2'>
-					<div className='flex items-center gap-1'>
-						<CalendarDays className='h-4 w-4' />
-						<span>Anytime</span>
-					</div>
+				<div className='flex items-center justify-between text-sm text-gray-600 my-3'>
 					<div className='flex items-center gap-1'>
 						<Clock className='h-4 w-4' />
 						<span>{duration}</span>
 					</div>
-				</div>
-
-				<div className='mt-2 flex items-baseline gap-2'>
-					<span className='text-sm text-blue-400 '>BDT {price}</span>
+					<div className='flex items-center gap-1'>
+						<span className='text-md text-[#0058a8] '>
+							BDT {price}
+						</span>
+					</div>
 				</div>
 
 				<Link href={`/umrah/${id}`} passHref legacyBehavior>

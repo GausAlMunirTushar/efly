@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Plus, Trash2, Edit, UploadCloud } from 'lucide-react'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
@@ -19,17 +19,6 @@ import { getCountries } from '@/services/countryService'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
-type EntryTypeOption = 'Single Entry' | 'Double Entry' | 'Multiple Entry'
-
-type VisaEntryType = {
-	entryType: EntryTypeOption
-	processingTime: string
-	visaValidity: string
-	maxStay: string
-	description?: string
-	content?: string
-}
-
 type Visa = {
 	_id?: string
 	country: string
@@ -37,10 +26,12 @@ type Visa = {
 	countryImage: string
 	visaType: 'Tourist Visa'
 	visaMode: 'E-Visa'
-	entryTypes: VisaEntryType[]
+	processingTime: string
+	visaValidity: string
+	maxStay: string
+	description?: string
 }
 
-// This is your frontend Country type (mapped from backend response)
 type Country = {
 	name: string
 	code: string
@@ -57,21 +48,20 @@ export default function AdminVisaPage() {
 		countryImage: '',
 		visaType: 'Tourist Visa',
 		visaMode: 'E-Visa',
-		entryTypes: []
+		processingTime: '',
+		visaValidity: '',
+		maxStay: '',
+		description: ''
 	})
 
 	const [editingId, setEditingId] = useState<string | null>(null)
 	const [imageUploading, setImageUploading] = useState(false)
 	const [imagePreview, setImagePreview] = useState<string | null>(null)
-
 	const [images, setImages] = useState<File[]>([])
+
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setImages(prev => [...prev, ...acceptedFiles])
 	}, [])
-
-	const removeImage = (index: number) => {
-		setImages(prev => prev.filter((_, i) => i !== index))
-	}
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
@@ -86,15 +76,14 @@ export default function AdminVisaPage() {
 				getCountries()
 			])
 
-			// Mapping backend country to frontend country
-			const mappedCountries = countryData.map(c => ({
-				name: c.name,
-				code: c.countryCode,
-				flag: c.image || ''
-			}))
-
 			setVisas(visaData)
-			setCountries(mappedCountries)
+			setCountries(
+				countryData.map(c => ({
+					name: c.name,
+					code: c.countryCode,
+					flag: c.image || ''
+				}))
+			)
 		} catch (err: any) {
 			toast.error(err.message || 'Failed to fetch data')
 		}
@@ -109,9 +98,11 @@ export default function AdminVisaPage() {
 			toast.error('Please select an image.')
 			return
 		}
+
 		setImageUploading(true)
 		const formData = new FormData()
 		formData.append('file', images[0])
+
 		try {
 			const res = await fetch('/api/upload', {
 				method: 'POST',
@@ -133,70 +124,25 @@ export default function AdminVisaPage() {
 		}
 	}
 
-	const addEntryType = () => {
-		const allTypes: EntryTypeOption[] = [
-			'Single Entry',
-			'Double Entry',
-			'Multiple Entry'
-		]
-		const remaining = allTypes.filter(
-			t => !form.entryTypes.find(e => e.entryType === t)
-		)
-		if (!remaining.length) {
-			toast.info('All entry types added.')
-			return
-		}
-		const newEntry: VisaEntryType = {
-			entryType: remaining[0],
-			processingTime: '',
-			visaValidity: '',
-			maxStay: '',
-			description: '',
-			content: ''
-		}
-		setForm(prev => ({
-			...prev,
-			entryTypes: [...prev.entryTypes, newEntry]
-		}))
-	}
-
-	const removeEntryType = (index: number) => {
-		setForm(prev => ({
-			...prev,
-			entryTypes: prev.entryTypes.filter((_, i) => i !== index)
-		}))
-	}
-
-	const updateEntryType = (
-		index: number,
-		key: keyof VisaEntryType,
-		value: any
-	) => {
-		setForm(prev => {
-			const updated = [...prev.entryTypes]
-			updated[index] = { ...updated[index], [key]: value }
-			return { ...prev, entryTypes: updated }
-		})
-	}
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		if (!form.country || !form.countryCode || !form.countryImage) {
-			toast.error('Country, Code and Image required.')
+		// Ensure image is uploaded first
+		if (!form.countryImage) {
+			toast.error('Please upload a country image first.')
 			return
 		}
 
-		if (!form.entryTypes.length) {
-			toast.error('At least one entry type needed.')
+		if (!form.country || !form.countryCode) {
+			toast.error('Country, Code, and Image are required.')
 			return
 		}
 
-		for (const et of form.entryTypes) {
-			if (!et.processingTime || !et.visaValidity || !et.maxStay) {
-				toast.error(`Fill all fields for ${et.entryType}`)
-				return
-			}
+		if (!form.processingTime || !form.visaValidity || !form.maxStay) {
+			toast.error(
+				'Please fill out processing time, visa validity, and max stay.'
+			)
+			return
 		}
 
 		try {
@@ -222,7 +168,10 @@ export default function AdminVisaPage() {
 			countryImage: '',
 			visaType: 'Tourist Visa',
 			visaMode: 'E-Visa',
-			entryTypes: []
+			processingTime: '',
+			visaValidity: '',
+			maxStay: '',
+			description: ''
 		})
 		setImagePreview(null)
 	}
@@ -246,28 +195,29 @@ export default function AdminVisaPage() {
 			countryImage: visa.countryImage,
 			visaType: visa.visaType,
 			visaMode: visa.visaMode,
-			entryTypes: visa.entryTypes
+			processingTime: visa.processingTime,
+			visaValidity: visa.visaValidity,
+			maxStay: visa.maxStay,
+			description: visa.description || ''
 		})
 		setImagePreview(visa.countryImage)
 	}
 
-	const joditConfig = useMemo(
-		() => ({ readonly: false, placeholder: 'Start typing...' }),
-		[]
-	)
-
 	return (
-		<div className='bg-white p-6 rounded-lg max-w-5xl mx-auto'>
-			<h1 className='text-2xl font-bold mb-6'>Visa Management</h1>
+		<div className='bg-white p-8 rounded-lg max-w-5xl mx-auto shadow-md'>
+			<h1 className='text-3xl font-bold mb-6 text-center'>
+				Visa Management
+			</h1>
 
-			<form onSubmit={handleSubmit} className='space-y-4'>
-				<div className='grid grid-cols-2 gap-4'>
+			<form onSubmit={handleSubmit} className='space-y-6'>
+				{/* Country Selection */}
+				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 					<div>
-						<label className='block mb-1 font-semibold'>
+						<label className='block text-sm font-semibold text-gray-700'>
 							Country
 						</label>
 						<select
-							className='w-full border rounded px-2 py-1'
+							className='w-full border rounded-md p-3 mt-1'
 							value={form.country}
 							onChange={e => {
 								const selected = countries.find(
@@ -290,16 +240,33 @@ export default function AdminVisaPage() {
 							))}
 						</select>
 					</div>
-
-					<Input
-						placeholder='Country Code'
-						value={form.countryCode}
-						disabled
-					/>
+					<div>
+						<Input
+							placeholder='Country Code'
+							value={form.countryCode}
+							disabled
+							className='p-3 mt-1'
+						/>
+					</div>
 				</div>
 
+				{/* Image Upload */}
+				<div
+					{...getRootProps()}
+					className='border-2 border-dashed p-6 rounded-md text-center cursor-pointer'
+				>
+					<input {...getInputProps()} />
+					<UploadCloud className='w-12 h-12 mx-auto text-gray-500' />
+					<p className='text-gray-600'>
+						{isDragActive
+							? 'Drop the image...'
+							: 'Drag & drop image or click'}
+					</p>
+				</div>
+
+				{/* Image Preview */}
 				{imagePreview && (
-					<div className='mt-2'>
+					<div className='mt-4 text-center'>
 						<Image
 							src={imagePreview}
 							alt='Country'
@@ -310,150 +277,86 @@ export default function AdminVisaPage() {
 					</div>
 				)}
 
-				<div
-					{...getRootProps()}
-					className='border-2 border-dashed p-4 rounded text-center cursor-pointer'
-				>
-					<input {...getInputProps()} />
-					<UploadCloud className='w-10 h-10 mx-auto text-gray-500' />
-					<p>
-						{isDragActive
-							? 'Drop the image...'
-							: 'Drag & drop image or click'}
-					</p>
-				</div>
-
 				<Button
 					type='button'
 					onClick={handleImageUpload}
 					disabled={imageUploading}
-					className='w-full mt-2'
+					className='w-full mt-4'
 				>
 					{imageUploading ? 'Uploading...' : 'Upload Image'}
 				</Button>
 
-				<div>
-					<h2 className='text-xl font-semibold my-4'>Entry Types</h2>
-					{form.entryTypes.map((entry, index) => (
-						<div
-							key={index}
-							className='border p-4 rounded mb-4 bg-gray-50 relative'
-						>
-							<button
-								type='button'
-								onClick={() => removeEntryType(index)}
-								className='absolute top-2 right-2 text-red-600'
-							>
-								<Trash2 />
-							</button>
-
-							<Input
-								placeholder='Entry Type'
-								value={entry.entryType}
-								disabled
-							/>
-							<Input
-								placeholder='Processing Time'
-								value={entry.processingTime}
-								onChange={e =>
-									updateEntryType(
-										index,
-										'processingTime',
-										e.target.value
-									)
-								}
-							/>
-							<Input
-								placeholder='Visa Validity'
-								value={entry.visaValidity}
-								onChange={e =>
-									updateEntryType(
-										index,
-										'visaValidity',
-										e.target.value
-									)
-								}
-							/>
-							<Input
-								placeholder='Max Stay'
-								value={entry.maxStay}
-								onChange={e =>
-									updateEntryType(
-										index,
-										'maxStay',
-										e.target.value
-									)
-								}
-							/>
-
-							<textarea
-								placeholder='Description'
-								value={entry.description || ''}
-								onChange={e =>
-									updateEntryType(
-										index,
-										'description',
-										e.target.value
-									)
-								}
-								className='w-full border rounded px-2 py-1 mt-2'
-							/>
-
-							<JoditEditor
-								value={entry.content || ''}
-								config={joditConfig}
-								onBlur={newContent =>
-									updateEntryType(
-										index,
-										'content',
-										newContent
-									)
-								}
-							/>
-						</div>
-					))}
-
-					<Button
-						type='button'
-						onClick={addEntryType}
-						disabled={form.entryTypes.length >= 3}
-						className='w-full'
-					>
-						<Plus className='mr-2' /> Add Entry Type
-					</Button>
+				{/* Visa Information */}
+				<div className='mt-8 space-y-3'>
+					<Input
+						placeholder='Processing Time'
+						value={form.processingTime}
+						onChange={e =>
+							setForm({ ...form, processingTime: e.target.value })
+						}
+					/>
+					<Input
+						placeholder='Visa Validity'
+						value={form.visaValidity}
+						onChange={e =>
+							setForm({ ...form, visaValidity: e.target.value })
+						}
+					/>
+					<Input
+						placeholder='Max Stay'
+						value={form.maxStay}
+						onChange={e =>
+							setForm({ ...form, maxStay: e.target.value })
+						}
+					/>
+					<JoditEditor
+						value={form.description || ''}
+						config={{
+							readonly: false,
+							placeholder: 'Enter description here...'
+						}}
+						onBlur={newContent =>
+							setForm({ ...form, description: newContent })
+						}
+					/>
 				</div>
 
-				<Button type='submit' className='w-full py-3'>
+				{/* Submit Button */}
+				<Button type='submit' className='w-full py-3 mt-6'>
 					{editingId ? 'Update Visa' : 'Create Visa'}
 				</Button>
 			</form>
 
-			<div className='mt-10'>
-				<h2 className='text-xl font-semibold mb-3'>Existing Visas</h2>
-				<table className='w-full border text-sm'>
+			{/* Existing Visas Table */}
+			<div className='mt-12'>
+				<h2 className='text-xl font-semibold mb-4 text-gray-700'>
+					Existing Visas
+				</h2>
+				<table className='w-full table-auto border-collapse'>
 					<thead className='bg-gray-100'>
 						<tr>
-							<th className='p-2'>Country</th>
-							<th className='p-2'>Code</th>
-							<th className='p-2'>Entry Types</th>
-							<th className='p-2'>Actions</th>
+							<th className='p-3 text-left'>Country</th>
+							<th className='p-3 text-left'>Code</th>
+							<th className='p-3 text-left'>Processing Time</th>
+							<th className='p-3 text-left'>Visa Validity</th>
+							<th className='p-3 text-left'>Max Stay</th>
+							<th className='p-3 text-left'>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						{visas.map(visa => (
 							<tr key={visa._id} className='border-t'>
-								<td className='p-2'>{visa.country}</td>
-								<td className='p-2'>{visa.countryCode}</td>
-								<td className='p-2'>
-									{visa.entryTypes
-										.map(e => e.entryType)
-										.join(', ')}
-								</td>
-								<td className='p-2 flex gap-2'>
+								<td className='p-3'>{visa.country}</td>
+								<td className='p-3'>{visa.countryCode}</td>
+								<td className='p-3'>{visa.processingTime}</td>
+								<td className='p-3'>{visa.visaValidity}</td>
+								<td className='p-3'>{visa.maxStay}</td>
+								<td className='p-3'>
 									<Button
 										size='sm'
 										variant='outline'
 										onClick={() => handleEdit(visa)}
+										className='mr-2'
 									>
 										<Edit size={16} />
 									</Button>

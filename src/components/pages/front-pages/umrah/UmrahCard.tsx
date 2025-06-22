@@ -33,7 +33,7 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 		<article
 			role='group'
 			aria-label={`Umrah package: ${packagename}`}
-			className='rounded-xl min-w-72 max-w-sm border bg-white shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400 hover:bg-gray-50'
+			className='rounded-xl max-w-72 border bg-white shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400 hover:bg-gray-50'
 			tabIndex={0}
 		>
 			<div className='relative h-48 w-full overflow-hidden rounded-t-lg'>
@@ -71,7 +71,7 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 
 				<Link href={`/umrah/${id}`} passHref legacyBehavior>
 					<Button
-						className='mt-3 block w-full rounded bg-[#0058a8] px-4 py-2 text-center text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+						className='mt-3 block w-full rounded bg-[#0058a8] px-4 py-2 text-center text-white hover:bg-[#0058a8] transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 						aria-label={`View details for ${packagename}`}
 					>
 						View Details

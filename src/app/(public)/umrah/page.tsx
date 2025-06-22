@@ -50,7 +50,7 @@ const UmrahPage = () => {
 			</section> */}
 
 			{/* Content container below image */}
-			<section className='container mx-auto'>
+			<section className='max-w-7xl mx-auto px-8'>
 				<Umrah />
 			</section>
 		</main>

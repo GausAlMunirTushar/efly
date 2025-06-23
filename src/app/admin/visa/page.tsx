@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Trash2, Edit, UploadCloud } from 'lucide-react'
+import { Trash2, Edit, UploadCloud } from 'lucide-react'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 import { toast } from 'react-toastify'
@@ -21,7 +21,7 @@ const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 type Visa = {
 	_id?: string
-	country: string
+	country: string // This should store the country _id
 	countryCode: string
 	countryImage: string
 	visaType: 'Tourist Visa'
@@ -33,6 +33,7 @@ type Visa = {
 }
 
 type Country = {
+	_id: string
 	name: string
 	code: string
 	flag: string
@@ -79,6 +80,7 @@ export default function AdminVisaPage() {
 			setVisas(visaData)
 			setCountries(
 				countryData.map(c => ({
+					_id: c._id || '', // Ensure _id is always a string
 					name: c.name,
 					code: c.countryCode,
 					flag: c.image || ''
@@ -190,7 +192,7 @@ export default function AdminVisaPage() {
 	const handleEdit = (visa: Visa) => {
 		setEditingId(visa._id || null)
 		setForm({
-			country: visa.country,
+			country: visa.country, // This should be the country _id, not the name
 			countryCode: visa.countryCode,
 			countryImage: visa.countryImage,
 			visaType: visa.visaType,
@@ -225,7 +227,7 @@ export default function AdminVisaPage() {
 								)
 								setForm(prev => ({
 									...prev,
-									country: selected?.name || '',
+									country: selected?._id || '', // Use _id (ObjectId) instead of name
 									countryCode: selected?.code || '',
 									countryImage: selected?.flag || ''
 								}))
@@ -234,7 +236,7 @@ export default function AdminVisaPage() {
 						>
 							<option value=''>Select Country</option>
 							{countries.map(c => (
-								<option key={c.code} value={c.name}>
+								<option key={c._id} value={c.name}>
 									{c.name}
 								</option>
 							))}
@@ -346,8 +348,12 @@ export default function AdminVisaPage() {
 					<tbody>
 						{visas.map(visa => (
 							<tr key={visa._id} className='border-t'>
-								<td className='p-3'>{visa.country}</td>
-								<td className='p-3'>{visa.countryCode}</td>
+								<td className='p-3'>{visa.country.name}</td>{' '}
+								{/* Update this line */}
+								<td className='p-3'>
+									{visa.country.countryCode}
+								</td>{' '}
+								{/* Update this line */}
 								<td className='p-3'>{visa.processingTime}</td>
 								<td className='p-3'>{visa.visaValidity}</td>
 								<td className='p-3'>{visa.maxStay}</td>

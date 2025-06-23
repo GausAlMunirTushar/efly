@@ -11,16 +11,17 @@ export interface VisaEntryType {
 	content?: string
 }
 
-export interface Visa {
+export type Visa = {
 	_id?: string
 	country: string
 	countryCode: string
 	countryImage: string
 	visaType: 'Tourist Visa'
 	visaMode: 'E-Visa'
-	entryTypes: VisaEntryType[]
-	createdAt?: string
-	updatedAt?: string
+	processingTime: string
+	visaValidity: string
+	maxStay: string
+	description?: string
 }
 
 // Get all visas

@@ -7,6 +7,7 @@ import { CalendarDays, Clock } from 'lucide-react'
 import Button from '@/components/form/Button'
 
 interface VisaCardProps {
+	id: string
 	imageUrl?: string
 	visaType?: string
 	visaMode?: string
@@ -22,6 +23,7 @@ interface VisaCardProps {
 const fallbackImage = '/images/placeholder.webp'
 
 const VisaCard: React.FC<VisaCardProps> = ({
+	id,
 	imageUrl = fallbackImage,
 	visaType = 'Tourist Visa',
 	visaMode = 'E-Visa',
@@ -87,7 +89,7 @@ const VisaCard: React.FC<VisaCardProps> = ({
 						</span>
 					</div>
 
-					<Link href={`/visa/${encodeURIComponent(country)}`}>
+					<Link href={`/visa/${id}`}>
 						<Button
 							className='mt-3 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 							aria-label={`View details for ${visaType} visa`}

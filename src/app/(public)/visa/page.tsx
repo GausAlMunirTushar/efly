@@ -37,6 +37,7 @@ const VisaPage = () => {
 						visas.map(visa => (
 							<VisaCard
 								key={visa._id}
+								id={visa._id}
 								imageUrl={
 									visa.country.image ||
 									'/images/placeholder.webp'

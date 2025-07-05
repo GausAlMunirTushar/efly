@@ -19,31 +19,49 @@ import { getCountries } from '@/services/countryService'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
-type Visa = {
-	_id?: string
-	country: string // This should store the country _id
+// Country type
+type Country = {
+	_id: string
+	name: string
 	countryCode: string
-	countryImage: string
-	visaType: 'Tourist Visa'
-	visaMode: 'E-Visa'
+	image: string
+}
+
+// API response type
+type VisaFromAPI = {
+	_id: string
+	country: Country
+	visaType: string
+	visaMode?: string
 	processingTime: string
 	visaValidity: string
 	maxStay: string
 	description?: string
+	visaFee?: string
+	serviceCharge?: string
 }
 
-type Country = {
-	_id: string
-	name: string
-	code: string
-	flag: string
+// Form data type
+type VisaFormData = {
+	_id?: string
+	country: string // Country ID
+	countryCode: string
+	countryImage: string
+	visaType: string
+	visaMode: string
+	processingTime: string
+	visaValidity: string
+	maxStay: string
+	description?: string
+	visaFee?: string
+	serviceCharge?: string
 }
 
 export default function AdminVisaPage() {
-	const [visas, setVisas] = useState<Visa[]>([])
+	const [visas, setVisas] = useState<VisaFromAPI[]>([])
 	const [countries, setCountries] = useState<Country[]>([])
 
-	const [form, setForm] = useState<Visa>({
+	const [form, setForm] = useState<VisaFormData>({
 		country: '',
 		countryCode: '',
 		countryImage: '',
@@ -67,7 +85,7 @@ export default function AdminVisaPage() {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		accept: { 'image/*': [] },
-		multiple: true
+		multiple: false
 	})
 
 	const fetchAllData = useCallback(async () => {
@@ -78,14 +96,7 @@ export default function AdminVisaPage() {
 			])
 
 			setVisas(visaData)
-			setCountries(
-				countryData.map(c => ({
-					_id: c._id || '', // Ensure _id is always a string
-					name: c.name,
-					code: c.countryCode,
-					flag: c.image || ''
-				}))
-			)
+			setCountries(countryData)
 		} catch (err: any) {
 			toast.error(err.message || 'Failed to fetch data')
 		}
@@ -129,30 +140,27 @@ export default function AdminVisaPage() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		// Ensure image is uploaded first
-		if (!form.countryImage) {
-			toast.error('Please upload a country image first.')
+		if (!form.country || !form.countryCode || !form.countryImage) {
+			toast.error('Please fill country, code, and image.')
 			return
 		}
 
-		if (!form.country || !form.countryCode) {
-			toast.error('Country, Code, and Image are required.')
-			return
-		}
-
-		if (!form.processingTime || !form.visaValidity || !form.maxStay) {
-			toast.error(
-				'Please fill out processing time, visa validity, and max stay.'
-			)
-			return
+		const visaPayload = {
+			...form,
+			country: {
+				_id: form.country,
+				name: '',
+				countryCode: form.countryCode,
+				image: form.countryImage
+			}
 		}
 
 		try {
 			if (editingId) {
-				await updateVisa(editingId, form)
+				await updateVisa(editingId, visaPayload)
 				toast.success('Visa updated.')
 			} else {
-				await createVisa(form)
+				await createVisa(visaPayload)
 				toast.success('Visa created.')
 			}
 			resetForm()
@@ -189,20 +197,22 @@ export default function AdminVisaPage() {
 		}
 	}
 
-	const handleEdit = (visa: Visa) => {
-		setEditingId(visa._id || null)
+	const handleEdit = (visa: VisaFromAPI) => {
+		setEditingId(visa._id)
 		setForm({
-			country: visa.country, // This should be the country _id, not the name
-			countryCode: visa.countryCode,
-			countryImage: visa.countryImage,
+			country: visa.country._id,
+			countryCode: visa.country.countryCode,
+			countryImage: visa.country.image,
 			visaType: visa.visaType,
-			visaMode: visa.visaMode,
+			visaMode: visa.visaMode || 'E-Visa',
 			processingTime: visa.processingTime,
 			visaValidity: visa.visaValidity,
 			maxStay: visa.maxStay,
-			description: visa.description || ''
+			description: visa.description || '',
+			visaFee: visa.visaFee || '',
+			serviceCharge: visa.serviceCharge || ''
 		})
-		setImagePreview(visa.countryImage)
+		setImagePreview(visa.country.image)
 	}
 
 	return (
@@ -212,7 +222,6 @@ export default function AdminVisaPage() {
 			</h1>
 
 			<form onSubmit={handleSubmit} className='space-y-6'>
-				{/* Country Selection */}
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 					<div>
 						<label className='block text-sm font-semibold text-gray-700'>
@@ -223,20 +232,21 @@ export default function AdminVisaPage() {
 							value={form.country}
 							onChange={e => {
 								const selected = countries.find(
-									c => c.name === e.target.value
+									c => c._id === e.target.value
 								)
+								if (!selected) return
 								setForm(prev => ({
 									...prev,
-									country: selected?._id || '', // Use _id (ObjectId) instead of name
-									countryCode: selected?.code || '',
-									countryImage: selected?.flag || ''
+									country: selected._id,
+									countryCode: selected.countryCode,
+									countryImage: selected.image
 								}))
-								setImagePreview(selected?.flag || null)
+								setImagePreview(selected.image || null)
 							}}
 						>
 							<option value=''>Select Country</option>
 							{countries.map(c => (
-								<option key={c._id} value={c.name}>
+								<option key={c._id} value={c._id}>
 									{c.name}
 								</option>
 							))}
@@ -266,7 +276,7 @@ export default function AdminVisaPage() {
 					</p>
 				</div>
 
-				{/* Image Preview */}
+				{/* Preview */}
 				{imagePreview && (
 					<div className='mt-4 text-center'>
 						<Image
@@ -288,7 +298,7 @@ export default function AdminVisaPage() {
 					{imageUploading ? 'Uploading...' : 'Upload Image'}
 				</Button>
 
-				{/* Visa Information */}
+				{/* Visa Info */}
 				<div className='mt-8 space-y-3'>
 					<Input
 						placeholder='Processing Time'
@@ -311,11 +321,25 @@ export default function AdminVisaPage() {
 							setForm({ ...form, maxStay: e.target.value })
 						}
 					/>
+					<Input
+						placeholder='Visa Fee'
+						value={form.visaFee}
+						onChange={e =>
+							setForm({ ...form, visaFee: e.target.value })
+						}
+					/>
+					<Input
+						placeholder='Service Charge'
+						value={form.serviceCharge}
+						onChange={e =>
+							setForm({ ...form, serviceCharge: e.target.value })
+						}
+					/>
 					<JoditEditor
 						value={form.description || ''}
 						config={{
 							readonly: false,
-							placeholder: 'Enter description here...'
+							placeholder: 'Enter description...'
 						}}
 						onBlur={newContent =>
 							setForm({ ...form, description: newContent })
@@ -323,13 +347,12 @@ export default function AdminVisaPage() {
 					/>
 				</div>
 
-				{/* Submit Button */}
 				<Button type='submit' className='w-full py-3 mt-6'>
 					{editingId ? 'Update Visa' : 'Create Visa'}
 				</Button>
 			</form>
 
-			{/* Existing Visas Table */}
+			{/* Table */}
 			<div className='mt-12'>
 				<h2 className='text-xl font-semibold mb-4 text-gray-700'>
 					Existing Visas
@@ -348,12 +371,10 @@ export default function AdminVisaPage() {
 					<tbody>
 						{visas.map(visa => (
 							<tr key={visa._id} className='border-t'>
-								<td className='p-3'>{visa.country.name}</td>{' '}
-								{/* Update this line */}
+								<td className='p-3'>{visa.country.name}</td>
 								<td className='p-3'>
 									{visa.country.countryCode}
-								</td>{' '}
-								{/* Update this line */}
+								</td>
 								<td className='p-3'>{visa.processingTime}</td>
 								<td className='p-3'>{visa.visaValidity}</td>
 								<td className='p-3'>{visa.maxStay}</td>
@@ -369,9 +390,7 @@ export default function AdminVisaPage() {
 									<Button
 										size='sm'
 										variant='danger'
-										onClick={() =>
-											visa._id && handleDelete(visa._id)
-										}
+										onClick={() => handleDelete(visa._id)}
 									>
 										<Trash2 size={16} />
 									</Button>

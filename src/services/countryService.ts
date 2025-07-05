@@ -1,10 +1,10 @@
 import apiClient from '@/configs/apiConfig'
 
 export interface Country {
-	_id?: string
+	_id: string
 	name: string
 	countryCode: string
-	image?: string
+	image: string
 	createdAt?: string
 	updatedAt?: string
 }

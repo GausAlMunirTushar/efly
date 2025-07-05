@@ -1,39 +1,39 @@
 'use client'
 
 import Image from 'next/image'
-import { CalendarDays, Clock } from 'lucide-react'
-import { useState } from 'react'
-import Button from '@/components/form/Button'
 import Link from 'next/link'
+import React, { useState } from 'react'
+import { CalendarDays, Clock } from 'lucide-react'
+import Button from '@/components/form/Button'
 
 interface VisaCardProps {
-	imageUrl: string
-	visaType: string
-	visaMode: string
-	entryType: string
-	processingTime: string
-	visaValidity: string
-	maxStay: string
-	visaFee: string
+	imageUrl?: string
+	visaType?: string
+	visaMode?: string
+	entryType?: string
+	processingTime?: string
+	visaValidity?: string
+	maxStay?: string
+	visaFee?: string
+	serviceCharge?: string
 	country: string
-	serviceCharge: string
 }
 
 const fallbackImage = '/images/placeholder.webp'
 
 const VisaCard: React.FC<VisaCardProps> = ({
-	imageUrl,
-	visaType,
-	visaMode,
-	entryType,
-	processingTime,
-	visaValidity,
-	maxStay,
-	visaFee,
-	country,
-	serviceCharge
+	imageUrl = fallbackImage,
+	visaType = 'Tourist Visa',
+	visaMode = 'E-Visa',
+	entryType = 'Single Entry',
+	processingTime = 'N/A',
+	visaValidity = 'N/A',
+	maxStay = 'N/A',
+	visaFee = '0',
+	serviceCharge = '0',
+	country
 }) => {
-	const [imgSrc, setImgSrc] = useState(imageUrl || fallbackImage)
+	const [imgSrc, setImgSrc] = useState(imageUrl)
 
 	return (
 		<article
@@ -44,8 +44,8 @@ const VisaCard: React.FC<VisaCardProps> = ({
 		>
 			<div className='relative h-48 w-full overflow-hidden rounded-lg'>
 				<Image
-					src={imgSrc || fallbackImage}
-					alt={visaType || 'Visa image'}
+					src={imgSrc}
+					alt={`${country} ${visaType}`}
 					fill
 					className='object-cover'
 					onError={() => setImgSrc(fallbackImage)}
@@ -57,8 +57,9 @@ const VisaCard: React.FC<VisaCardProps> = ({
 				<h3 className='text-lg font-semibold leading-tight text-gray-800'>
 					{country} {visaType}
 				</h3>
+
 				<p className='text-sm text-gray-500'>
-					{visaMode} - {entryType}
+					{visaMode} — {entryType}
 				</p>
 
 				<div className='flex items-center justify-between text-sm text-gray-600 mt-2'>
@@ -72,8 +73,8 @@ const VisaCard: React.FC<VisaCardProps> = ({
 					</div>
 				</div>
 
-				<div className='mt-2 text-sm text-gray-600'>
-					<span>Max Stay: {maxStay}</span>
+				<div className='text-sm text-gray-600'>
+					Max Stay: <span className='font-medium'>{maxStay}</span>
 				</div>
 
 				<div className='mt-4'>
@@ -86,7 +87,7 @@ const VisaCard: React.FC<VisaCardProps> = ({
 						</span>
 					</div>
 
-					<Link href={`/visa/${country}`}>
+					<Link href={`/visa/${encodeURIComponent(country)}`}>
 						<Button
 							className='mt-3 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 							aria-label={`View details for ${visaType} visa`}

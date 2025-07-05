@@ -1,27 +1,25 @@
 import apiClient from '@/configs/apiConfig'
 
-export type EntryTypeOption = 'Single Entry' | 'Double Entry' | 'Multiple Entry'
-
-export interface VisaEntryType {
-	entryType: EntryTypeOption
-	processingTime: string
-	visaValidity: string
-	maxStay: string
-	description?: string
-	content?: string
+// Define the structure of country object
+export interface Country {
+	_id: string
+	name: string
+	countryCode: string
+	image: string
 }
 
-export type Visa = {
-	_id?: string
-	country: string
-	countryCode: string
-	countryImage: string
-	visaType: 'Tourist Visa'
-	visaMode: 'E-Visa'
+// Visa interface based on updated response
+export interface Visa {
+	_id: string
+	country: Country
+	visaType: string
+	visaMode?: string
 	processingTime: string
 	visaValidity: string
 	maxStay: string
 	description?: string
+	visaFee?: string
+	serviceCharge?: string
 }
 
 // Get all visas

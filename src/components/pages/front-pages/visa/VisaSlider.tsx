@@ -63,6 +63,7 @@ const VisaSlider = () => {
 							imageUrl={
 								visa.countryImage || '/images/placeholder.webp'
 							}
+							id={visa._id}
 							visaType={visa.visaType}
 							visaMode={visa.visaMode}
 							entryType={visa.entryType}

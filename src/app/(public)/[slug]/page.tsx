@@ -66,7 +66,7 @@ export default function Page({
 					setBlog(data)
 				} catch (error) {
 					console.error(error)
-					setError('Failed to load blog') // Set error message
+					setError('Failed to load blog')
 				} finally {
 					setLoading(false)
 				}
@@ -110,7 +110,7 @@ export default function Page({
 						<img
 							src={blog.imageUrl}
 							alt={blog.title}
-							className='w-full h-[600] object- rounded-lg border mb-4'
+							className='w-full h-64 sm:h-96 object-cover rounded-lg border mb-4'
 						/>
 					)}
 					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
@@ -123,7 +123,7 @@ export default function Page({
 							</p>
 
 							<div
-								className='mt-4 text-gray-700 leading-relaxed'
+								className='mt-4 text-gray-700 leading-relaxed w-full text-wrap'
 								dangerouslySetInnerHTML={{
 									__html: blog.content
 								}}

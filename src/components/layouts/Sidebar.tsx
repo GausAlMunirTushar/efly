@@ -20,7 +20,8 @@ import {
 	BookOpenCheck,
 	Settings,
 	UserRoundSearchIcon,
-	ListOrdered
+	ListOrdered,
+	Files
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -95,6 +96,11 @@ const menuItems: MenuItem[] = [
 		title: 'Customers',
 		icon: <UserRoundSearchIcon className='w-5 h-5' />,
 		href: `/admin/customers`
+	},
+	{
+		title: 'Invoices',
+		icon: <Files className='w-5 h-5' />,
+		href: `/admin/invoices`
 	},
 	{
 		title: 'Settings',

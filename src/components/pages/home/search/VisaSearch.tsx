@@ -3,9 +3,10 @@
 import Button from '@/components/form/Button'
 import SelectSearchInput from '@/components/form/SelectSearchInput'
 import { Search } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getCountries, Country } from '@/services/countryService'
+import { getVisas, Visa } from '@/services/visaService'
 
 type VisaOption = { code: string; name: string }
 
@@ -31,15 +32,22 @@ export default function VisaSearch() {
 		fetchVisaCountries()
 	}, [])
 
-	const handleSearch = () => {
-		if (country) {
-			const selectedCountry = options.find(opt => opt.code === country)
-			if (selectedCountry) {
-				const slug = selectedCountry.name
-					.toLowerCase()
-					.replace(/\s+/g, '-')
-				router.push(`/visa/${slug}`)
+	const handleSearch = async () => {
+		if (!country) return
+
+		try {
+			const visas: Visa[] = await getVisas()
+			const matchedVisa = visas.find(
+				v => v.country?.countryCode === country
+			)
+
+			if (matchedVisa) {
+				router.push(`/visa/${matchedVisa._id}`)
+			} else {
+				alert('No visa found for the selected country.')
 			}
+		} catch (err) {
+			console.error('Error fetching visas:', err)
 		}
 	}
 
@@ -54,9 +62,9 @@ export default function VisaSearch() {
 				/>
 			</div>
 			<div className='flex'>
-				<Button className='' onClick={handleSearch}>
+				<Button onClick={handleSearch}>
 					<div className='px-4'>
-						<Search size={20} className='' />
+						<Search size={20} />
 					</div>
 				</Button>
 			</div>

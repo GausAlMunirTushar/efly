@@ -31,7 +31,7 @@ const VisaPage = () => {
 			>
 				<Search />
 			</section>
-			<section className='max-w-7xl mx-auto'>
+			{/* <section className='max-w-7xl mx-auto'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4'>
 					{visas.length > 0 ? (
 						visas.map(visa => (
@@ -57,7 +57,7 @@ const VisaPage = () => {
 						<p>No visas available</p>
 					)}
 				</div>
-			</section>
+			</section> */}
 		</main>
 	)
 }

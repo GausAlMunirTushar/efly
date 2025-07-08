@@ -15,8 +15,8 @@ const Footer = () => {
 
 	const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 	return (
-		<footer className=' text-white py-10 px-2 sm:px-5 bg-[#0058A8] shadow-md'>
-			<div className='max-w-7xl mx-auto sm:px-8'>
+		<footer className=' text-white py-10 px-4 sm:px-5 bg-[#0058A8] shadow-md'>
+			<div className='max-w-7xl mx-auto'>
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  text-white'>
 					{/* About Section */}
 					<div className='flex flex-col items-start'>

@@ -45,7 +45,7 @@ export default function VisaDetailPage() {
 
 	return (
 		<section className='bg-gray-100'>
-			<div className='container mx-auto py-4'>
+			<div className='max-w-7xl mx-auto py-4 px-4'>
 				<VisaHeader
 					country={visa.country.name}
 					imageUrl={visa.country.image}

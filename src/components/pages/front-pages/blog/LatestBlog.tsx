@@ -35,7 +35,7 @@ export default function LatestBlog() {
 	}, [])
 
 	return (
-		<div className='p-4 bg-white shadow-md rounded-lg'>
+		<div className='p-4 bg-white rounded-lg'>
 			<h2 className='text-xl font-bold mb-4'>Latest Blogs</h2>
 
 			{loading ? (

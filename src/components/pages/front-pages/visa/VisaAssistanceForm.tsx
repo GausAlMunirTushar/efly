@@ -57,7 +57,7 @@ export default function VisaAssistanceForm() {
 	}
 
 	return (
-		<div className='max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg'>
+		<div className='max-w-md mx-auto p-6 bg-white rounded-lg'>
 			<h2 className='text-2xl font-semibold text-center text-indigo-600'>
 				Request Visa
 			</h2>

@@ -103,7 +103,7 @@ export default function Page({
 			</div> */}
 
 			{/* Blog Content & Sidebar */}
-			<div className='container mx-auto py-6 '>
+			<div className='max-w-7xl mx-auto py-6 px-4'>
 				{/* Blog Content */}
 				<div className='w-full'>
 					{blog.imageUrl && (

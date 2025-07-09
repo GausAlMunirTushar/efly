@@ -24,3 +24,10 @@ export const deleteLocation = async (id: string) => {
 	const res = await apiClient.delete(`/locations/${id}`)
 	return res.data
 }
+
+export const getLocationByName = async (name: string) => {
+	const res = await apiClient.get('/locations', {
+		params: { name } // axios automatically encodes the query
+	})
+	return res.data
+}

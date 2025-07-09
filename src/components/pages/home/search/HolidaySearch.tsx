@@ -29,7 +29,7 @@ export default function HolidaySearch() {
 				}))
 
 				setDestinations(formatted)
-				if (formatted.length) setDestination(formatted[0].id)
+				if (formatted.length) setDestination(formatted[0].name)
 			} catch (error) {
 				console.error('Failed to fetch destinations', error)
 			}
@@ -40,7 +40,7 @@ export default function HolidaySearch() {
 
 	const handleSearch = () => {
 		if (!destination) return
-		router.push(`/holiday?location=${encodeURIComponent(destination)}`)
+		router.push(`/holiday/${encodeURIComponent(destination)}`)
 	}
 
 	return (

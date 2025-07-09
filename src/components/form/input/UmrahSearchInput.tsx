@@ -11,7 +11,7 @@ const UmrahSearchInput = ({ label, value }: SelectInputProps) => {
 			<label className='block text-xs font-semibold text-gray-600 mb-1'>
 				{label}
 			</label>
-			<div className='text-sm font-bold text-primary-500'>
+			<div className='text-xs sm:text-sm font-bold text-primary-500'>
 				Umrah - Mecca, Medina
 			</div>
 		</div>

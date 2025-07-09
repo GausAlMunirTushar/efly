@@ -9,7 +9,7 @@ export default function UmrahSearch() {
 	return (
 		<div className='w-full flex gap-4'>
 			<UmrahSearchInput label='Destination' value='UM' />
-			<Link href={`/umrah`} className='flex'>
+			<Link href={`/umrah/list`} className='flex'>
 				<Button>
 					<div className='flex items-center justify-center px-4'>
 						<Search size={20} className='' />

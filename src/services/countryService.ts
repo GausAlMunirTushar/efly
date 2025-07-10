@@ -54,3 +54,13 @@ export const uploadImage = async (file: File): Promise<string> => {
 
 	return response.data.url
 }
+
+// Get a country by name
+export const getCountryByName = async (
+	name: string
+): Promise<Country | null> => {
+	const response = await apiClient.get(
+		`/countries?name=${encodeURIComponent(name)}`
+	)
+	return response.data.length ? response.data[0] : null // assuming response is an array
+}

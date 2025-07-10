@@ -42,7 +42,10 @@ export default function VisaSearch() {
 			)
 
 			if (matchedVisa) {
-				router.push(`/visa/${matchedVisa._id}`)
+				const slug = matchedVisa.country?.name
+					.toLowerCase()
+					.replace(/\s+/g, '-') // convert to kebab-case
+				router.push(`/visa/${slug}`)
 			} else {
 				alert('No visa found for the selected country.')
 			}

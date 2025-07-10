@@ -62,5 +62,5 @@ export const getCountryByName = async (
 	const response = await apiClient.get(
 		`/countries?name=${encodeURIComponent(name)}`
 	)
-	return response.data.length ? response.data[0] : null // assuming response is an array
+	return response.data.length ? response.data[0] : null
 }

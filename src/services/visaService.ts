@@ -53,3 +53,10 @@ export const updateVisa = async (
 export const deleteVisa = async (id: string): Promise<void> => {
 	await apiClient.delete(`/visas/${id}`)
 }
+
+export const getVisasByCountryName = async (name: string): Promise<Visa[]> => {
+	const response = await apiClient.get(
+		`/visas?name=${encodeURIComponent(name)}`
+	)
+	return response.data
+}

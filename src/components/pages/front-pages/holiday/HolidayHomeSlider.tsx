@@ -72,7 +72,11 @@ const HolidayHomeSlider = () => {
 			>
 				{packages.map(pkg => (
 					<SwiperSlide key={pkg._id}>
-						<HolidayPackageCard {...pkg} id={pkg._id} />
+						<HolidayPackageCard
+							{...pkg}
+							slug={pkg.location}
+							id={pkg._id}
+						/>
 					</SwiperSlide>
 				))}
 			</Swiper>

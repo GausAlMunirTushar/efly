@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { getLocationByName } from '@/services/locationService'
 import Image from 'next/image'
 import { getAllHolidays } from '@/services/holidayService'
 import HolidayPackageCard from '@/components/pages/front-pages/holiday/HolidayPackageCard'
+import titleCase from '@/utils/titleCase'
 
 interface HolidayPackage {
 	_id: string
@@ -19,33 +20,43 @@ interface HolidayPackage {
 }
 
 export default function HolidayDestinationPage() {
-	const searchParams = useSearchParams()
+	const params = useParams()
+	const slug = params?.slug as string // e.g. "dhaka"
 	const [location, setLocation] = useState<any>(null)
 	const [packages, setPackages] = useState<HolidayPackage[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState('')
-	const locationId = searchParams.get('location') || ''
 
 	useEffect(() => {
-		const fetchHolidayPackages = async () => {
+		const fetchLocationAndPackages = async () => {
 			try {
-				const queryParam = locationId ? `?location=${locationId}` : ''
-				const data = await getAllHolidays(queryParam)
+				if (!slug) return
 
-				const mappedPackages: HolidayPackage[] = data.map(
-					(item: any) => ({
-						_id: item._id,
-						imageUrl: item.imageUrl,
-						title: item.title,
-						description: item.description,
-						location: item.location,
-						nightsInfo: item.nightsInfo,
-						price: item.price,
-						tags: item.tags
-					})
-				)
+				// Step 1: Get location by name (slug)
+				const locationData = await getLocationByName(slug)
+				setLocation(locationData)
 
-				setPackages(mappedPackages)
+				// Step 2: Get holidays by location ID
+				if (locationData?._id) {
+					const data = await getAllHolidays(
+						`?location=${locationData._id}`
+					)
+
+					const mappedPackages: HolidayPackage[] = data.map(
+						(item: any) => ({
+							_id: item._id,
+							imageUrl: item.imageUrl,
+							title: item.title,
+							description: item.description,
+							location: item.location,
+							nightsInfo: item.nightsInfo,
+							price: item.price,
+							tags: item.tags
+						})
+					)
+
+					setPackages(mappedPackages)
+				}
 			} catch (err: any) {
 				setError(err.message || 'Something went wrong')
 			} finally {
@@ -53,15 +64,8 @@ export default function HolidayDestinationPage() {
 			}
 		}
 
-		fetchHolidayPackages()
-	}, [locationId])
-
-	useEffect(() => {
-		const name = searchParams.get('name')
-		if (name) {
-			getLocationByName(name).then(setLocation).catch(console.error)
-		}
-	}, [searchParams])
+		fetchLocationAndPackages()
+	}, [slug])
 
 	return (
 		<div>
@@ -77,28 +81,22 @@ export default function HolidayDestinationPage() {
 				/>
 				<div className='absolute inset-0 bg-black bg-opacity-40'></div>
 				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent'></div>
-				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-10 px-4 text-center'>
-					Best Holiday Packages from {}
-				</h1>
-			</section>
-			<section className='w-full relative h-[30vh]'>
-				<h1 className='absolute inset-0 flex items-center justify-center text-white text-3xl font-bold z-10'>
-					{location
-						? `Best Holiday Packages for ${location.name}`
-						: 'Loading...'}
+				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
+					Best Holiday Packages from {titleCase(slug)}
 				</h1>
 			</section>
 			{/* Holiday Packages */}
 			<section className='max-w-7xl mx-auto sm:px-8'>
 				{loading ? (
-					<p className='text-center mt-10'>Loading packages...</p>
+					<p className='text-center mt-4'>Loading packages...</p>
 				) : error ? (
-					<p className='text-red-500 text-center mt-10'>{error}</p>
+					<p className='text-red-500 text-center mt-4'>{error}</p>
 				) : packages.length > 0 ? (
 					<div className='grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 p-6'>
 						{packages.map(pkg => (
 							<HolidayPackageCard
 								key={pkg._id}
+								slug={slug}
 								id={pkg._id}
 								imageUrl={pkg.imageUrl}
 								title={pkg.title}
@@ -111,7 +109,7 @@ export default function HolidayDestinationPage() {
 						))}
 					</div>
 				) : (
-					<p className='text-center col-span-full mt-10'>
+					<p className='text-center col-span-full mt-4'>
 						No holiday packages found.
 					</p>
 				)}

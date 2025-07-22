@@ -78,7 +78,7 @@ export default function HolidayDestinationPage() {
 				<div className='absolute inset-0 bg-black bg-opacity-40'></div>
 				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent'></div>
 				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-10 px-4 text-center'>
-					Best Holiday Packages from Bangladesh
+					Best Holiday Packages from {}
 				</h1>
 			</section>
 			<section className='w-full relative h-[30vh]'>

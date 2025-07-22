@@ -12,6 +12,15 @@ interface Destination {
 	name: string
 }
 
+const slugify = (text: string) =>
+	text
+		.toString()
+		.toLowerCase()
+		.trim()
+		.replace(/\s+/g, '-') // Replace spaces with -
+		.replace(/[^\w\-]+/g, '') // Remove all non-word chars
+		.replace(/\-\-+/g, '-') // Replace multiple - with single -
+
 export default function HolidaySearch() {
 	const [destinations, setDestinations] = useState<Destination[]>([])
 	const [destination, setDestination] = useState<string>('')
@@ -38,17 +47,25 @@ export default function HolidaySearch() {
 		fetchDestinations()
 	}, [])
 
+	const handleChange = (code: string) => {
+		const selected = destinations.find(d => d.id === code)
+		if (selected) {
+			setDestination(selected.name)
+		}
+	}
+
 	const handleSearch = () => {
 		if (!destination) return
-		router.push(`/holiday/${encodeURIComponent(destination)}`)
+		const slug = slugify(destination)
+		router.push(`/holiday/${slug}`)
 	}
 
 	return (
 		<div className='flex gap-4'>
 			<SelectSearchInput
 				label='Destination'
-				value={destination}
-				onChange={setDestination}
+				value={destinations.find(d => d.name === destination)?.id || ''}
+				onChange={handleChange}
 				options={destinations.map(d => ({
 					code: d.id,
 					name: d.name

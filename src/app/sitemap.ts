@@ -11,13 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{
 			url: 'https://efly.com.bd/about',
 			lastModified: new Date(),
-			changeFrequency: 'monthly',
+			changeFrequency: 'yearly',
 			priority: 0.8
 		},
 		{
-			url: 'https://efly.com.bd//blog',
+			url: 'https://efly.com.bd/blog',
 			lastModified: new Date(),
-			changeFrequency: 'weekly',
+			changeFrequency: 'daily',
 			priority: 1
 		}
 	]

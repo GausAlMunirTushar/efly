@@ -22,27 +22,29 @@ export const metadata: Metadata = {
 
 const UmrahListPage = () => {
 	return (
-		<div>
+		<div className='m-6 sm:m-10'>
 			{/* Smaller height responsive image */}
-			<section className='w-full relative h-[20vh] sm:h-[25vh] md:h-[30vh] lg:h-[35vh] xl:h-[40vh]'>
+			<section className='relative w-full h-[120px] sm:h-[220px] m-4 rounded-xl overflow-hidden max-w-7xl mx-auto'>
 				<Image
 					src='/images/umrah/umrah.jpg'
 					alt='Umrah Banner'
 					fill
-					style={{ objectFit: 'cover' }}
+					// style={{ objectFit: 'cover' }}
 					priority
-					sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+					// sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+					className='object-cover w-full h-full'
 				/>
 
 				<div className='absolute inset-0 bg-black bg-opacity-40'></div>
-				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent'></div>
+				{/*
+				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent'></div> */}
 
 				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-10 px-4 text-center'>
 					Best Umrah Packages from Bangladesh {CURRENT_YEAR} -{' '}
 					{CURRENT_YEAR + 1}
 				</h1>
 			</section>
-			<section className='max-w-7xl mx-auto px-8'>
+			<section className='max-w-7xl mx-auto'>
 				<Umrah />
 			</section>
 		</div>

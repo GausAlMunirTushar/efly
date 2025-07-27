@@ -6,6 +6,7 @@ import 'swiper/css'
 
 import VisaCard from '@/components/pages/front-pages/visa/VisaCard'
 import { useEffect, useState } from 'react'
+import { getVisas } from '@/services/visaService'
 
 const VisaSlider = () => {
 	const [visas, setVisas] = useState<any[]>([])
@@ -14,11 +15,7 @@ const VisaSlider = () => {
 	useEffect(() => {
 		const fetchVisas = async () => {
 			try {
-				const response = await fetch('/api/visa')
-				if (!response.ok) {
-					throw new Error('Failed to fetch visa data')
-				}
-				const data = await response.json()
+				const data = await getVisas()
 				setVisas(data)
 			} catch (error) {
 				console.error('Error loading visa data:', error)
@@ -64,6 +61,9 @@ const VisaSlider = () => {
 								visa.countryImage || '/images/placeholder.webp'
 							}
 							id={visa._id}
+							// slug={visa.country?.name
+							// 	.toLowerCase()
+							// 	.replace(/\s+/g, '-')}
 							slug={visa.slug}
 							visaType={visa.visaType}
 							visaMode={visa.visaMode}

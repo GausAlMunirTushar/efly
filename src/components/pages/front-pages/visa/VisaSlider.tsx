@@ -73,7 +73,7 @@ const VisaSlider = () => {
 							maxStay={visa.maxStay}
 							visaFee={visa.visaFee}
 							serviceCharge={visa.serviceCharge}
-							country={visa.country}
+							country={visa.country?.name}
 						/>
 					</SwiperSlide>
 				))}

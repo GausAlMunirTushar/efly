@@ -5,6 +5,9 @@ import { useParams } from 'next/navigation'
 import { getCountryByName, Country } from '@/services/countryService'
 import { getVisasByCountryName, Visa } from '@/services/visaService'
 import VisaCard from '@/components/pages/front-pages/visa/VisaCard'
+import Image from 'next/image'
+
+const fallbackImage = '/images/placeholder.webp'
 
 const VisaCountryPage = () => {
 	const { slug } = useParams()
@@ -45,17 +48,22 @@ const VisaCountryPage = () => {
 	return (
 		<div className='max-w-7xl mx-auto px-6 py-4'>
 			{/* Country Info */}
-			<div className='mb-10 '>
-				<p className='text-gray-600 mb-2'>Visa Requirements for</p>
-				<h1 className='text-4xl font-bold mb-4'>{country.name}</h1>
-				{country.image && (
-					<img
-						src={country.image}
-						alt={country.name || '/images/placeholder.webp'}
-						className='mx-auto max-w-sm rounded shadow'
-					/>
-				)}
-			</div>
+			<section className='w-full relative h-[180px] sm:h-[230px] rounded-lg'>
+				<Image
+					src={`/images/holiday/holiday.jpg`}
+					alt='holiday Banner'
+					fill
+					style={{ objectFit: 'cover' }}
+					priority
+					className='rounded-lg'
+					sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+				/>
+				<div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg'></div>
+				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg'></div>
+				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
+					Visa Requirements for {country.name}
+				</h1>
+			</section>
 
 			{/* Visa Cards */}
 			<div className='mt-8'>

@@ -43,10 +43,10 @@ const VisaCard: React.FC<VisaCardProps> = ({
 		<article
 			role='group'
 			aria-label={`Visa: ${visaType}`}
-			className='rounded-xl min-w-72 max-w-sm border bg-white p-3 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+			className='rounded-xl min-w-72 max-w-sm border bg-white shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 			tabIndex={0}
 		>
-			<div className='relative h-48 w-full overflow-hidden rounded-lg'>
+			<div className='relative h-48 w-full overflow-hidden rounded-t-lg'>
 				<Image
 					src={imgSrc}
 					alt={`${country} ${visaType}`}
@@ -57,7 +57,7 @@ const VisaCard: React.FC<VisaCardProps> = ({
 				/>
 			</div>
 
-			<div className='mt-4 space-y-2'>
+			<div className='mt-4 space-y-2 p-3'>
 				<h3 className='text-lg font-semibold leading-tight text-gray-800'>
 					{country} {visaType}
 				</h3>
@@ -83,17 +83,17 @@ const VisaCard: React.FC<VisaCardProps> = ({
 
 				<div className='mt-4'>
 					<div className='flex items-center justify-between'>
-						<span className='text-xl font-bold text-black'>
+						<span className='text-md font-bold text-black'>
 							Visa Fee: BDT {visaFee}
 						</span>
-						<span className='text-sm text-gray-500'>
+						{/* <span className='text-sm text-gray-500'>
 							+ Service charge: BDT {serviceCharge}
-						</span>
+						</span> */}
 					</div>
 
 					<Link href={`/visa/${slug}/${id}`}>
 						<Button
-							className='mt-3 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400'
+							className='mt-3 w-full rounded bg-[#0058A8] px-4 py-2 text-white hover:bg-[#0058A8] transition focus:outline-none focus:ring-2 focus:ring-blue-400'
 							aria-label={`View details for ${visaType} visa`}
 						>
 							View Details

@@ -62,7 +62,7 @@ export default async function HolidayDetailsPage({
 						/>
 					</div>
 
-					<div className='w-full flex bg-white py-3 rounded-t-lg'>
+					<div className='w-full flex flex-col md:flex-row bg-white py-3 rounded-t-lg'>
 						<div className='w-full md:w-9/12'>
 							<HolidayDetails packageDetails={cleanedPkg} />
 						</div>

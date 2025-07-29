@@ -1,4 +1,4 @@
-import { Clock5 } from 'lucide-react'
+import { Clock5, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -53,10 +53,10 @@ export default function BlogCard({
 
 				<div className='my-2'>
 					<Link
-						href={`/${blog.slug}`} // Only using the blog slug for the link
-						className='bg-primary px-4 py-1.5 text-white rounded-lg cursor-pointer'
+						href={`/${blog.slug}`}
+						className='bg-[#0058A8] w-full text-center px-4 py-1.5 text-white rounded cursor-pointer flex items-center justify-center gap-2'
 					>
-						Read More
+						<span>Read More</span> <ExternalLink size={13} />
 					</Link>
 				</div>
 			</div>

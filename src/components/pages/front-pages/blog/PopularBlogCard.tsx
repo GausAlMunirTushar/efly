@@ -44,8 +44,8 @@ export default function PopularBlogCard({
 
 				<div className='pb-2'>
 					<Link
-						href={`/${blog.slug}`} // Only using the blog slug for the link
-						className='bg-[#0058A8] w-full text-center px-4 py-1.5 text-white rounded-lg cursor-pointer flex items-center justify-center gap-2'
+						href={`/${blog.slug}`}
+						className='bg-[#0058A8] w-full text-center px-4 py-1.5 text-white rounded cursor-pointer flex items-center justify-center gap-2'
 					>
 						<span>Read More</span> <ExternalLink size={13} />
 					</Link>

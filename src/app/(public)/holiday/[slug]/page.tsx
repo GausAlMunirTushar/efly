@@ -68,66 +68,55 @@ export default function HolidayDestinationPage() {
 	}, [slug])
 
 	return (
-		<div className='max-w-7xl mx-auto py-4 px-4'>
-			{/* Hero Banner */}
-			<section className='w-full relative h-[180px] sm:h-[230px] rounded-lg'>
-				<Image
-					src='/images/holiday/holiday.jpg'
-					alt='holiday Banner'
-					fill
-					style={{ objectFit: 'cover' }}
-					priority
-					className='rounded-lg'
-					sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
-				/>
-				<div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg'></div>
-				<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg'></div>
-				<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
-					Best Holiday Packages from {titleCase(slug)}
-				</h1>
-			</section>
-			{/* <div
-				className="relative w-full h-60 bg-[url('/images/holiday/holiday.jpg')] bg-cover bg-center rounded-lg"
-				style={{
-					backgroundImage: `url('/images/holiday/holiday.jpg})`
-				}}
-			>
-				<div className='absolute inset-0 bg-black opacity-50 rounded-lg'></div>
-				<div className='relative z-10 flex items-center justify-center h-full'>
-					<h1 className='text-4xl text-white font-semibold'>
+		<main className='bg-gray-100'>
+			<div className='max-w-7xl mx-auto py-4 px-4'>
+				{/* Hero Banner */}
+				<section className='w-full relative h-[150px] sm:h-[200px] rounded-lg bg-white'>
+					<Image
+						src='/images/holiday/holiday.jpg'
+						alt='holiday Banner'
+						fill
+						style={{ objectFit: 'cover' }}
+						priority
+						className='rounded-lg'
+						sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+					/>
+					<div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg'></div>
+					<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg'></div>
+					<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
 						Best Holiday Packages from {titleCase(slug)}
 					</h1>
-				</div>
-			</div> */}
-			{/* Holiday Packages */}
-			<section className='max-w-7xl mx-auto'>
-				{loading ? (
-					<p className='text-center mt-4'>Loading packages...</p>
-				) : error ? (
-					<p className='text-red-500 text-center mt-4'>{error}</p>
-				) : packages.length > 0 ? (
-					<div className='grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 my-5'>
-						{packages.map(pkg => (
-							<HolidayPackageCard
-								key={pkg._id}
-								slug={slug}
-								id={pkg._id}
-								imageUrl={pkg.imageUrl}
-								title={pkg.title}
-								description={pkg.description}
-								location={pkg.location?.name || ''}
-								nightsInfo={pkg.nightsInfo}
-								price={pkg.price}
-								tags={pkg.tags}
-							/>
-						))}
-					</div>
-				) : (
-					<p className='text-center col-span-full mt-4'>
-						No holiday packages found.
-					</p>
-				)}
-			</section>
-		</div>
+				</section>
+				{/* Holiday Packages */}
+				<section className='max-w-7xl mx-auto'>
+					{loading ? (
+						<p className='text-center mt-4'>Loading packages...</p>
+					) : error ? (
+						<p className='text-red-500 text-center mt-4'>{error}</p>
+					) : packages.length > 0 ? (
+						<div className='grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 my-5'>
+							{packages.map(pkg => (
+								<HolidayPackageCard
+									key={pkg._id}
+									slug={slug}
+									id={pkg._id}
+									imageUrl={pkg.imageUrl}
+									title={pkg.title}
+									description={pkg.description}
+									location={pkg.location?.name || ''}
+									nightsInfo={pkg.nightsInfo}
+									price={pkg.price}
+									tags={pkg.tags}
+								/>
+							))}
+						</div>
+					) : (
+						<p className='text-center col-span-full mt-4'>
+							No holiday packages found.
+						</p>
+					)}
+				</section>
+			</div>
+		</main>
 	)
 }

@@ -25,7 +25,7 @@ const UmrahListPage = () => {
 		<main className='bg-gray-100'>
 			<div className='max-w-7xl mx-auto px-6 py-4'>
 				{/* Smaller height responsive image */}
-				<section className='w-full relative h-[180px] sm:h-[230px] rounded-lg bg-white'>
+				<section className='w-full relative h-[150px] sm:h-[200px] rounded-lg bg-white'>
 					<Image
 						src={`/images/umrah/umrah.jpg`}
 						alt='Umrah Banner'

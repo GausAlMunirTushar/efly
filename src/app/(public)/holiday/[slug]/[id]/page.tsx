@@ -54,7 +54,7 @@ export default async function HolidayDetailsPage({
 
 		return (
 			<main className='bg-gray-100'>
-				<section className='container mx-auto'>
+				<section className='max-w-7xl mx-auto p-4'>
 					<div className='py-6'>
 						<HolidaySlider
 							images={[cleanedPkg.imageUrl]}
@@ -62,11 +62,11 @@ export default async function HolidayDetailsPage({
 						/>
 					</div>
 
-					<div className='w-full flex flex-col md:flex-row bg-white py-3 rounded-t-lg'>
-						<div className='w-full md:w-9/12'>
+					<div className='w-full flex flex-col md:flex-row gap-4'>
+						<div className='w-full md:w-9/12 bg-white p-3 rounded-lg'>
 							<HolidayDetails packageDetails={cleanedPkg} />
 						</div>
-						<div className='w-full md:w-3/12 flex'>
+						<div className='w-full md:w-3/12 flex bg-white p-3 rounded-lg'>
 							<HolidayConsultationForm isLoading={false} />
 						</div>
 					</div>

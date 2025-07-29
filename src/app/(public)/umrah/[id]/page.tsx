@@ -110,10 +110,10 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 						</aside>
 					</div>
 
-					<div className='flex flex-col md:flex-row gap-8 bg-white rounded-lg mt-3 p-3'>
+					<div className='flex flex-col md:flex-row gap-4 mt-3'>
 						<section
 							aria-labelledby='package-info'
-							className='w-full md:w-8/12 space-y-6'
+							className='w-full md:w-8/12 space-y-6  bg-white rounded-lg p-4'
 						>
 							<header>
 								<h1

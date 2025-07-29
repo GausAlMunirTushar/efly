@@ -14,8 +14,7 @@ interface UmrahFormProps {
 }
 
 interface FormData {
-	firstName: string
-	lastName: string
+	name: string
 	email: string
 	phone: string
 	whatsAppNumber?: string
@@ -34,8 +33,7 @@ const countryOptions = [
 
 const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 	const [formData, setFormData] = useState<FormData>({
-		firstName: '',
-		lastName: '',
+		name: '',
 		email: '',
 		phone: '',
 		whatsAppNumber: '',
@@ -69,10 +67,7 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 	const validate = (): boolean => {
 		const newErrors: Record<string, string> = {}
 
-		if (!formData.firstName.trim())
-			newErrors.firstName = 'First name is required'
-		if (!formData.lastName.trim())
-			newErrors.lastName = 'Last name is required'
+		if (!formData.name.trim()) newErrors.firstName = 'Name is required'
 		if (!formData.email.trim()) newErrors.email = 'Email is required'
 		if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
 
@@ -97,22 +92,12 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 			</h1>
 
 			<Input
-				label='First Name'
-				placeholder='First Name'
+				label='Name'
+				placeholder='Name'
 				name='firstName'
-				value={formData.firstName}
+				value={formData.name}
 				onChange={handleChange}
 				error={errors.firstName}
-				required
-				fullWidth
-			/>
-			<Input
-				label='Last Name'
-				placeholder='Last Name'
-				name='lastName'
-				value={formData.lastName}
-				onChange={handleChange}
-				error={errors.lastName}
 				required
 				fullWidth
 			/>

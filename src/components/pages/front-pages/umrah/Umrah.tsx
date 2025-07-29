@@ -43,7 +43,7 @@ export const Umrah = () => {
 
 	return (
 		<section
-			className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 bg-white gap-2'
+			className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 justify-center px-3 gap-4'
 			aria-labelledby='umrah-heading'
 		>
 			{umrahPackages.map(pkg => {

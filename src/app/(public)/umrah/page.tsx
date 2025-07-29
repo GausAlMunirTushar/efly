@@ -1,4 +1,3 @@
-import { Umrah } from '@/components/pages/front-pages/umrah/Umrah'
 import Search from '@/components/pages/home/search/Search'
 import type { Metadata } from 'next'
 

@@ -58,7 +58,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 	}
 
 	return (
-		<>
+		<div className=' bg-gray-100'>
 			<Head>
 				<title>{packagename} | Umrah Packages</title>
 				<meta
@@ -70,9 +70,9 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 				<meta name='robots' content='index, follow' />
 			</Head>
 
-			<main className='container mx-auto px-4 py-6'>
+			<main className='max-w-7xl mx-auto px-4 py-6'>
 				<article>
-					<div className='flex flex-col md:flex-row gap-4'>
+					<div className='flex flex-col md:flex-row gap-4 bg-white rounded-lg overflow-hidden p-3'>
 						{/* Left big image */}
 						<section
 							aria-labelledby='package-image'
@@ -110,7 +110,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 						</aside>
 					</div>
 
-					<div className='flex flex-col md:flex-row gap-8'>
+					<div className='flex flex-col md:flex-row gap-8 bg-white rounded-lg mt-3 p-3'>
 						<section
 							aria-labelledby='package-info'
 							className='w-full md:w-8/12 space-y-6'
@@ -195,7 +195,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 					</div>
 				</article>
 			</main>
-		</>
+		</div>
 	)
 }
 

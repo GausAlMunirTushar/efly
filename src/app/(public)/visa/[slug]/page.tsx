@@ -67,7 +67,7 @@ const VisaCountryPage = () => {
 				</section>
 
 				{/* Visa Cards */}
-				<div className='mt-8'>
+				<div className='mt-6'>
 					{visas.length === 0 ? (
 						<p className='text-gray-500 text-center'>
 							No visas found for this country.

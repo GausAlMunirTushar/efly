@@ -110,10 +110,10 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 						</aside>
 					</div>
 
-					<div className='flex flex-col md:flex-row gap-4 mt-3'>
+					<div className='flex flex-col md:flex-row gap-4 mt-4'>
 						<section
 							aria-labelledby='package-info'
-							className='w-full md:w-8/12 space-y-6  bg-white rounded-lg p-4'
+							className='w-full md:w-9/12 space-y-6  bg-white rounded-lg p-4'
 						>
 							<header>
 								<h1
@@ -189,7 +189,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 							{/* You can add more sections like includedServices, exclusions, etc. here */}
 						</section>
 
-						<aside className='w-full md:w-4/12'>
+						<aside className='w-full md:w-3/12'>
 							<UmrahForm />
 						</aside>
 					</div>

@@ -55,7 +55,7 @@ export default async function HolidayDetailsPage({
 		return (
 			<main className='bg-gray-100'>
 				<section className='max-w-7xl mx-auto p-4'>
-					<div className='py-6'>
+					<div className='py-4'>
 						<HolidaySlider
 							images={[cleanedPkg.imageUrl]}
 							packageDetails={cleanedPkg}

@@ -60,7 +60,7 @@ const HolidayHomeSlider = () => {
 					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				}}
-				speed={5000}
+				speed={3000}
 				grabCursor
 				aria-label='Holiday packages slider'
 				breakpoints={{

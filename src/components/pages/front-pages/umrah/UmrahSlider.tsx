@@ -57,7 +57,7 @@ const UmrahSlider = () => {
 					disableOnInteraction: false,
 					pauseOnMouseEnter: true
 				}}
-				speed={5000}
+				speed={3000}
 				grabCursor
 				aria-label='Umrah packages slider'
 				breakpoints={{
@@ -89,9 +89,12 @@ const UmrahSlider = () => {
 						price: `$${pkg.price.toFixed(2)}`
 					}
 					return (
-						<div key={pkg._id}>
+						<SwiperSlide
+							key={pkg._id}
+							className='flex items-center justify-center gap-2'
+						>
 							<UmrahCard {...cardProps} />
-						</div>
+						</SwiperSlide>
 					)
 				})}
 			</Swiper>

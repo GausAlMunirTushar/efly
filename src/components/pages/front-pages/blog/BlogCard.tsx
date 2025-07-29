@@ -1,4 +1,5 @@
 import { Clock5 } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function BlogCard({
@@ -28,11 +29,16 @@ export default function BlogCard({
 				className='cursor-pointer'
 			>
 				{blog.imageUrl && (
-					<img
-						src={blog.imageUrl}
-						alt={blog.title}
-						className='w-full h-64 object-fill rounded-t-lg mb-3'
-					/>
+					<div className='relative w-full aspect-[683/300] rounded-lg border mb-4 overflow-hidden'>
+						<Image
+							src={blog.imageUrl}
+							alt={blog.title}
+							fill
+							className='object-cover'
+							sizes='(max-width: 768px) 100vw, 768px'
+							priority
+						/>
+					</div>
 				)}
 			</Link>
 			<div className='px-4 py-2'>

@@ -5,6 +5,7 @@ import SkeletonLoader from '@/components/common/SkeletonLoader'
 import BlogDetailsSidebar from '@/components/layouts/blog/BlogDetailsSidebar'
 import LatestBlog from '@/components/pages/front-pages/blog/LatestBlog'
 import PopularBlog from '@/components/pages/front-pages/blog/PopularBlog'
+import Image from 'next/image'
 
 export default function Page({
 	params
@@ -107,11 +108,16 @@ export default function Page({
 				{/* Blog Content */}
 				<div className='w-full'>
 					{blog.imageUrl && (
-						<img
-							src={blog.imageUrl}
-							alt={blog.title}
-							className='w-full h-64 sm:h-96 object-cover rounded-lg border mb-4'
-						/>
+						<div className='relative w-full aspect-[683/300] rounded-lg border mb-4 overflow-hidden'>
+							<Image
+								src={blog.imageUrl}
+								alt={blog.title}
+								fill
+								className='object-cover'
+								sizes='(max-width: 768px) 100vw, 768px'
+								priority
+							/>
+						</div>
 					)}
 					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
 						<div className='md:col-span-6'>

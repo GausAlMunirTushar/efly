@@ -64,7 +64,7 @@ const VisaSlider = () => {
 							// slug={visa.country?.name
 							// 	.toLowerCase()
 							// 	.replace(/\s+/g, '-')}
-							slug={visa.slug}
+							slug={visa._id}
 							visaType={visa.visaType}
 							visaMode={visa.visaMode}
 							entryType={visa.entryType}

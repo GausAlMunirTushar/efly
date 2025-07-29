@@ -51,7 +51,7 @@ export default function VisaDetailPage() {
 					imageUrl={visa.country.image}
 				/>
 
-				<div className='w-full flex gap-6 py-6'>
+				<div className='w-full flex flex-col md:flex-row gap-6 py-6 bg-white'>
 					<div className='w-full sm:w-9/12'>
 						<h1 className='text-3xl font-bold mb-4'>
 							{visa.country.name} Visa

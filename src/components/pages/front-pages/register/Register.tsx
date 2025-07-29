@@ -146,9 +146,11 @@ const Register: React.FC = () => {
 				className='bg-white p-6 rounded-xl shadow-md w-full max-w-sm'
 				aria-label='Registration form'
 			>
-				<h1 className='text-2xl font-semibold text-center mb-2'>
-					Sign Up
-				</h1>
+				<img
+						src='/efly.png'
+						alt='eFly Logo'
+						className='py-4 h-20 mx-auto'
+					/>
 				<p className='text-gray-600 text-sm text-center mb-4'>
 					Create an account to get started
 				</p>

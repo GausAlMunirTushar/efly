@@ -104,7 +104,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 					</div>
 				</div>
 
-				<Link href={`${slug}/${id}`}>
+				<Link href={`/holiday/${slug}/${id}`}>
 					<Button className='bg-[#0058A8]  mt-2 w-full hover:bg-[#0058A8]  text-white text-sm py-2 px-4 rounded'>
 						{buttonText}
 					</Button>

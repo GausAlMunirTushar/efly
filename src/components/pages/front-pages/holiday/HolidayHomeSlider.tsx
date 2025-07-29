@@ -74,7 +74,7 @@ const HolidayHomeSlider = () => {
 					<SwiperSlide key={pkg._id}>
 						<HolidayPackageCard
 							{...pkg}
-							slug={pkg.location}
+							slug={pkg._id}
 							id={pkg._id}
 						/>
 					</SwiperSlide>

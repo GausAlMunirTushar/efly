@@ -29,12 +29,12 @@ export default function BlogCard({
 				className='cursor-pointer'
 			>
 				{blog.imageUrl && (
-					<div className='relative w-full aspect-[683/300] rounded-lg border mb-4 overflow-hidden'>
+					<div className='relative w-full h-64 object-fill aspect-[683/300] rounded-t-lg border mb-4 overflow-hidden'>
 						<Image
 							src={blog.imageUrl}
 							alt={blog.title}
 							fill
-							className='object-cover'
+							className='h-64 object-fill rounded-t-lg'
 							sizes='(max-width: 768px) 100vw, 768px'
 							priority
 						/>

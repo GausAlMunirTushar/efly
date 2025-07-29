@@ -113,8 +113,8 @@ export default function Page({
 								src={blog.imageUrl}
 								alt={blog.title}
 								fill
-								className='object-cover'
-								sizes='(max-width: 768px) 100vw, 768px'
+								className='object-fill'
+								// sizes='(max-width: 768px) 100vw, 768px'
 								priority
 							/>
 						</div>

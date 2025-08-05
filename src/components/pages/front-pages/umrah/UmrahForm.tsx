@@ -8,9 +8,12 @@ import 'react-day-picker/dist/style.css'
 import Input from '@/components/form/Input'
 import SelectInput from '@/components/form/SelectInput'
 import Button from '@/components/form/Button'
+import { createOrder } from '@/services/orderService'
+import { toast } from 'react-toastify'
 
 interface UmrahFormProps {
 	isLoading?: boolean
+	umrahId: string
 }
 
 interface FormData {
@@ -31,7 +34,7 @@ const countryOptions = [
 	{ value: '+44', label: '+44' }
 ]
 
-const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
+const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 	const [formData, setFormData] = useState<FormData>({
 		name: '',
 		email: '',
@@ -75,10 +78,32 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 		return Object.keys(newErrors).length === 0
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>
+	): Promise<void> => {
 		e.preventDefault()
-		if (validate()) {
-			// onSubmit(formData)
+		if (!validate()) return
+
+		try {
+			await createOrder({
+				customerName: formData.name,
+				customerEmail: formData.email,
+				customerPhone: formData.phone,
+				countryCode: formData.countryCode,
+				whatsAppNumber: formData.whatsAppNumber,
+				preferredTravelDate: formData.preferredTravelDate,
+				additionalNotes: formData.additionalNotes,
+				numberOfPeople: formData.numberOfPeople,
+
+				productType: 'umrah',
+				productId: umrahId,
+				price: 0
+			})
+			toast.success('Order submitted successfully!')
+			// Reset form if needed
+		} catch (error) {
+			toast.error('Failed to submit order')
+			console.error(error)
 		}
 	}
 

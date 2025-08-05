@@ -35,6 +35,7 @@ async function fetchUmrahPackage(id: string): Promise<UmrahPackage | null> {
 const UmrahDetailsPage = async ({ params }: PageProps) => {
 	const paramsId = await params
 	const packageData = await fetchUmrahPackage(paramsId.id)
+	const umrahId = paramsId.id
 
 	if (!packageData) {
 		notFound()
@@ -190,7 +191,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 						</section>
 
 						<aside className='w-full md:w-3/12'>
-							<UmrahForm />
+							<UmrahForm umrahId={umrahId} />
 						</aside>
 					</div>
 				</article>

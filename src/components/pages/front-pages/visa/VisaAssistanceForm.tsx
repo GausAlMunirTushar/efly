@@ -1,45 +1,67 @@
 'use client'
 
-import Button from '@/components/form/Button'
+import React, { useState } from 'react'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
 import Input from '@/components/form/Input'
-import { useState } from 'react'
+import SelectInput from '@/components/form/SelectInput'
+import Button from '@/components/form/Button'
+
+const countryOptions = [
+	{ value: '+880', label: '+880' },
+	{ value: '+1', label: '+1' },
+	{ value: '+44', label: '+44' }
+]
 
 export default function VisaAssistanceForm() {
 	const [formData, setFormData] = useState({
 		name: '',
+		email: '',
 		phone: '',
-		email: ''
+		whatsAppNumber: '',
+		countryCode: '+880',
+		journeyDate: undefined as Date | undefined,
+		additionalRequirements: ''
 	})
 
-	const [errors, setErrors] = useState({
-		name: '',
-		phone: '',
-		email: ''
-	})
-
+	const [errors, setErrors] = useState<Record<string, string>>({})
 	const [formStatus, setFormStatus] = useState<string | null>(null)
+	const [showDatePicker, setShowDatePicker] = useState<boolean>(false)
 
-	// Handle form field changes
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
 		const { name, value } = e.target
 		setFormData(prev => ({ ...prev, [name]: value }))
+		setErrors(prev => ({ ...prev, [name]: '' }))
 	}
 
-	// Validate form
+	const handleSelectChange = (value: string) => {
+		setFormData(prev => ({ ...prev, countryCode: value }))
+		setErrors(prev => ({ ...prev, countryCode: '' }))
+	}
+
+	const handleDateSelect = (date?: Date) => {
+		setFormData(prev => ({ ...prev, journeyDate: date }))
+		setShowDatePicker(false)
+	}
+
 	const validateForm = () => {
-		const newErrors: any = {}
-		if (!formData.name) newErrors.name = 'Name is required'
-		if (!formData.phone) newErrors.phone = 'Phone number is required'
-		if (!formData.email) newErrors.email = 'Email is required'
-		if (formData.email && !/\S+@\S+\.\S+/.test(formData.email))
-			newErrors.email = 'Email is invalid'
+		const newErrors: Record<string, string> = {}
+
+		if (!formData.name.trim()) newErrors.name = 'Name is required'
+		if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
+		if (!formData.email.trim()) newErrors.email = 'Email is required'
+		else if (!/\S+@\S+\.\S+/.test(formData.email))
+			newErrors.email = 'Invalid email'
+
 		return newErrors
 	}
 
-	// Handle form submission
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-
 		const validationErrors = validateForm()
 
 		if (Object.keys(validationErrors).length > 0) {
@@ -47,7 +69,6 @@ export default function VisaAssistanceForm() {
 			return
 		}
 
-		// You can replace this with the actual API call
 		try {
 			console.log(formData)
 			setFormStatus('Submitted successfully!')
@@ -57,94 +78,117 @@ export default function VisaAssistanceForm() {
 	}
 
 	return (
-		<div className='max-w-md mx-auto p-6 bg-white rounded-lg'>
-			<h2 className='text-2xl font-semibold text-center text-indigo-600'>
-				Request Visa
+		<div className='max-w-md mx-auto p-4 bg-white rounded-lg'>
+			<h2 className='text-xl mb-2 font-semibold text-center text-indigo-600'>
+				Visa Assistance Request
 			</h2>
 			<p className='text-center text-gray-500 mb-6'>
-				Please share your contact information. Our team will get in
-				touch with you shortly.
+				Please fill out the form. We’ll contact you shortly.
 			</p>
 
 			<form onSubmit={handleSubmit} className='space-y-4'>
-				{/* Name */}
-				<div>
-					<label
-						htmlFor='name'
-						className='block text-sm font-medium text-gray-700'
-					>
-						Name
-					</label>
-					<Input
-						id='name'
-						name='name'
-						type='text'
-						value={formData.name}
-						onChange={handleInputChange}
-						className='mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
-						placeholder='Enter your name'
-					/>
-					{errors.name && (
-						<p className='text-red-500 text-xs'>{errors.name}</p>
-					)}
-				</div>
+				<Input
+					name='name'
+					label='Name'
+					placeholder='Enter your name'
+					value={formData.name}
+					onChange={handleChange}
+					required
+					error={errors.name}
+					fullWidth
+				/>
 
-				{/* Phone Number */}
+				<Input
+					name='email'
+					label='Email Address'
+					placeholder='someone@example.com'
+					type='email'
+					value={formData.email}
+					onChange={handleChange}
+					error={errors.email}
+					fullWidth
+				/>
+
 				<div>
-					<label
-						htmlFor='phone'
-						className='block text-sm font-medium text-gray-700'
-					>
-						Phone Number
+					<label className='text-sm font-medium block mb-1'>
+						Phone Number <span className='text-red-500'>*</span>
 					</label>
-					<div className='flex items-center space-x-2'>
+					<div className='flex items-center'>
+						<SelectInput
+							label=''
+							options={countryOptions}
+							value={formData.countryCode}
+							onChange={handleSelectChange}
+							fullWidth={false}
+						/>
 						<Input
-							id='phone'
 							name='phone'
-							type='tel'
+							placeholder='Phone Number'
 							value={formData.phone}
-							onChange={handleInputChange}
-							className='mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
-							placeholder='+880 1XXX XXXXX'
+							onChange={handleChange}
+							error={errors.phone}
 							fullWidth
 						/>
 					</div>
-					{errors.phone && (
-						<p className='text-red-500 text-xs'>{errors.phone}</p>
-					)}
 				</div>
 
-				{/* Email Address */}
+				<Input
+					name='whatsAppNumber'
+					label='WhatsApp Number (Optional)'
+					placeholder='WhatsApp Number'
+					value={formData.whatsAppNumber}
+					onChange={handleChange}
+					fullWidth
+				/>
+
 				<div>
-					<label
-						htmlFor='email'
-						className='block text-sm font-medium text-gray-700'
-					>
-						Email Address
+					<label className='text-sm font-medium block mb-1'>
+						Preferred Journey Date{' '}
+						<span className='text-red-500'>*</span>
 					</label>
-					<Input
-						id='email'
-						name='email'
-						type='email'
-						value={formData.email}
-						onChange={handleInputChange}
-						className='mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
-						placeholder='someone@example.com'
-					/>
-					{errors.email && (
-						<p className='text-red-500 text-xs'>{errors.email}</p>
+					<div
+						onClick={() => setShowDatePicker(prev => !prev)}
+						className='w-full flex items-center justify-between border border-gray-300 bg-white px-3 py-2 rounded-md text-sm cursor-pointer'
+					>
+						{formData.journeyDate ? (
+							<span>{format(formData.journeyDate, 'PPP')}</span>
+						) : (
+							<span className='text-gray-500'>
+								No date selected
+							</span>
+						)}
+						<CalendarIcon className='h-4 w-4 text-gray-500' />
+					</div>
+					{showDatePicker && (
+						<div className='mt-2'>
+							<DayPicker
+								mode='single'
+								selected={formData.journeyDate}
+								onSelect={handleDateSelect}
+							/>
+						</div>
 					)}
 				</div>
 
-				{/* Submit Button */}
 				<div>
-					<Button type='submit' variant='primary' className='w-full'>
-						Submit
-					</Button>
+					<label className='text-sm font-medium block mb-1'>
+						Additional Requirements
+					</label>
+					<textarea
+						name='additionalRequirements'
+						value={formData.additionalRequirements}
+						onChange={handleChange}
+						rows={3}
+						placeholder='Additional Requirements'
+						className='w-full rounded-md border resize-none border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all'
+					/>
 				</div>
+
+				<Button type='submit' variant='primary' className='w-full'>
+					Submit
+				</Button>
 			</form>
 
-			{/* Form Status */}
 			{formStatus && (
 				<div className='mt-4 text-center text-green-500'>
 					<p>{formStatus}</p>

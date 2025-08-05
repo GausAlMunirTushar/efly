@@ -17,6 +17,7 @@ import {
 	UmrahPackage
 } from '@/services/umrahService'
 import apiClient from '@/configs/apiConfig'
+import Title from '@/components/common/Title'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
@@ -185,9 +186,7 @@ export default function AdminUmrahPage() {
 
 	return (
 		<div className='bg-white p-6 space-y-4 rounded-lg'>
-			<h1 className='text-2xl font-bold'>
-				{form._id ? 'Edit' : 'Create'} Umrah Package
-			</h1>
+			<Title>{form._id ? 'Edit' : ''} Umrah</Title>
 
 			<Input
 				name='packagename'

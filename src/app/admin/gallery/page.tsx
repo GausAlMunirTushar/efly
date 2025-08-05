@@ -6,7 +6,7 @@ import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { UploadCloud, X } from 'lucide-react'
+import { Edit, Trash2, UploadCloud, X } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
 
 type Gallery = {
@@ -153,9 +153,9 @@ export default function AdminGalleryPage() {
 	}
 
 	return (
-		<div className='p-6 space-y-6 bg-white'>
+		<div className='p-4 space-y-6 bg-white rounded-lg'>
 			<h1 className='text-2xl font-bold'>
-				{editingId ? 'Edit' : 'Create'} Gallery
+				{editingId ? 'Edit' : ''} Gallery
 			</h1>
 
 			{/* Input fields for gallery details */}
@@ -218,7 +218,7 @@ export default function AdminGalleryPage() {
 			<button
 				type='button'
 				onClick={handleImageUpload}
-				className='w-full mt-4 py-2 bg-blue-600 text-white rounded-md'
+				className='w-full mt-4 py-2 bg-blue-800 text-white rounded-md'
 				disabled={imageUploading}
 			>
 				{imageUploading ? 'Uploading...' : 'Upload Images'}
@@ -229,44 +229,49 @@ export default function AdminGalleryPage() {
 				onClick={handleSubmit}
 				disabled={loading || form.galleryImage === ''}
 			>
-				{loading ? 'Creating Package...' : 'Create Package'}
+				{loading ? 'Creating Gallery...' : 'Create Gallery'}
 			</Button>
 
 			{/* Display Gallery */}
-			<div className='pt-6'>
-				<table className='w-full text-left'>
-					<thead className='bg-gray-100'>
-						<tr>
-							<th className='p-2'>Title</th>
-							<th className='p-2'>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{galleries.map(gallery => (
-							<tr key={gallery._id} className='border-t'>
-								<td className='p-2'>{gallery.title}</td>
-								<td className='p-2 flex gap-2'>
-									<Button
-										size='sm'
-										variant='outline'
-										onClick={() => handleEdit(gallery)}
-									>
-										Edit
-									</Button>
-									<Button
-										size='sm'
-										variant='danger'
-										onClick={() =>
-											handleDelete(gallery._id!)
-										}
-									>
-										Delete
-									</Button>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+			<div className='pt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+				{galleries.map(gallery => (
+					<div
+						key={gallery._id}
+						className='bg-white rounded-lg shadow-md p-4 border border-gray-100'
+					>
+						<div className='h-52'>
+							<Image
+								src={gallery.galleryImage}
+								alt='Gallery Image'
+								width={500}
+								height={500}
+								className='w-full max-h-52 rounded-lg'
+							/>
+						</div>
+						<h3 className='text-lg font-semibold my-2'>
+							{gallery.title}
+						</h3>
+
+						<div className='flex gap-2 mt-4'>
+							<Button
+								size='sm'
+								variant='primary'
+								onClick={() => handleEdit(gallery)}
+							>
+								<Edit size={16} className='mr-2' /> Edit
+							</Button>
+
+							<Button
+								size='sm'
+								variant='danger'
+								onClick={() => handleDelete(gallery._id!)}
+							>
+								<Trash2 size={16} className='mr-1' />
+								Delete
+							</Button>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	)

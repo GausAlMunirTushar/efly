@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
-import { UploadCloud, X } from 'lucide-react'
+import { Edit, LocateIcon, Trash2, UploadCloud, X } from 'lucide-react'
 import { IHoliday } from '@/types/IHoliday'
 import { getAllLocations, createLocation } from '@/services/locationService'
 import {
@@ -18,6 +18,7 @@ import {
 	deleteHoliday
 } from '@/services/holidayService'
 import apiClient from '@/configs/apiConfig'
+import Title from '@/components/common/Title'
 
 type LocationOption = { label: string; value: string }
 
@@ -245,12 +246,12 @@ const AdminHolidayPage = () => {
 	}
 
 	return (
-		<div className='p-6 space-y-6 bg-white rounded-lg w-full mx-auto'>
-			<h1 className='text-2xl font-bold'>Holiday</h1>
+		<div className='p-4 space-y-6 bg-white rounded-lg w-full mx-auto'>
+			<Title>Holiday</Title>
 
 			{/* Add New Location */}
 			<section className='mb-6'>
-				<label className='block font-medium mb-1'>
+				<label className='block font-medium mt-4 mb-1'>
 					Add New Location
 				</label>
 				<div className='flex gap-2'>
@@ -261,7 +262,10 @@ const AdminHolidayPage = () => {
 						onChange={e => setNewLocation(e.target.value)}
 						placeholder='Enter new location name'
 					/>
-					<Button onClick={addNewLocation}>Add Location</Button>
+					<Button onClick={addNewLocation}>
+						{' '}
+						<LocateIcon size={16} className='mr-2' /> Add Location
+					</Button>
 				</div>
 			</section>
 
@@ -417,18 +421,20 @@ const AdminHolidayPage = () => {
 							/>
 						</div>
 						<div className='flex justify-end gap-2 mt-4'>
-							<button
+							<Button
+								size='sm'
 								onClick={() => handleEdit(pkg)}
-								className='px-3 py-1 text-sm bg-yellow-500 text-white rounded'
+								className=' text-sm bg-yellow-500 text-white rounded'
 							>
-								Edit
-							</button>
-							<button
+								<Edit size={16} className='mr-2' /> Edit
+							</Button>
+							<Button
+								size='sm'
 								onClick={() => handleDelete(pkg.id)}
-								className='px-3 py-1 text-sm bg-red-600 text-white rounded'
+								className=' text-sm bg-red-600 text-white rounded'
 							>
-								Delete
-							</button>
+								<Trash2 size={16} className='mr-2' /> Delete
+							</Button>
 						</div>
 					</article>
 				))}

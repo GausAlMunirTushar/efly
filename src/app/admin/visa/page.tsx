@@ -16,6 +16,7 @@ import {
 	deleteVisa
 } from '@/services/visaService'
 import { getCountries } from '@/services/countryService'
+import Title from '@/components/common/Title'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
@@ -216,19 +217,14 @@ export default function AdminVisaPage() {
 	}
 
 	return (
-		<div className='bg-white p-8 rounded-lg max-w-5xl mx-auto shadow-md'>
-			<h1 className='text-3xl font-bold mb-6 text-center'>
-				Visa Management
-			</h1>
+		<div className='bg-white p-4 rounded-lg w-full mx-auto box-shadow'>
+			<Title>Visa </Title>
 
-			<form onSubmit={handleSubmit} className='space-y-6'>
+			<form onSubmit={handleSubmit} className='space-y-6 mt-4'>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 					<div>
-						<label className='block text-sm font-semibold text-gray-700'>
-							Country
-						</label>
 						<select
-							className='w-full border rounded-md p-3 mt-1'
+							className='w-full border rounded-md p-2.5 mt-1'
 							value={form.country}
 							onChange={e => {
 								const selected = countries.find(

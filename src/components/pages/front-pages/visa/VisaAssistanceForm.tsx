@@ -8,6 +8,8 @@ import 'react-day-picker/dist/style.css'
 import Input from '@/components/form/Input'
 import SelectInput from '@/components/form/SelectInput'
 import Button from '@/components/form/Button'
+import { toast } from 'react-toastify'
+import { createOrder } from '@/services/orderService'
 
 const countryOptions = [
 	{ value: '+880', label: '+880' },
@@ -15,7 +17,15 @@ const countryOptions = [
 	{ value: '+44', label: '+44' }
 ]
 
-export default function VisaAssistanceForm() {
+interface VisaAssistanceFormProps {
+	isLoading?: boolean
+	visaId: string
+}
+
+export default function VisaAssistanceForm({
+	isLoading,
+	visaId
+}: VisaAssistanceFormProps) {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -70,10 +80,34 @@ export default function VisaAssistanceForm() {
 		}
 
 		try {
-			console.log(formData)
-			setFormStatus('Submitted successfully!')
+			await createOrder({
+				customerName: formData.name,
+				customerEmail: formData.email,
+				customerPhone: formData.phone,
+				countryCode: formData.countryCode,
+				whatsAppNumber: formData.whatsAppNumber,
+				preferredTravelDate: formData.journeyDate,
+				additionalNotes: formData.additionalRequirements,
+
+				productType: 'visa',
+				productId: visaId,
+				price: 0
+			})
+
+			toast.success('Visa assistance submitted successfully!')
+			setFormStatus(null)
+			setFormData({
+				name: '',
+				email: '',
+				phone: '',
+				whatsAppNumber: '',
+				countryCode: '+880',
+				journeyDate: undefined,
+				additionalRequirements: ''
+			})
 		} catch (error) {
-			setFormStatus('There was an error submitting the form.')
+			toast.error('Failed to submit visa assistance')
+			console.error(error)
 		}
 	}
 

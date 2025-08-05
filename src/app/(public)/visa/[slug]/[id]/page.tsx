@@ -101,7 +101,7 @@ export default function VisaDetailPage() {
 					</div>
 
 					<div className='w-full sm:w-3/12 bg-white rounded-lg'>
-						<VisaAssistanceForm />
+						<VisaAssistanceForm visaId={id} />
 					</div>
 				</div>
 			</div>

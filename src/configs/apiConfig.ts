@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import Cookies from 'js-cookie'
 
 const BASE_URL =
-	process.env.NEXT_PUBLIC_API_URL || 'https://efly.com.bd/backend/api/v1'
+	process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1'
 
 const apiClient: AxiosInstance = axios.create({
 	baseURL: BASE_URL,

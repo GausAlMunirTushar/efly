@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import getRelativeTime from '@/utils/getRelativeTime'
 import { Copy, Trash2 } from 'lucide-react'
+import Title from '@/components/common/Title'
 
 const statusOptions = [
 	'new',
@@ -113,12 +114,12 @@ const ContactPage = () => {
 	const totalPages = Math.ceil(total / limit)
 
 	return (
-		<section className='bg-white min-h-screen rounded-xl'>
+		<section className='bg-white min-h-screen rounded-lg'>
 			<div className='p-4'>
 				{error && <p className='text-red-500'>{error}</p>}
-
+				<Title>Contact</Title>
 				{/* Message Grid */}
-				<div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
+				<div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4'>
 					{messages.length === 0 ? (
 						<p>No messages yet</p>
 					) : (
@@ -133,7 +134,7 @@ const ContactPage = () => {
 										{getRelativeTime(msg.createdAt)}
 									</p>
 								</div>
-								<p className='text-gray-600 trunscate'>
+								<p className='text-gray-600 trunscate text-wrap'>
 									{msg.email}
 								</p>
 								<p className='mt-2 truncate'>{msg.message}</p>
@@ -141,36 +142,32 @@ const ContactPage = () => {
 								{/* Phone */}
 								{msg.phone && (
 									<div className='mt-2'>
-										<p className='text-gray-800 flex justify-between items-center'>
+										<p className='text-gray-800'>
 											<span>
 												<strong>Phone:</strong>{' '}
 												{msg.phone}
+												<button
+													onClick={() =>
+														handleCopyPhone(
+															msg.phone
+														)
+													}
+													className='mt-2 flex gap-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600'
+												>
+													<Copy size={14} />
+												</button>
 											</span>
+											<br />
 											<span
 												className={`capitalize text-xs px-2 py-1 rounded ${statusStyles[msg.status] || 'bg-gray-100 text-gray-700'}`}
 											>
 												{msg.status || 'new'}
 											</span>
 										</p>
-										<button
-											onClick={() =>
-												handleCopyPhone(msg.phone)
-											}
-											className='mt-2 flex gap-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600'
-										>
-											<Copy />
-											<span>Copy Phone</span>
-										</button>
 									</div>
 								)}
 
 								<div className='flex justify-between items-center mt-4'>
-									<button
-										onClick={() => handleDelete(msg._id)}
-										className='bg-red-500 text-white px-1.5 py-1 rounded hover:bg-red-600'
-									>
-										<Trash2 />
-									</button>
 									<select
 										value={msg.status}
 										onChange={e =>
@@ -187,6 +184,12 @@ const ContactPage = () => {
 											</option>
 										))}
 									</select>
+									<button
+										onClick={() => handleDelete(msg._id)}
+										className='bg-red-500 text-white px-1.5 py-1 rounded hover:bg-red-600'
+									>
+										<Trash2 size={14} />
+									</button>
 								</div>
 							</div>
 						))

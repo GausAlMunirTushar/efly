@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Button from '@/components/form/Button'
 import Modal from '@/components/common/Modal'
 import Title from '@/components/common/Title'
+import { Edit, Trash2 } from 'lucide-react'
 
 interface Slide {
 	_id: string
@@ -122,7 +123,7 @@ const HomeSlide = () => {
 	const isSubmitDisabled = !link || (file && !preview) || loading
 
 	return (
-		<section className='mx-auto p-6 bg-white min-h-screen box-shadow rounded-lg'>
+		<section className='mx-auto p-4 bg-white min-h-screen box-shadow rounded-lg'>
 			<div className='flex justify-between items-center'>
 				<Title>Home Slide</Title>
 
@@ -201,16 +202,17 @@ const HomeSlide = () => {
 							</Link>
 							<div className='flex justify-between mt-4'>
 								<Button
-									variant='secondary'
+									variant='primary'
 									onClick={() => handleEdit(slide)}
 								>
+									<Edit size={16} className='mr-2' />
 									Edit
 								</Button>
 								<Button
 									variant='danger'
 									onClick={() => handleDelete(slide._id)}
 								>
-									Delete
+									<Trash2 size={16} className='mr-2' /> Delete
 								</Button>
 							</div>
 						</div>

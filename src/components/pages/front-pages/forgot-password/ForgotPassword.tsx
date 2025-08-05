@@ -41,8 +41,8 @@ const ForgotPassword = () => {
 	}
 
 	return (
-		<div className='flex min-h-screen items-center justify-center bg-gray-100 dark:bg-bg_dark p-4'>
-			<div className='w-full max-w-sm bg-white dark:bg-bg_dark box-shadow rounded-lg p-6'>
+		<div className='flex items-center justify-center bg-gray-100 dark:bg-bg_dark p-4'>
+			<div className='w-full max-w-sm bg-white dark:bg-bg_dark shadow rounded-lg p-6'>
 				<img
 					src='/efly.png'
 					alt='eFly Logo'

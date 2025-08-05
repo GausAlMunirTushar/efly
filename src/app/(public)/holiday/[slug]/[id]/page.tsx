@@ -67,7 +67,10 @@ export default async function HolidayDetailsPage({
 							<HolidayDetails packageDetails={cleanedPkg} />
 						</div>
 						<div className='w-full md:w-3/12 flex bg-white p-3 rounded-lg'>
-							<HolidayConsultationForm isLoading={false} />
+							<HolidayConsultationForm
+								isLoading={false}
+								holidayId={id}
+							/>
 						</div>
 					</div>
 				</section>

@@ -8,9 +8,12 @@ import 'react-day-picker/dist/style.css'
 import Input from '@/components/form/Input'
 import SelectInput from '@/components/form/SelectInput'
 import Button from '@/components/form/Button'
+import { toast } from 'react-toastify'
+import { createOrder } from '@/services/orderService'
 
 interface HolidayConsultationFormProps {
 	isLoading?: boolean
+	holidayId: string
 }
 
 interface FormData {
@@ -30,7 +33,8 @@ const countryOptions = [
 ]
 
 const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
-	isLoading
+	isLoading,
+	holidayId
 }) => {
 	const [formData, setFormData] = useState<FormData>({
 		name: '',
@@ -77,10 +81,42 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 		return Object.keys(newErrors).length === 0
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>
+	): Promise<void> => {
 		e.preventDefault()
-		if (validate()) {
-			// onSubmit(formData)
+		if (!validate()) return
+
+		try {
+			await createOrder({
+				customerName: formData.name,
+				customerEmail: formData.email,
+				customerPhone: formData.phone,
+				countryCode: formData.countryCode,
+				whatsAppNumber: formData.whatsAppNumber,
+				preferredTravelDate: formData.journeyDate,
+				additionalNotes: formData.additionalRequirements,
+
+				productType: 'holiday',
+				productId: holidayId,
+				price: 0
+			})
+
+			toast.success('Holiday consultation submitted successfully!')
+
+			// Optional: Reset form
+			setFormData({
+				name: '',
+				email: '',
+				phone: '',
+				whatsAppNumber: '',
+				countryCode: '+880',
+				journeyDate: undefined,
+				additionalRequirements: ''
+			})
+		} catch (error) {
+			console.error(error)
+			toast.error('Failed to submit your holiday consultation')
 		}
 	}
 

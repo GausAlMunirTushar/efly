@@ -12,6 +12,8 @@ import {
 import { toast } from 'react-toastify'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
+import Title from '@/components/common/Title'
+import { Trash2 } from 'lucide-react'
 
 interface User {
 	_id: string
@@ -82,10 +84,10 @@ const CustomersPage = () => {
 	}
 
 	return (
-		<div className='p-6 bg-white mx-auto rounded-lg'>
-			<h1 className='text-2xl font-bold mb-4'>Customers</h1>
+		<div className='p-4 bg-white mx-auto rounded-lg'>
+			<Title>Customers</Title>
 
-			<div className='mb-6 space-y-2'>
+			<div className='my-4 space-y-2'>
 				<Input
 					placeholder='Name'
 					value={newUser.name}
@@ -123,7 +125,7 @@ const CustomersPage = () => {
 							role: e.target.value as 'admin' | 'editor' | 'user'
 						})
 					}
-					className='border px-2 py-1 rounded w-full'
+					className='border px-2 py-1.5 rounded-lg w-full'
 				>
 					<option value='user'>User</option>
 					<option value='editor'>Editor</option>
@@ -162,6 +164,7 @@ const CustomersPage = () => {
 										size='sm'
 										onClick={() => handleDelete(user._id)}
 									>
+										<Trash2 size={16} className='mr-2' />
 										Delete
 									</Button>
 								</td>

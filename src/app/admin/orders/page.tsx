@@ -10,6 +10,7 @@ import {
 import { toast } from 'react-toastify'
 import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
+import Title from '@/components/common/Title'
 
 interface Order {
 	_id: string
@@ -86,10 +87,10 @@ const OrdersPage = () => {
 	}
 
 	return (
-		<div className='p-6 bg-white rounded-lg mx-auto'>
-			<h1 className='text-2xl font-bold mb-4'>Order Management</h1>
+		<div className='p-4 bg-white rounded-lg mx-auto'>
+			<Title>Orders</Title>
 
-			<div className='mb-6 space-y-2'>
+			<div className='my-4 space-y-2'>
 				<Input
 					placeholder='Customer Name'
 					value={newOrder.customerName}

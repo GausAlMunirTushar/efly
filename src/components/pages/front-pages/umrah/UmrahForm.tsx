@@ -94,10 +94,10 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 			<Input
 				label='Name'
 				placeholder='Name'
-				name='firstName'
+				name='name'
 				value={formData.name}
 				onChange={handleChange}
-				error={errors.firstName}
+				error={errors.name}
 				required
 				fullWidth
 			/>
@@ -165,7 +165,7 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading }) => {
 					<CalendarIcon className='h-4 w-4 text-gray-500' />
 				</div>
 				{showDatePicker && (
-					<div className='mt-2'>
+					<div className='mt-2 px-2'>
 						<DayPicker
 							mode='single'
 							selected={formData.preferredTravelDate}

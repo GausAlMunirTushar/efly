@@ -45,13 +45,13 @@ export default function VisaDetailPage() {
 
 	return (
 		<section className='bg-gray-100'>
-			<div className='max-w-7xl mx-auto py-4 px-4'>
+			<div className='max-w-7xl mx-auto py-5 px-4'>
 				<VisaHeader
 					country={visa.country.name}
 					imageUrl={visa.country.image}
 				/>
 
-				<div className='w-full flex flex-col md:flex-row gap-6 py-4'>
+				<div className='w-full flex flex-col md:flex-row gap-4 py-5'>
 					<div className='w-full sm:w-9/12 bg-white rounded-lg p-4'>
 						<h1 className='text-3xl font-bold mb-4'>
 							{visa.country.name} Visa

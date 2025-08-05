@@ -14,8 +14,7 @@ interface HolidayConsultationFormProps {
 }
 
 interface FormData {
-	firstName: string
-	lastName: string
+	name: string
 	email: string
 	phone: string
 	whatsAppNumber?: string
@@ -34,8 +33,7 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 	isLoading
 }) => {
 	const [formData, setFormData] = useState<FormData>({
-		firstName: '',
-		lastName: '',
+		name: '',
 		email: '',
 		phone: '',
 		whatsAppNumber: '',
@@ -68,10 +66,8 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 	const validate = (): boolean => {
 		const newErrors: Record<string, string> = {}
 
-		if (!formData.firstName.trim())
-			newErrors.firstName = 'The first name field is required'
-		if (!formData.lastName.trim())
-			newErrors.lastName = 'The last name field is required'
+		if (!formData.name.trim())
+			newErrors.name = 'The first name field is required'
 		if (!formData.email.trim())
 			newErrors.email = 'The email address field is required'
 		if (!formData.phone.trim())
@@ -91,29 +87,18 @@ const HolidayConsultationForm: React.FC<HolidayConsultationFormProps> = ({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='space-y-4 bg-white p-6 rounded-md  w-full max-w-md'
+			className='space-y-4 bg-white p-4 rounded-md  w-full max-w-md'
 		>
 			<h1 className='text-md font-bold text-primary'>
 				Get Free Holiday Consultation
 			</h1>
 			<Input
-				label='First Name'
-				placeholder='First Name'
-				name='firstName'
-				value={formData.firstName}
+				label='Name'
+				placeholder='Name'
+				name='name'
+				value={formData.name}
 				onChange={handleChange}
-				error={errors.firstName}
-				required
-				fullWidth
-			/>
-
-			<Input
-				label='Last Name'
-				placeholder='Last Name'
-				name='lastName'
-				value={formData.lastName}
-				onChange={handleChange}
-				error={errors.lastName}
+				error={errors.name}
 				required
 				fullWidth
 			/>

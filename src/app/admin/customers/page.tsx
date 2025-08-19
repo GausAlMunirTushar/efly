@@ -10,10 +10,10 @@ import {
 } from '@/services/userService'
 
 import { toast } from 'react-toastify'
-import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 import Title from '@/components/common/Title'
 import { Trash2 } from 'lucide-react'
+import Link from 'next/link'
 
 interface User {
 	_id: string
@@ -27,14 +27,6 @@ const CustomersPage = () => {
 	const [users, setUsers] = useState<User[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState('')
-
-	const [newUser, setNewUser] = useState<CreateUserPayload>({
-		name: '',
-		email: '',
-		phone: '',
-		password: '',
-		role: 'user'
-	})
 
 	const fetchUsers = async () => {
 		setLoading(true)
@@ -52,27 +44,6 @@ const CustomersPage = () => {
 		fetchUsers()
 	}, [])
 
-	const handleCreate = async () => {
-		if (!newUser.name || !newUser.email || !newUser.password) {
-			toast.error('Name, email, and password are required')
-			return
-		}
-		try {
-			await createUser(newUser)
-			toast.success('User created')
-			setNewUser({
-				name: '',
-				email: '',
-				phone: '',
-				password: '',
-				role: 'user'
-			})
-			fetchUsers()
-		} catch (err) {
-			toast.error('Failed to create user')
-		}
-	}
-
 	const handleDelete = async (id: string) => {
 		try {
 			await deleteUser(id)
@@ -84,54 +55,12 @@ const CustomersPage = () => {
 	}
 
 	return (
-		<div className='p-4 bg-white mx-auto rounded-lg'>
-			<Title>Customers</Title>
-
-			<div className='my-4 space-y-2'>
-				<Input
-					placeholder='Name'
-					value={newUser.name}
-					onChange={e =>
-						setNewUser({ ...newUser, name: e.target.value })
-					}
-				/>
-				<Input
-					placeholder='Email'
-					value={newUser.email}
-					onChange={e =>
-						setNewUser({ ...newUser, email: e.target.value })
-					}
-				/>
-				<Input
-					placeholder='Phone'
-					value={newUser.phone}
-					onChange={e =>
-						setNewUser({ ...newUser, phone: e.target.value })
-					}
-				/>
-				<Input
-					placeholder='Password'
-					type='password'
-					value={newUser.password}
-					onChange={e =>
-						setNewUser({ ...newUser, password: e.target.value })
-					}
-				/>
-				<select
-					value={newUser.role}
-					onChange={e =>
-						setNewUser({
-							...newUser,
-							role: e.target.value as 'admin' | 'editor' | 'user'
-						})
-					}
-					className='border px-2 py-1.5 rounded-lg w-full'
-				>
-					<option value='user'>User</option>
-					<option value='editor'>Editor</option>
-					<option value='admin'>Admin</option>
-				</select>
-				<Button onClick={handleCreate}>Add Customer</Button>
+		<div className='p-4 bg-white min-h-screen mx-auto rounded-lg'>
+			<div className='flex justify-between items-center mb-4'>
+				<Title>Customers</Title>
+				<Link href={'/admin/customers/create-customer'}>
+					<Button size='sm'>Create new Customer</Button>
+				</Link>
 			</div>
 
 			{loading ? (

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Edit, Trash2, UploadCloud, X } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
+import Title from '@/components/common/Title'
 
 type Gallery = {
 	_id?: string
@@ -154,9 +155,7 @@ export default function AdminGalleryPage() {
 
 	return (
 		<div className='p-4 space-y-6 bg-white rounded-lg'>
-			<h1 className='text-2xl font-bold'>
-				{editingId ? 'Edit' : ''} Gallery
-			</h1>
+			<Title>{editingId ? 'Edit' : ''} Gallery</Title>
 
 			{/* Input fields for gallery details */}
 			<Input

@@ -110,7 +110,7 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className='space-y-4 bg-white sm:p-6 rounded-md w-full max-w-md'
+			className='space-y-4 bg-white p-3 sm:p-4 rounded-md w-full max-w-md'
 		>
 			<h1 className='text-md font-bold text-primary'>
 				Request Your Umrah Consultation

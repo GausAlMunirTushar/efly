@@ -8,6 +8,7 @@ import SelectDropdown from '@/components/form/SelectDropdown'
 import SelectSearchInput from '@/components/form/SelectSearchInput'
 import Button from '@/components/form/Button'
 import { ArrowRightLeft, Search } from 'lucide-react'
+import FlightSearchInput from '@/components/form/FlightSearchInput'
 
 // Types
 type TripType = 'one-way' | 'round-trip' | 'multi-city'
@@ -62,7 +63,7 @@ export default function FlightSearch() {
 					<div className='flex gap-4'>
 						{/* From */}
 						<div className='flex-1'>
-							<SelectSearchInput
+							<FlightSearchInput
 								label='From'
 								value={from}
 								onChange={setFrom}
@@ -72,7 +73,7 @@ export default function FlightSearch() {
 
 						{/* To */}
 						<div className='flex-1'>
-							<SelectSearchInput
+							<FlightSearchInput
 								label='To'
 								value={to}
 								onChange={setTo}
@@ -161,7 +162,7 @@ export default function FlightSearch() {
 					size='md'
 					leftIcon={<Search size={18} />}
 				>
-					Search Flights
+					Search Flight
 				</Button>
 			</div>
 		</div>

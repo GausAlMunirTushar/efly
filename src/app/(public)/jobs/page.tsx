@@ -22,7 +22,7 @@ const JobListPage = () => {
 			<div className='flex items-center justify-center  bg-[#0058A8]  h-36'>
 				<h1 className='text-4xl font-bold text-white'>Jobs</h1>
 			</div>
-			<div className='max-w-7xl mx-auto py-6'>
+			<div className='max-w-7xl mx-auto py-6 px-4'>
 				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8'>
 					{jobs.map(job => (
 						<JobCard key={String(job._id)} job={job} />

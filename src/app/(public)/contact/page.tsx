@@ -62,7 +62,7 @@ const ContactPage = () => {
 			<div className='max-w-7xl mx-auto p-6'>
 				<div className='grid md:grid-cols-2 gap-6'>
 					{/* Left Side - Contact Form */}
-					<div className='bg-white shadow-md p-6 rounded-lg'>
+					<div className='bg-white shadow-sm p-6 rounded-lg'>
 						<p className='mb-4 text-gray-600'>
 							Reach out to us via email or connect directly by
 							phone. For a personalized touch, visit us in person
@@ -108,7 +108,7 @@ const ContactPage = () => {
 								value={formData.message}
 								onChange={handleChange}
 								required
-								className='sm:max-h-44 2xl:max-h-32'
+								className='sm:max-h-44 2xl:max-h-32 resize-none'
 							/>
 							<Button
 								type='submit'
@@ -121,7 +121,7 @@ const ContactPage = () => {
 					</div>
 
 					{/* Right Side - Map and Address */}
-					<div className='shadow-md rounded-lg'>
+					<div className='shadow-sm rounded-lg'>
 						<iframe
 							className='w-full h-72 rounded-lg mb-2'
 							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sefly%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'

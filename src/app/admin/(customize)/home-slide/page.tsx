@@ -184,7 +184,7 @@ const HomeSlide = () => {
 				{slides.map(slide => (
 					<div
 						key={slide._id}
-						className='border rounded-md shadow-md overflow-hidden'
+						className='border rounded-md shadow-sm overflow-hidden'
 					>
 						<img
 							src={slide.image}

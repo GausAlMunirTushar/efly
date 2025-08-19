@@ -34,7 +34,7 @@ export default {
 					highlight: '#FFA07A'
 				},
 				primary: {
-					DEFAULT: '#137EFF',
+					DEFAULT: '#0058A8',
 					50: '#F2F2FB',
 					100: '#E1E4FA',
 					200: '#BFC3F4',

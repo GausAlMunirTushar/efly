@@ -44,7 +44,7 @@ export default function UserSidebar() {
 	})
 
 	return (
-		<aside className='w-60 bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 shadow-md flex flex-col rounded-lg overflow-y-auto scrollbar-none'>
+		<aside className='w-60 bg-white dark:bg-bg_dark border-r dark:border-bg_secondary border-gray-200 shadow-sm flex flex-col rounded-lg overflow-y-auto scrollbar-none'>
 			<nav className='space-y-1 py-5'>
 				{filteredMenuItems.map(item => (
 					<Link

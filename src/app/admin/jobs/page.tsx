@@ -21,7 +21,7 @@ const JobListPage = () => {
 	}, [])
 
 	return (
-		<div className='container mx-auto p-4 bg-white rounded-lg'>
+		<div className='container mx-auto p-4 bg-white min-h-full rounded-lg'>
 			<div className='flex justify-between gap-2'>
 				<Title>Jobs</Title>
 				<Link href='/jobs/create'>

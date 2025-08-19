@@ -126,7 +126,7 @@ const ContactPage = () => {
 						messages.map(msg => (
 							<div
 								key={msg._id}
-								className='bg-white shadow-md p-4 rounded-lg border'
+								className='w-full bg-white shadow-sm p-4 rounded-lg border'
 							>
 								<div className='flex justify-between items-center'>
 									<h3 className='font-bold'>{msg.name}</h3>
@@ -134,9 +134,11 @@ const ContactPage = () => {
 										{getRelativeTime(msg.createdAt)}
 									</p>
 								</div>
-								<p className='text-gray-600 trunscate text-wrap'>
-									{msg.email}
-								</p>
+								<div className='text-wrap'>
+									<p className='text-gray-600 '>
+										{msg.email}
+									</p>
+								</div>
 								<p className='mt-2 truncate'>{msg.message}</p>
 
 								{/* Phone */}

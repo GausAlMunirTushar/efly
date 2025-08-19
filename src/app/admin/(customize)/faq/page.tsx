@@ -14,7 +14,7 @@ const AdminFaqPage = () => {
 		<section className='bg-white min-h-screen rounded-lg p-4'>
 			<div className='flex justify-between items-center'>
 				<Title>FAQ</Title>
-				<Link href='/admin/create-faq'>
+				<Link href='/admin/faq/create-faq'>
 					<Button size='sm'>Create New FAQ</Button>
 				</Link>
 			</div>

@@ -79,16 +79,17 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 							aria-labelledby='package-image'
 							className='w-full md:w-9/12'
 						>
-							<Image
-								src={imageUrl}
-								alt={`${packagename} image`}
-								width={1200}
-								height={480}
-								className='w-full h-auto max-h-[24rem] md:max-h-[30rem] rounded-lg object-cover'
-								priority
-								sizes='(max-width: 768px) 100vw, 50vw'
-								style={{ maxWidth: '100%', height: 'auto' }}
-							/>
+							<div className='relative w-full aspect-[700/350] rounded-lg overflow-hidden'>
+								<Image
+									src={imageUrl}
+									alt={`${packagename} image`}
+									fill
+									className='object-'
+									priority
+									quality={100}
+									// sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+								/>
+							</div>
 						</section>
 
 						{/* Right smaller images stacked vertically */}

@@ -40,8 +40,10 @@ const UmrahCard: React.FC<UmrahCardProps> = ({
 				<Image
 					src={imgSrc || fallbackImage}
 					alt={packagename || 'Umrah package image'}
-					fill
-					className='object-cover'
+					// fill
+					className='object-fill aspect-[3/2] '
+					width={1080}
+					height={1080}
 					onError={() => setImgSrc(fallbackImage)}
 					sizes='(max-width: 768px) 100vw, 33vw'
 				/>

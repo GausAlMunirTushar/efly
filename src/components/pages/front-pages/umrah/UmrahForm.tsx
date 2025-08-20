@@ -115,7 +115,7 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 			<h1 className='text-md font-bold text-primary'>
 				Request Your Umrah Consultation
 			</h1>
-
+			ya
 			<Input
 				label='Name'
 				placeholder='Name'
@@ -137,7 +137,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 				type='email'
 				fullWidth
 			/>
-
 			<div>
 				<label className='text-sm font-medium block mb-1'>
 					Phone Number <span className='text-red-500'>*</span>
@@ -161,7 +160,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 					/>
 				</div>
 			</div>
-
 			<Input
 				label='WhatsApp Number'
 				name='whatsAppNumber'
@@ -171,7 +169,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 				error={errors.whatsAppNumber}
 				fullWidth
 			/>
-
 			<div>
 				<label className='text-sm font-medium block mb-1'>
 					Preferred Travel Date
@@ -199,7 +196,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 					</div>
 				)}
 			</div>
-
 			<Input
 				label='Number of People'
 				name='numberOfPeople'
@@ -209,7 +205,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 				error={errors.numberOfPeople}
 				fullWidth
 			/>
-
 			<div>
 				<label className='text-sm font-medium block mb-1'>
 					Additional Notes
@@ -223,7 +218,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 					className='w-full rounded-md border resize-none border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all'
 				/>
 			</div>
-
 			<Button
 				type='submit'
 				variant='primary'

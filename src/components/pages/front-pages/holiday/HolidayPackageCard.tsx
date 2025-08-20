@@ -62,7 +62,7 @@ const HolidayPackageCard: FC<HolidayPackageCardProps> = ({
 				/>
 			</div>
 
-			<div className='px-4 py-6 flex flex-col gap-2 flex-grow'>
+			<div className='px-2 py-4 flex flex-col gap-2 flex-grow'>
 				<div className='flex flex-wrap gap-2'>
 					{tags?.map(tag => {
 						const icon = iconMapper[tag]

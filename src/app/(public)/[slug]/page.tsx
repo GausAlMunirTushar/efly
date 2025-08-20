@@ -107,21 +107,29 @@ export default function Page({
 			<div className='max-w-7xl mx-auto py-6 px-4'>
 				{/* Blog Content */}
 				<div className='w-full'>
-					{blog.imageUrl && (
-						<div className='relative w-full aspect-[683/300] rounded-lg border mb-4 overflow-hidden'>
-							<Image
-								src={blog.imageUrl}
-								alt={blog.title}
-								fill
-								className='object-fill'
-								// sizes='(max-width: 768px) 100vw, 768px'
-								priority
-							/>
+					<section className='grid grid-cols-12 gap-6'>
+						<div className='col-span-12 md:col-span-9'>
+							{blog.imageUrl && (
+								<div className='relative w-full h-[350px] md:h-[400px] rounded-lg overflow-hidden shadow'>
+									<Image
+										src={blog.imageUrl}
+										alt={blog.title}
+										fill
+										className='object-cover md:object-fill'
+										sizes='(max-width: 768px) 80vw, 768px'
+										priority
+									/>
+								</div>
+							)}
 						</div>
-					)}
+						<div className='col-span-12 md:col-span-3'>
+							<BlogDetailsSidebar />
+						</div>
+					</section>
+
 					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
 						<div className='md:col-span-6'>
-							<h1 className='text-3xl font-bold mb-2'>
+							<h1 className='text-3xl font-bold mt-5 mb-3'>
 								{blog.title}
 							</h1>
 							<p className='text-gray-500 text-sm mb-4'>
@@ -157,7 +165,7 @@ export default function Page({
 						</div>
 						{/* Sidebar */}
 						<div className='md:col-span-2'>
-							<BlogDetailsSidebar />
+							{/* <BlogDetailsSidebar /> */}
 							<div className='mt-4'>
 								<LatestBlog />
 							</div>

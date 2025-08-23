@@ -1,29 +1,30 @@
 'use client'
-import Title from '@/components/common/Title'
-import dynamic from 'next/dynamic'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/form/Button'
 import { ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
-import React, { useCallback, useState } from 'react'
-import { UmrahPackage } from '@/services/umrahService'
+import {
+	UmrahPackage,
+	getUmrahById,
+	updateUmrah
+} from '@/services/umrahService'
 import Input from '@/components/form/Input'
-import Image from 'next/image'
-import { useDropzone } from 'react-dropzone'
-import { UploadCloud, X, Edit, Trash } from 'lucide-react'
+import JoditEditor from 'jodit-react'
 import { toast } from 'react-toastify'
+import { useParams } from 'next/navigation'
+import Title from '@/components/common/Title'
+import { UploadCloud, X } from 'lucide-react'
+import { useDropzone } from 'react-dropzone'
 import apiClient from '@/configs/apiConfig'
-import { createUmrah } from '@/services/umrahService'
+import Image from 'next/image' // Import Image component
 
-const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
+type FormData = Omit<UmrahPackage, '_id'>
 
-const UmrahCreatePage = () => {
-	const [loading, setLoading] = useState(false)
-	const [images, setImages] = useState<File[]>([])
-	const [imagePreviews, setImagePreviews] = useState<string[]>([])
-	const [imageUploading, setImageUploading] = useState(false)
+const UmrahPackageEditPage = () => {
+	const { id } = useParams<{ id: string }>() // Typing useParams to include 'id'
 	const router = useRouter()
-	const [form, setForm] = useState<Omit<UmrahPackage, '_id'>>({
+
+	const [form, setForm] = useState<FormData>({
 		packagename: '',
 		price: '',
 		description: '',
@@ -32,7 +33,36 @@ const UmrahCreatePage = () => {
 		isFeatured: false
 	})
 
-	// Handle input change for the form
+	const [loading, setLoading] = useState(false)
+	const [imagePreviews, setImagePreviews] = useState<string[]>([])
+	const [images, setImages] = useState<File[]>([])
+	const [imageUploading, setImageUploading] = useState(false)
+
+	// Fetch the existing package data by id
+	useEffect(() => {
+		const fetchPackage = async () => {
+			try {
+				const packageData = await getUmrahById(id)
+				setForm({
+					packagename: packageData.packagename,
+					price: packageData.price.toString(),
+					description: packageData.description,
+					duration: packageData.duration,
+					images: packageData.images,
+					isFeatured: packageData.isFeatured
+				})
+				setImagePreviews(packageData.images)
+			} catch (error) {
+				toast.error('Failed to fetch the Umrah package!')
+			}
+		}
+
+		if (id) {
+			fetchPackage()
+		}
+	}, [id])
+
+	// Handle input changes
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value, type, checked } = e.target
 		if (type === 'checkbox') {
@@ -41,17 +71,14 @@ const UmrahCreatePage = () => {
 			setForm({ ...form, [name]: value })
 		}
 	}
-	// Remove an image from the selected list
-	const removeImage = (index: number) => {
-		setImages(prev => prev.filter((_, i) => i !== index))
-		setImagePreviews(prev => prev.filter((_, i) => i !== index))
-	}
-	// Handle drag and drop for images
+
+	// Handle image upload via drag and drop
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		setImages(prev => [...prev, ...acceptedFiles])
 		const previews = acceptedFiles.map(file => URL.createObjectURL(file))
 		setImagePreviews(prev => [...prev, ...previews])
 	}, [])
+
 	// Configure the dropzone for image upload
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
@@ -59,97 +86,81 @@ const UmrahCreatePage = () => {
 		multiple: true
 	})
 
-	// Handle image uploads to the server
-	const handleImageUpload = async () => {
-		if (images.length === 0) {
-			toast.error('No images selected for upload.')
-			return
-		}
-		setImageUploading(true)
-
-		try {
-			const uploadedUrls: string[] = []
-
-			for (const image of images) {
-				const formData = new FormData()
-				formData.append('file', image)
-
-				const response = await apiClient.post('/upload', formData, {
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					}
-				})
-
-				const data = response.data
-				if (!data?.imageUrl) {
-					throw new Error(data?.error || 'Upload failed.')
-				}
-
-				uploadedUrls.push(data.imageUrl)
-			}
-
-			setForm(prev => ({ ...prev, images: uploadedUrls }))
-			toast.success('Images uploaded successfully!')
-		} catch (error: any) {
-			console.error(error)
-			toast.error(
-				error?.response?.data?.message ||
-					error?.message ||
-					'Image upload failed.'
-			)
-		} finally {
-			setImageUploading(false)
-		}
+	// Remove an image from the selected list
+	const removeImage = (index: number) => {
+		setImages(prev => prev.filter((_, i) => i !== index))
+		setImagePreviews(prev => prev.filter((_, i) => i !== index))
 	}
 
-	// Handle form submission for creating a new Umrah package
+	// Handle form submission for updating the package
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		if (!form.packagename.trim() || !form.price.toString().trim()) {
+		if (!form.packagename.trim() || !form.price.trim()) {
 			toast.error('Package name and price are required.')
 			return
 		}
-		if (form.images.length === 0) {
+
+		if (form.images.length === 0 && images.length === 0) {
 			toast.error('Please upload at least one image.')
 			return
 		}
 
 		setLoading(true)
 
-		try {
-			const payload: UmrahPackage = {
-				...form,
-				title: form.packagename, // Map packagename to title
-				price: Number(form.price),
-				description: form.description,
-				duration: form.duration,
-				hotelDetails: '', // Provide default or collect from form
-				transportDetails: '' // Provide default or collect from form
-			}
+		// Upload images to the server if new ones are added
+		let uploadedImages: string[] = []
+		if (images.length > 0) {
+			setImageUploading(true)
 
-			await createUmrah(payload)
-			toast.success('Umrah package created successfully!')
+			try {
+				const formData = new FormData()
+				images.forEach(image => formData.append('file', image))
+
+				const response = await apiClient.post('/upload', formData, {
+					headers: { 'Content-Type': 'multipart/form-data' }
+				})
+
+				uploadedImages = response.data.imageUrls // Assuming the API returns an array of image URLs
+				setForm(prev => ({
+					...prev,
+					images: [...prev.images, ...uploadedImages]
+				}))
+				toast.success('Images uploaded successfully!')
+			} catch (error) {
+				toast.error('Failed to upload images.')
+			} finally {
+				setImageUploading(false)
+			}
+		}
+
+		// Update Umrah package
+		try {
+			const updatedPackage = {
+				...form,
+				price: Number(form.price),
+				title: form.packagename,
+				images: [...form.images, ...uploadedImages]
+			}
+			await updateUmrah(id, updatedPackage)
+			toast.success('Umrah package updated successfully!')
 			router.push('/admin/umrah')
-		} catch (error: any) {
-			console.error('Create error:', error)
-			toast.error(
-				error?.response?.data?.message || 'Failed to create package.'
-			)
+		} catch (error) {
+			toast.error('Failed to update the Umrah package!')
 		} finally {
 			setLoading(false)
 		}
 	}
+
 	return (
 		<div className='bg-white p-6 min-h-screen space-y-4 rounded-lg'>
 			<div className='flex items-center justify-between'>
-				<Title>Create Umrah Package</Title>
-				<Link href='/admin/umrah'>
-					<Button size='sm'>
-						<ArrowLeft size={16} />
-					</Button>
-				</Link>
+				<Title>Edit Umrah Package</Title>
+				<Button size='sm' onClick={() => router.push('/admin/umrah')}>
+					<ArrowLeft size={16} />
+				</Button>
 			</div>
+
 			<div className='space-y-4'>
 				<Input
 					name='packagename'
@@ -245,32 +256,12 @@ const UmrahCreatePage = () => {
 					</div>
 				</div>
 
-				<button
-					type='button'
-					onClick={handleImageUpload}
-					disabled={imageUploading || images.length === 0}
-					className={`w-full py-2 rounded-md text-white ${
-						imageUploading || images.length === 0
-							? 'bg-gray-400 cursor-not-allowed'
-							: 'bg-blue-600 hover:bg-blue-700'
-					}`}
-				>
-					{imageUploading ? 'Uploading...' : 'Upload Images'}
-				</button>
-
-				<Button
-					onClick={handleSubmit}
-					disabled={loading || form.images.length === 0}
-				>
-					{loading
-						? 'Saving...'
-						: form._id
-							? 'Update Package'
-							: 'Create Package'}
+				<Button onClick={handleSubmit} disabled={loading}>
+					{loading ? 'Saving...' : 'Update Package'}
 				</Button>
 			</div>
 		</div>
 	)
 }
 
-export default UmrahCreatePage
+export default UmrahPackageEditPage

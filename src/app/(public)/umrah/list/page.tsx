@@ -33,7 +33,7 @@ const UmrahListPage = () => {
 						height={1080}
 						layout='intrinsic'
 						priority
-						className='rounded-lg w-full object-cover' // Use object-cover to maintain the aspect ratio
+						className='rounded-lg w-full object-cover h-[550px]' // Use object-cover to maintain the aspect ratio
 						sizes='(max-width: 640px) 80vw, (max-width: 768px) 100vw, 100vw' // Adjust size based on screen width
 					/>
 					{/* Optional overlay */}

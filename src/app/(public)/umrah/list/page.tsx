@@ -23,25 +23,28 @@ export const metadata: Metadata = {
 const UmrahListPage = () => {
 	return (
 		<main className='bg-gray-100'>
-			<div className='max-w-7xl mx-auto px-6 py-4'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 py-4'>
 				{/* Smaller height responsive image */}
-				<section className='w-full relative h-[150px] sm:h-[200px] rounded-lg bg-white'>
+				<section className='w-full relative h-auto rounded-lg bg-white'>
 					<Image
 						src={`/images/umrah/umrah-cover.png`}
 						alt='Umrah Banner'
-						fill
-						style={{ objectFit: 'cover' }}
+						width={1920}
+						height={1080}
+						layout='intrinsic'
 						priority
-						className='rounded-lg'
-						sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+						className='rounded-lg w-full object-cover' // Use object-cover to maintain the aspect ratio
+						sizes='(max-width: 640px) 80vw, (max-width: 768px) 100vw, 100vw' // Adjust size based on screen width
 					/>
-					{/* <div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg'></div>
-					<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg'></div> */}
-					{/* <h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
-						Best Umrah Packages from Bangladesh {CURRENT_YEAR} -{' '}
-						{CURRENT_YEAR + 1}
-					</h1> */}
+					{/* Optional overlay */}
+					{/* <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg"></div>
+  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg"></div> */}
+					{/* Optional Text */}
+					{/* <h1 className="absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center">
+    Best Umrah Packages from Bangladesh {CURRENT_YEAR} - {CURRENT_YEAR + 1}
+  </h1> */}
 				</section>
+
 				<section className='mt-3'>
 					<Umrah />
 				</section>

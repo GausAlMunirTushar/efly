@@ -146,7 +146,7 @@ const UmrahDetailsPage = async ({ params }: PageProps) => {
 										Description
 									</h2>
 									<div
-										className='text-gray-700'
+										className='text-gray-700 text-wrap'
 										dangerouslySetInnerHTML={{
 											__html: description
 										}}

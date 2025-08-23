@@ -115,7 +115,6 @@ const UmrahForm: React.FC<UmrahFormProps> = ({ isLoading, umrahId }) => {
 			<h1 className='text-md font-bold text-primary'>
 				Request Your Umrah Consultation
 			</h1>
-			ya
 			<Input
 				label='Name'
 				placeholder='Name'

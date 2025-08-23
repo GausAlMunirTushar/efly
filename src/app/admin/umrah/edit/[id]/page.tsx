@@ -121,7 +121,15 @@ const UmrahPackageEditPage = () => {
 					headers: { 'Content-Type': 'multipart/form-data' }
 				})
 
-				uploadedImages = response.data.imageUrls // Assuming the API returns an array of image URLs
+				// Log the response to check its structure
+				console.log('Image Upload Response:', response.data)
+
+				// Assuming the response contains an array of image URLs
+				// If the response is a single image URL, adjust accordingly
+				uploadedImages = Array.isArray(response.data.imageUrls)
+					? response.data.imageUrls
+					: [response.data.imageUrl] // Adjust this based on your API response
+
 				setForm(prev => ({
 					...prev,
 					images: [...prev.images, ...uploadedImages]
@@ -140,7 +148,7 @@ const UmrahPackageEditPage = () => {
 				...form,
 				price: Number(form.price),
 				title: form.packagename,
-				images: [...form.images, ...uploadedImages]
+				images: [...uploadedImages]
 			}
 			await updateUmrah(id, updatedPackage)
 			toast.success('Umrah package updated successfully!')

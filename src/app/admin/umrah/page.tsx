@@ -40,7 +40,7 @@ export default function AdminUmrahPage() {
 	}
 
 	return (
-		<div className='bg-white p-6 space-y-4 rounded-lg'>
+		<div className='bg-white p-6 space-y-4 min-h-screen rounded-lg'>
 			<div className='flex items-center justify-between'>
 				<Title>Umrah</Title>
 				<Link href='/admin/umrah/create'>

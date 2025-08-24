@@ -10,7 +10,7 @@ import Link from 'next/link'
 import Button from '@/components/form/Button'
 
 interface HolidayPackage {
-	id: string
+	_id: string
 	title: string
 	description: string
 	imageUrl: string
@@ -37,11 +37,11 @@ const AdminHolidayPage = () => {
 	}, [])
 
 	// Handle the delete action for holiday packages
-	const handleDelete = async (id: string) => {
+	const handleDelete = async (_id: string) => {
 		if (confirm('Are you sure you want to delete this package?')) {
 			try {
-				await deleteHoliday(id)
-				setPackages(packages.filter(pkg => pkg.id !== id))
+				await deleteHoliday(_id)
+				setPackages(packages.filter(pkg => pkg._id !== _id))
 				toast.success('Package deleted successfully')
 			} catch {
 				toast.error('Failed to delete package')
@@ -60,44 +60,37 @@ const AdminHolidayPage = () => {
 
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4'>
 				{packages.map(pkg => (
-					<div key={pkg.id} className='bg-white rounded-lg shadow-lg'>
+					<div key={pkg._id} className='bg-white rounded-lg shadow'>
 						<div className='relative'>
 							<img
 								src={pkg.imageUrl}
 								alt={pkg.title}
 								className='w-full h-48 object-cover rounded-t-md'
 							/>
-							<div className='absolute top-2 right-2'>
-								<button
-									className='bg-primary text-white p-2 rounded-full'
-									title='Edit'
-									onClick={() =>
-										router.push(
-											`/admin/holiday/edit/${pkg.id}`
-										)
-									}
-								>
-									<Edit size={20} />
-								</button>
-							</div>
 						</div>
 						<div className='p-4'>
 							<h3 className='text-lg font-semibold truncate'>
 								{pkg.title}
 							</h3>
-							<p className='text-sm text-gray-600 mt-2'>
-								{pkg.description}
-							</p>
-							<div className='mt-4 flex justify-between items-center'>
-								<span className='text-xl font-bold'>
-									{pkg.price} BDT
-								</span>
+
+							<div className='mt-4 flex justify-between'>
 								<button
-									className='bg-red-500 text-white p-2 rounded-full'
-									title='Delete'
-									onClick={() => handleDelete(pkg.id)}
+									className='flex bg-primary px-4 py-2 text-white gap-2 items-center rounded'
+									title='Edit'
+									onClick={() =>
+										router.push(
+											`/admin/holiday/edit/${pkg._id}`
+										)
+									}
 								>
-									<Trash size={20} />
+									<Edit size={20} /> <span>Edit</span>
+								</button>
+								<button
+									className='flex bg-red-500 px-4 py-2 text-white gap-2 items-center rounded'
+									title='Delete'
+									onClick={() => handleDelete(pkg._id)}
+								>
+									<Trash size={20} /> <p>Delete</p>
 								</button>
 							</div>
 						</div>

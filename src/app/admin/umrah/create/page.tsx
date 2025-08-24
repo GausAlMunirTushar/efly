@@ -120,12 +120,12 @@ const UmrahCreatePage = () => {
 		try {
 			const payload: UmrahPackage = {
 				...form,
-				title: form.packagename, // Map packagename to title
+				title: form.packagename,
 				price: Number(form.price),
 				description: form.description,
 				duration: form.duration,
-				hotelDetails: '', // Provide default or collect from form
-				transportDetails: '' // Provide default or collect from form
+				hotelDetails: '',
+				transportDetails: ''
 			}
 
 			await createUmrah(payload)

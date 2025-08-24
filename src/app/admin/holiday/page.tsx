@@ -52,7 +52,7 @@ const AdminHolidayPage = () => {
 	return (
 		<div className='bg-white p-6 min-h-screen rounded-lg'>
 			<div className='flex items-center justify-between'>
-				<Title>Holiday Packages</Title>
+				<Title>Holiday</Title>
 				<Link href='/admin/holiday/create'>
 					<Button size='sm'>Create Holiday Package</Button>
 				</Link>

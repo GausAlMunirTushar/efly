@@ -9,6 +9,7 @@ import {
 	uploadImage,
 	Country
 } from '@/services/countryService'
+import Title from '@/components/common/Title'
 
 const AdminCountryPage = () => {
 	const [countries, setCountries] = useState<Country[]>([])
@@ -113,7 +114,9 @@ const AdminCountryPage = () => {
 
 	return (
 		<div className='p-4 bg-white rounded-lg'>
-			<h1 className='text-2xl font-bold mb-4'>Country Management</h1>
+			<div>
+				<Title>Country</Title>
+			</div>
 
 			{error && <div className='text-red-500 mb-2'>{error}</div>}
 

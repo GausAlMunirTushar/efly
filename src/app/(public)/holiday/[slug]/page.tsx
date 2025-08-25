@@ -71,21 +71,18 @@ export default function HolidayDestinationPage() {
 		<main className='bg-gray-100'>
 			<div className='max-w-7xl mx-auto py-4 px-4'>
 				{/* Hero Banner */}
-				<section className='w-full relative h-[150px] sm:h-[200px] rounded-lg bg-white'>
+				<section className='w-full relative h-auto rounded-lg bg-white'>
 					<Image
-						src='/images/holiday/holiday.jpg'
+						src='/images/holiday/singapure-tour.jpg'
 						alt='holiday Banner'
-						fill
-						style={{ objectFit: 'cover' }}
+						width={1920}
+						height={1080}
+						layout='intrinsic'
 						priority
-						className='rounded-lg'
-						sizes='(max-width: 640px) 100vw, (max-width: 768px) 100vw, 100vw'
+						quality={100}
+						className='rounded-lg w-full object-cover h-[550px]'
+						sizes='(max-width: 640px) 80vw, (max-width: 768px) 100vw, 100vw'
 					/>
-					<div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg'></div>
-					<div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black to-transparent rounded-lg'></div>
-					<h1 className='absolute inset-0 flex items-center justify-center text-white text-xl sm:text-3xl md:text-4xl font-bold z-4 px-4 text-center'>
-						Best Holiday Packages from {titleCase(slug)}
-					</h1>
 				</section>
 				{/* Holiday Packages */}
 				<section className='max-w-7xl mx-auto'>

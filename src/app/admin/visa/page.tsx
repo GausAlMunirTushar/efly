@@ -39,9 +39,14 @@ const VisaPage = () => {
 		<div className='p-6 bg-white rounded-lg min-h-screen'>
 			<div className='flex items-center justify-between mb-4'>
 				<Title>Visas</Title>
-				<Link href='/admin/visa/create'>
-					<Button size='sm'>Create Visa</Button>
-				</Link>
+				<div className='flex items-center gap-4'>
+					<Link href='/admin/visa/country'>
+						<Button size='sm'>Country</Button>
+					</Link>
+					<Link href='/admin/visa/create'>
+						<Button size='sm'>Create Visa</Button>
+					</Link>
+				</div>
 			</div>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4'>
 				{visas.map(visa => (

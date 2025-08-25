@@ -119,7 +119,6 @@ const HomeSlide = () => {
 		setEditingId(null)
 	}
 
-	// Enable submit button only if the file is selected or there is a preview
 	const isSubmitDisabled = !link || (file && !preview) || loading
 
 	return (
@@ -129,7 +128,7 @@ const HomeSlide = () => {
 
 				<Button
 					variant='primary'
-					size='md'
+					size='sm'
 					onClick={() => setIsModalOpen(true)}
 				>
 					Create Slide

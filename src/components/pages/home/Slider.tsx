@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -20,10 +20,28 @@ type CustomSliderProps = {
 }
 
 export default function CustomSlider({ slides = [] }: CustomSliderProps) {
+	const [sliderData, setSliderData] = useState<SlideItem[]>([])
 	const prevRef = useRef<HTMLButtonElement | null>(null)
 	const nextRef = useRef<HTMLButtonElement | null>(null)
 
-	useEffect(() => {}, [])
+	useEffect(() => {
+		// Fetch the slide data from the API
+		const fetchSlides = async () => {
+			try {
+				const response = await fetch('/api/homeslides')
+				const data = await response.json()
+
+				// Assuming the response is an array of slide objects
+				if (Array.isArray(data)) {
+					setSliderData(data)
+				}
+			} catch (error) {
+				console.error('Failed to fetch slides:', error)
+			}
+		}
+
+		fetchSlides()
+	}, [])
 
 	return (
 		<div className='relative w-full mx-auto'>
@@ -58,8 +76,8 @@ export default function CustomSlider({ slides = [] }: CustomSliderProps) {
 				}}
 				className='rounded-lg overflow-hidden'
 			>
-				{slides.length > 0 ? (
-					slides.map(slide => (
+				{sliderData.length > 0 ? (
+					sliderData.map(slide => (
 						<SwiperSlide key={slide.id} className='relative group'>
 							<div className='relative h-56  w-full rounded-lg overflow-hidden cursor-pointer'>
 								<Link href={slide.link} target='_blank'>
@@ -67,7 +85,7 @@ export default function CustomSlider({ slides = [] }: CustomSliderProps) {
 										src={slide.image}
 										alt={`Slide ${slide.id}`}
 										fill
-										className='object-cover transition-transform duration-300 group-hover:scale-110'
+										className='object-fill transition-transform duration-300 group-hover:scale-110'
 										priority
 									/>
 									<Link

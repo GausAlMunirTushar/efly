@@ -166,9 +166,7 @@ export default function Page({
 						{/* Sidebar */}
 						<div className='md:col-span-2'>
 							{/* <BlogDetailsSidebar /> */}
-							<div className='mt-4'>
-								<LatestBlog />
-							</div>
+							<div className='mt-4'>{/* <LatestBlog /> */}</div>
 						</div>
 					</div>
 				</div>

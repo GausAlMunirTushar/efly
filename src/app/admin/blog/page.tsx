@@ -32,7 +32,7 @@ const BlogPage = () => {
 			setBlogs(data)
 		} catch (error) {
 			console.error('Error fetching blogs:', error)
-			setBlogs([]) // Set blogs to an empty array in case of error
+			setBlogs([])
 		} finally {
 			setLoading(false)
 		}
@@ -55,13 +55,11 @@ const BlogPage = () => {
 	}
 
 	return (
-		<section className='bg-white p-4 rounded-lg'>
+		<section className='bg-white p-4 rounded-lg min-h-screen'>
 			<div className='flex justify-between items-center'>
 				<Title>Blogs</Title>
 				<Link href={`/admin/blog/create`}>
-					<Button size='md'>
-						<Plus className='w-4 h-4 mr-1' /> Create New Blog
-					</Button>
+					<Button size='sm'>Create New Blog</Button>
 				</Link>
 			</div>
 			<div className='mt-4'>
@@ -82,7 +80,7 @@ const BlogPage = () => {
 							blogs.map(blog => (
 								<div
 									key={blog.slug}
-									className='bg-white rounded-lg shadow-md border border-gray-200'
+									className='bg-white rounded-lg shadow border border-gray-200'
 								>
 									{/* Use Image component for optimized image rendering */}
 									<div className='relative w-full h-36'>
@@ -97,16 +95,16 @@ const BlogPage = () => {
 											className='object-cover h-36 w-full rounded-t-lg'
 										/>
 									</div>
-									<div className='p-2'>
+									<div className='px-2 py-3'>
 										<h3 className='text-2xl font-semibold truncate'>
 											{blog.title}
 										</h3>
 										<p className='text-sm text-gray-600'>
 											{blog.category.name}
 										</p>
-										<p className='mt-2 text-gray-800 line-clamp-3'>
+										{/* <p className='mt-2 text-gray-800 line-clamp-3'>
 											{blog.content}
-										</p>
+										</p> */}
 										<div className='mt-4 flex gap-4'>
 											<Link
 												href={`/admin/blog/create?slug=${blog.slug}`}

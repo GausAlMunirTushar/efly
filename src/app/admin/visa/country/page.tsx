@@ -1,84 +1,61 @@
 'use client'
 
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { X, Edit, Trash2 } from 'lucide-react'
 import {
-	getCountries,
+	Country,
 	createCountry,
 	updateCountry,
 	deleteCountry,
-	uploadImage,
-	Country
+	getCountries
 } from '@/services/countryService'
+import Modal from '@/components/common/Modal'
+import Input from '@/components/form/Input'
+import ImageUploader from '@/components/common/ImageUploader'
+import Button from '@/components/form/Button'
 import Title from '@/components/common/Title'
+import Image from 'next/image'
 
-const AdminCountryPage = () => {
+const CountryPage = () => {
 	const [countries, setCountries] = useState<Country[]>([])
+	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [form, setForm] = useState<Partial<Country>>({
 		name: '',
 		countryCode: '',
 		image: ''
 	})
-	const [selectedFile, setSelectedFile] = useState<File | null>(null)
-	const [preview, setPreview] = useState<string | null>(null)
 	const [editingId, setEditingId] = useState<string | null>(null)
-	const [loading, setLoading] = useState<boolean>(false)
-	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
 		fetchCountries()
 	}, [])
 
 	const fetchCountries = async () => {
-		try {
-			setLoading(true)
-			const data = await getCountries()
-			setCountries(data)
-		} catch (err) {
-			setError('Failed to fetch countries.')
-		} finally {
-			setLoading(false)
-		}
+		const data = await getCountries()
+		setCountries(data)
 	}
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setForm({ ...form, [e.target.name]: e.target.value })
 	}
 
-	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files && e.target.files.length > 0) {
-			const file = e.target.files[0]
-			setSelectedFile(file)
-			setPreview(URL.createObjectURL(file))
-		}
+	const handleImageUpload = (imageUrl: string) => {
+		setForm(prev => ({ ...prev, image: imageUrl }))
 	}
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		setLoading(true)
-		setError(null)
+		if (!form.name || !form.countryCode || !form.image) return // Validation
 
-		try {
-			let imageUrl = form.image
-
-			if (selectedFile) {
-				imageUrl = await uploadImage(selectedFile)
-			}
-
-			const countryData = { ...form, image: imageUrl }
-
-			if (editingId) {
-				await updateCountry(editingId, countryData)
-			} else {
-				await createCountry(countryData)
-			}
-
-			resetForm()
-			await fetchCountries()
-		} catch (err: any) {
-			setError(err?.message || 'Something went wrong.')
-		} finally {
-			setLoading(false)
+		if (editingId) {
+			await updateCountry(editingId, form)
+		} else {
+			await createCountry(form)
 		}
+
+		resetForm()
+		await fetchCountries()
+		setIsModalOpen(false)
 	}
 
 	const handleEdit = (country: Country) => {
@@ -87,149 +64,113 @@ const AdminCountryPage = () => {
 			countryCode: country.countryCode,
 			image: country.image
 		})
-		setEditingId(country._id || null)
-		setPreview(country.image || null)
-		setSelectedFile(null)
+		setEditingId(country._id)
+		setIsModalOpen(true)
 	}
 
 	const handleDelete = async (id: string) => {
-		if (!confirm('Are you sure you want to delete?')) return
-		setLoading(true)
-		try {
+		if (confirm('Are you sure you want to delete?')) {
 			await deleteCountry(id)
 			await fetchCountries()
-		} catch (err: any) {
-			setError(err?.message || 'Failed to delete.')
-		} finally {
-			setLoading(false)
 		}
 	}
 
 	const resetForm = () => {
 		setForm({ name: '', countryCode: '', image: '' })
-		setSelectedFile(null)
-		setPreview(null)
 		setEditingId(null)
 	}
 
 	return (
-		<div className='p-4 bg-white rounded-lg'>
-			<div>
+		<div className='bg-white min-h-screen p-6 rounded-lg'>
+			<div className='flex items-center justify-between mb-4'>
 				<Title>Country</Title>
+				<Button size='sm' onClick={() => setIsModalOpen(true)}>
+					Add Country
+				</Button>
 			</div>
 
-			{error && <div className='text-red-500 mb-2'>{error}</div>}
-
-			<form onSubmit={handleSubmit} className='mb-4 space-y-2'>
-				<input
-					type='text'
-					name='name'
-					value={form.name}
-					onChange={handleInputChange}
-					placeholder='Country Name'
-					className='border p-2 w-full'
-					required
-					disabled={loading}
-				/>
-				<input
-					type='text'
-					name='countryCode'
-					value={form.countryCode}
-					onChange={handleInputChange}
-					placeholder='Country Code (e.g. US)'
-					className='border p-2 w-full'
-					required
-					disabled={loading}
-				/>
-				<input
-					type='file'
-					onChange={handleFileChange}
-					className='w-full'
-					disabled={loading}
-				/>
-				{preview && (
-					<img
-						src={preview}
-						alt='Preview'
-						className='w-20 h-20 object-cover mt-2 rounded'
+			{/* Modal for Add/Edit Country */}
+			<Modal
+				isOpen={isModalOpen}
+				size='xl'
+				onClose={() => setIsModalOpen(false)}
+				title={editingId ? 'Edit Country' : 'Add Country'}
+			>
+				<form onSubmit={handleSubmit} className='space-y-4 p-4'>
+					<Input
+						label='Country Name'
+						name='name'
+						value={form.name}
+						onChange={handleInputChange}
+						required
 					/>
-				)}
-				<button
-					type='submit'
-					className={`bg-blue-500 text-white px-4 py-2 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-					disabled={loading}
-				>
-					{loading
-						? 'Processing...'
-						: editingId
-							? 'Update'
-							: 'Create'}
-				</button>
-				{editingId && (
-					<button
-						type='button'
-						className='ml-2 bg-gray-500 text-white px-4 py-2 rounded'
-						onClick={resetForm}
-						disabled={loading}
-					>
-						Cancel
-					</button>
-				)}
-			</form>
+					<Input
+						label='Country Code'
+						name='countryCode'
+						value={form.countryCode}
+						onChange={handleInputChange}
+						required
+					/>
+					<ImageUploader onImageUpload={handleImageUpload} />
+					<div className='flex justify-end'>
+						<Button size='sm' type='submit'>
+							{editingId ? 'Update' : 'Add'} Country
+						</Button>
+					</div>
+				</form>
+			</Modal>
 
-			<div>
-				<h2 className='text-xl mb-2'>Countries</h2>
-				{loading && countries.length === 0 ? (
-					<div>Loading...</div>
-				) : (
-					<ul>
-						{countries.map(country => (
-							<li
-								key={country._id}
-								className='flex items-center justify-between mb-2 border p-2 rounded'
-							>
-								<div className='flex items-center'>
-									{country.image && (
-										<img
-											src={country.image}
-											alt={country.name}
-											className='w-10 h-10 inline-block mr-2 rounded'
-										/>
-									)}
-									<div>
-										<div className='font-semibold'>
-											{country.name}
-										</div>
-										<div className='text-sm text-gray-500'>
-											({country.countryCode})
-										</div>
-									</div>
-								</div>
-								<div>
-									<button
-										className='mr-2 bg-yellow-500 text-white px-2 py-1 rounded'
+			{/* Country List */}
+			<div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+				{countries.map(country => (
+					<div
+						key={country._id}
+						className='bg-white rounded-md shadow'
+					>
+						<div className=''>
+							<div>
+								{country.image && (
+									<Image
+										src={country.image}
+										alt={country.name}
+										width={1980}
+										height={1080}
+										layout='intrinsic'
+										quality={100}
+										className='w-full h-40 object-cover rounded-t-md'
+									/>
+								)}
+							</div>
+							<div className='p-4'>
+								<p className='font-semibold'>{country.name}</p>
+								<p className='text-gray-500'>
+									{country.countryCode}
+								</p>
+								<div className='flex items-center justify-end gap-4'>
+									<Button
+										variant='outline'
+										size='sm'
 										onClick={() => handleEdit(country)}
-										disabled={loading}
 									>
-										Edit
-									</button>
-									<button
-										className='bg-red-500 text-white px-2 py-1 rounded'
+										<Edit className='w-5 h-5' />
+									</Button>
+									<Button
+										variant='danger'
+										size='sm'
 										onClick={() =>
 											handleDelete(country._id!)
 										}
-										disabled={loading}
 									>
-										Delete
-									</button>
+										<Trash2 className='w-5 h-5' />
+									</Button>
 								</div>
-							</li>
-						))}
-					</ul>
-				)}
+							</div>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	)
 }
 
-export default AdminCountryPage
+export default CountryPage

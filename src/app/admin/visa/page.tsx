@@ -57,7 +57,7 @@ const VisaPage = () => {
 						<h3 className='text-lg font-semibold'>
 							{visa.visaType}
 						</h3>
-						<p>{visa.country.name}</p>
+						{/* <p>{visa.country.name}</p> */}
 						<Button
 							size='sm'
 							variant='outline'

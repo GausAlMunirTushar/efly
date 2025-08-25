@@ -4,6 +4,7 @@ import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { X, UploadCloud } from 'lucide-react'
 import Image from 'next/image'
+import Button from '../form/Button'
 
 const ImageUploader = ({
 	onImageUpload
@@ -70,7 +71,7 @@ const ImageUploader = ({
 
 			{/* Image Preview */}
 			{images.length > 0 && (
-				<div className='mt-4 grid grid-cols-3 gap-3'>
+				<div className='my-4 grid grid-cols-3 gap-3'>
 					{images.map((file, index) => (
 						<div key={index} className='relative group'>
 							<Image
@@ -94,13 +95,14 @@ const ImageUploader = ({
 			)}
 
 			{/* Upload Button */}
-			<button
+			<Button
+				size='sm'
+				className='w-full mt-2'
 				type='button'
 				onClick={handleImageUpload}
-				className='w-full mt-4 py-2 bg-blue-600 text-white rounded-md'
 			>
 				Upload Image
-			</button>
+			</Button>
 		</div>
 	)
 }

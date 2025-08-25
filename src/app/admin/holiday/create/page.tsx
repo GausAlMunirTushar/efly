@@ -13,8 +13,11 @@ import { SingleValue } from 'react-select'
 import apiClient from '@/configs/apiConfig'
 import Title from '@/components/common/Title'
 import Link from 'next/link'
-import JoditEditor from 'jodit-react'
 import Image from 'next/image'
+
+import dynamic from 'next/dynamic'
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 type FormState = {
 	title: string
@@ -163,7 +166,7 @@ const HolidayPackageCreatePage = () => {
 		<div className='p-6 bg-white rounded-lg min-h-screen'>
 			<div className='flex items-center justify-between mb-4'>
 				<Title>Create Holiday Package</Title>
-				<Link href='/admin/holidays'>
+				<Link href='/admin/holiday'>
 					<Button size='sm'>
 						<ArrowLeft size={16} />
 					</Button>

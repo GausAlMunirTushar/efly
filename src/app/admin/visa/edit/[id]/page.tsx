@@ -7,9 +7,11 @@ import { ArrowLeft } from 'lucide-react'
 import { getVisaById, updateVisa } from '@/services/visaService'
 import Input from '@/components/form/Input'
 import { toast } from 'react-toastify'
-import JoditEditor from 'jodit-react'
+import dynamic from 'next/dynamic'
 import Title from '@/components/common/Title'
 import Link from 'next/link'
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 type Country = {
 	_id: string

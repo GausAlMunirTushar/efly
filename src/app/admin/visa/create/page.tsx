@@ -7,13 +7,15 @@ import Button from '@/components/form/Button'
 import { ArrowLeft } from 'lucide-react'
 import Select from 'react-select'
 import Input from '@/components/form/Input'
-import JoditEditor from 'jodit-react'
+import dynamic from 'next/dynamic'
 import { createVisa } from '@/services/visaService'
 import { getCountries } from '@/services/countryService'
 import apiClient from '@/configs/apiConfig'
 import Title from '@/components/common/Title'
 import Link from 'next/link'
 import Image from 'next/image'
+
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 
 type FormState = {
 	country: string // Country ID

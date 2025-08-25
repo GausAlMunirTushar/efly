@@ -44,6 +44,7 @@ const VisaCountryPage = () => {
 				Country not found
 			</div>
 		)
+	const countryImage = country?.image
 
 	return (
 		<main className='bg-gray-100'>
@@ -51,7 +52,7 @@ const VisaCountryPage = () => {
 				{/* Country Info */}
 				<section className='w-full relative h-auto rounded-lg bg-white'>
 					<Image
-						src={`/images/visa/singapure-visa.jpg`}
+						src={`${countryImage}`}
 						alt='Visa Banner'
 						width={1920}
 						height={1080}

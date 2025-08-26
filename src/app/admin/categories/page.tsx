@@ -6,6 +6,7 @@ import Input from '@/components/form/Input'
 import Button from '@/components/form/Button'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Title from '@/components/common/Title'
 
 interface Category {
 	_id: string
@@ -40,7 +41,7 @@ export default function CategoriesPage() {
 	}, [categoryName])
 
 	const fetchCategories = async (): Promise<void> => {
-		setIsFetching(true) // Start loading before fetching
+		setIsFetching(true)
 		try {
 			const res = await fetch('/api/categories')
 			if (!res.ok) throw new Error('Failed to fetch categories')
@@ -51,7 +52,7 @@ export default function CategoriesPage() {
 				error instanceof Error ? error.message : 'An error occurred'
 			)
 		} finally {
-			setIsFetching(false) // Stop loading after fetching
+			setIsFetching(false)
 		}
 	}
 
@@ -124,8 +125,8 @@ export default function CategoriesPage() {
 				</div>
 			)}
 
-			<h2 className='text-xl font-semibold mb-4'>Manage Categories</h2>
-			<form onSubmit={handleSubmit} className='space-y-4'>
+			<Title>Blog Categories</Title>
+			<form onSubmit={handleSubmit} className='space-y-4 mt-2'>
 				<Input
 					type='text'
 					name='category'
@@ -162,7 +163,7 @@ export default function CategoriesPage() {
 						</div>
 						<div className='flex gap-2'>
 							<Button
-								variant='secondary'
+								variant='primary'
 								onClick={() => handleEdit(category)}
 								disabled={loading}
 							>

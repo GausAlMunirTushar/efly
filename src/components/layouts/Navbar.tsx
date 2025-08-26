@@ -42,7 +42,7 @@ const Navbar = () => {
 	}, [])
 
 	return (
-		<nav className='flex items-center justify-between px-4 py-3 bg-white dark:bg-bg_dark rounded-lg box-shadow'>
+		<nav className='flex items-center justify-between px-4 py-3 bg-white dark:bg-bg_dark rounded-lg'>
 			{/* Search Bar */}
 			<div
 				onClick={() => setSearchOpen(true)}

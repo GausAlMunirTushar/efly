@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Title from '@/components/common/Title'
+import Link from 'next/link'
+import Button from '@/components/form/Button'
+import { ArrowLeft } from 'lucide-react'
 
 const CreateJobPage = () => {
 	const [formData, setFormData] = useState({
@@ -43,11 +47,16 @@ const CreateJobPage = () => {
 	}
 
 	return (
-		<div className='container mx-auto p-6'>
-			<h1 className='text-3xl font-semibold text-gray-900'>
-				Create a New Job
-			</h1>
-			<form onSubmit={handleSubmit} className='mt-6 space-y-6'>
+		<div className='w-full mx-auto p-4 bg-white min-h-full rounded-lg'>
+			<div className='flex justify-between gap-2'>
+				<Title>Jobs</Title>
+				<Link href='/admin/jobs'>
+					<Button size='sm' variant='primary'>
+						<ArrowLeft size={16} />
+					</Button>
+				</Link>
+			</div>
+			<form onSubmit={handleSubmit} className='mt-6 space-y-3'>
 				<div>
 					<label htmlFor='title' className='block text-gray-700'>
 						Job Title
@@ -160,12 +169,7 @@ const CreateJobPage = () => {
 				</div>
 
 				<div className='mt-4 flex justify-end'>
-					<button
-						type='submit'
-						className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
-					>
-						Create Job
-					</button>
+					<Button type='submit'>Create Job</Button>
 				</div>
 			</form>
 		</div>

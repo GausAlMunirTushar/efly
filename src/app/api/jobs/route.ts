@@ -4,7 +4,7 @@ import { connectDatabase } from '@/configs/database'
 
 // Handle Job routes (POST, GET for jobs)
 export async function POST(req: Request) {
-	await connectDatabase() // Ensure DB connection
+	await connectDatabase()
 
 	const {
 		title,
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 			requirements,
 			salary,
 			deadline,
-			status: status || 'open' // Default to 'open' if not provided
+			status: status || 'open'
 		})
 
 		await newJob.save()
@@ -58,10 +58,10 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-	await connectDatabase() // Ensure DB connection
+	await connectDatabase()
 
 	try {
-		const jobs = await Job.find().sort({ createdAt: -1 }) // Fetch jobs sorted by creation date
+		const jobs = await Job.find().sort({ createdAt: -1 })
 		return NextResponse.json(jobs, { status: 200 })
 	} catch (error) {
 		return NextResponse.json(

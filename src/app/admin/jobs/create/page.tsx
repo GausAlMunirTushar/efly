@@ -6,6 +6,8 @@ import Title from '@/components/common/Title'
 import Link from 'next/link'
 import Button from '@/components/form/Button'
 import { ArrowLeft } from 'lucide-react'
+import Input from '@/components/form/Input'
+import JoditEdit from '@/components/form/JoditEditor'
 
 const CreateJobPage = () => {
 	const [formData, setFormData] = useState({
@@ -28,6 +30,13 @@ const CreateJobPage = () => {
 		setFormData(prev => ({ ...prev, [name]: value }))
 	}
 
+	const handleRichTextChange = (
+		name: 'description' | 'requirements',
+		value: string
+	) => {
+		setFormData(prev => ({ ...prev, [name]: value }))
+	}
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
@@ -40,7 +49,7 @@ const CreateJobPage = () => {
 		})
 
 		if (response.ok) {
-			router.push('/jobs')
+			router.push('/admin/jobs')
 		} else {
 			alert('Failed to create job')
 		}
@@ -56,15 +65,17 @@ const CreateJobPage = () => {
 					</Button>
 				</Link>
 			</div>
+
 			<form onSubmit={handleSubmit} className='mt-6 space-y-3'>
 				<div>
 					<label htmlFor='title' className='block text-gray-700'>
 						Job Title
 					</label>
-					<input
+					<Input
 						type='text'
 						id='title'
 						name='title'
+						placeholder='Enter job title...'
 						value={formData.title}
 						onChange={handleChange}
 						className='w-full mt-2 p-2 border border-gray-300 rounded-md'
@@ -76,8 +87,9 @@ const CreateJobPage = () => {
 					<label htmlFor='company' className='block text-gray-700'>
 						Company
 					</label>
-					<input
+					<Input
 						type='text'
+						placeholder='Enter company name...'
 						id='company'
 						name='company'
 						value={formData.company}
@@ -91,9 +103,10 @@ const CreateJobPage = () => {
 					<label htmlFor='location' className='block text-gray-700'>
 						Location
 					</label>
-					<input
+					<Input
 						type='text'
 						id='location'
+						placeholder='Enter location...'
 						name='location'
 						value={formData.location}
 						onChange={handleChange}
@@ -102,39 +115,37 @@ const CreateJobPage = () => {
 					/>
 				</div>
 
+				{/* Description with JoditEdit */}
 				<div>
 					<label
 						htmlFor='description'
-						className='block text-gray-700'
+						className='block text-gray-700 mb-2'
 					>
 						Job Description
 					</label>
-					<textarea
-						id='description'
-						name='description'
+					<JoditEdit
 						value={formData.description}
-						onChange={handleChange}
-						className='w-full mt-2 p-2 border border-gray-300 rounded-md'
-						rows={4}
-						required
+						onChange={value =>
+							handleRichTextChange('description', value)
+						}
+						placeholder='Enter job description...'
 					/>
 				</div>
 
+				{/* Requirements with JoditEdit */}
 				<div>
 					<label
 						htmlFor='requirements'
-						className='block text-gray-700'
+						className='block text-gray-700 mb-2'
 					>
 						Requirements
 					</label>
-					<input
-						type='text'
-						id='requirements'
-						name='requirements'
+					<JoditEdit
 						value={formData.requirements}
-						onChange={handleChange}
-						className='w-full mt-2 p-2 border border-gray-300 rounded-md'
-						required
+						onChange={value =>
+							handleRichTextChange('requirements', value)
+						}
+						placeholder='Enter job requirements...'
 					/>
 				</div>
 
@@ -142,10 +153,11 @@ const CreateJobPage = () => {
 					<label htmlFor='salary' className='block text-gray-700'>
 						Salary
 					</label>
-					<input
+					<Input
 						type='number'
 						id='salary'
 						name='salary'
+						placeholder='Enter salary...'
 						value={formData.salary}
 						onChange={handleChange}
 						className='w-full mt-2 p-2 border border-gray-300 rounded-md'
@@ -157,7 +169,7 @@ const CreateJobPage = () => {
 					<label htmlFor='deadline' className='block text-gray-700'>
 						Deadline
 					</label>
-					<input
+					<Input
 						type='date'
 						id='deadline'
 						name='deadline'

@@ -5,7 +5,7 @@ import Link from 'next/link'
 interface JobCardProps {
 	job: IJob
 
-	onDelete: (id: string) => void // Prop for delete operation
+	onDelete: (id: string) => void
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
@@ -30,9 +30,6 @@ const JobCard: React.FC<JobCardProps> = ({ job, onDelete }) => {
 					{job.company}
 				</p>
 				<p className='text-sm text-gray-500 mb-4'>{job.location}</p>
-				<p className='text-sm text-gray-500 mb-4'>
-					{job.description.slice(0, 150)}...
-				</p>
 
 				<div className='mt-4 flex justify-between items-center'>
 					<span className='text-green-500 font-semibold'>

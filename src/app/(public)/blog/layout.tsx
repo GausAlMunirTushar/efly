@@ -31,10 +31,10 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
 				onClose={() => setDrawerOpen(false)}
 			/>
 
-			<div className='max-w-7xl mx-auto my-4'>
+			<div className='max-w-7xl mx-auto my-4 px-4 sm:px-6'>
 				<BlogSlider />
 			</div>
-			<div className='max-w-7xl mx-auto flex gap-6 my-2 w-full'>
+			<div className='max-w-7xl mx-auto flex gap-6 my-2 w-full px-4 sm:px-6'>
 				<div className='w-full hidden sm:block sm:w-2/12 h-full'>
 					<BlogSidebar />
 				</div>

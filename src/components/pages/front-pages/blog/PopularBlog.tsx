@@ -36,7 +36,7 @@ export default function PopularBlog() {
 
 	return (
 		<div className='p bg-white  rounded-lg'>
-			<h2 className='text-xl font-bold my-4'>Popular Blogs</h2>
+			<h2 className='text-2xl font-bold mt-4 mb-2'>Popular Blog</h2>
 
 			{loading ? (
 				<div className='space-y-3'>
@@ -45,7 +45,7 @@ export default function PopularBlog() {
 					<SkeletonLoader type='blog' />
 				</div>
 			) : latestBlogs.length > 0 ? (
-				<div className='w-full flex flex-row flex-wrap gap-4'>
+				<div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
 					{latestBlogs.map(blog => (
 						<PopularBlogCard key={blog._id} blog={blog} />
 					))}

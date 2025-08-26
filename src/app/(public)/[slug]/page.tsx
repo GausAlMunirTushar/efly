@@ -159,15 +159,15 @@ export default function Page({
 									))}
 								</div>
 							)}
-							<div>
-								<PopularBlog />
-							</div>
 						</div>
 						{/* Sidebar */}
 						<div className='md:col-span-2'>
 							{/* <BlogDetailsSidebar /> */}
 							<div className='mt-4'>{/* <LatestBlog /> */}</div>
 						</div>
+					</div>
+					<div>
+						<PopularBlog />
 					</div>
 				</div>
 			</div>

@@ -44,7 +44,7 @@ export default function CustomSlider({ slides = [] }: CustomSliderProps) {
 	}, [])
 
 	return (
-		<div className='relative w-full mx-auto'>
+		<div className='relative w-full mx-auto py-4 sm:py-8'>
 			<button
 				ref={prevRef}
 				className='absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-2 rounded-full hidden md:flex focus:outline-none'
@@ -91,7 +91,7 @@ export default function CustomSlider({ slides = [] }: CustomSliderProps) {
 									<Link
 										href={slide.link}
 										target='_blank'
-										className='absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-blue-500 text-white font-bold px-4 py-2 text-sm rounded-lg shadow-md'
+										className='absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary text-white font-bold px-4 py-2 text-sm rounded-lg shadow-md'
 									>
 										<span className='flex items-center gap-1'>
 											Details <ArrowUpRight size={18} />

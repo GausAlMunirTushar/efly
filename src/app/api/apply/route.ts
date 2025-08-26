@@ -15,7 +15,6 @@ export async function POST(req: Request) {
 		jobId
 	} = await req.json()
 
-	// Validation for required fields
 	if (!firstName || !lastName || !email || !phone || !resume || !jobId) {
 		return NextResponse.json(
 			{ error: 'Missing required fields' },
@@ -35,14 +34,14 @@ export async function POST(req: Request) {
 	})
 
 	try {
-		await applicant.save() // Save to the database
+		await applicant.save()
 		return NextResponse.json(
 			{ message: 'Application submitted successfully', applicant },
 			{ status: 201 }
 		)
-	} catch (error) {
+	} catch (error: any) {
 		return NextResponse.json(
-			{ error: 'Something went wrong' },
+			{ error: error.message || 'Something went wrong' },
 			{ status: 500 }
 		)
 	}

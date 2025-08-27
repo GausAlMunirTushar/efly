@@ -2,6 +2,20 @@ import { NextResponse } from 'next/server'
 import { connectDatabase } from '@/configs/database'
 import Applicant from '@/models/applicant.model'
 
+export async function GET() {
+	await connectDatabase()
+
+	try {
+		const applicants = await Applicant.find().sort({ createdAt: -1 })
+		return NextResponse.json({ applicants })
+	} catch (error: any) {
+		return NextResponse.json(
+			{ error: error.message || 'Failed to fetch applications' },
+			{ status: 500 }
+		)
+	}
+}
+
 export async function POST(req: Request) {
 	await connectDatabase()
 	const {

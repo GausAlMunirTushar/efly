@@ -106,6 +106,7 @@ export default function Page({
 			{/* Blog Content & Sidebar */}
 			<div className='max-w-7xl mx-auto py-6 px-4'>
 				{/* Blog Content */}
+				<h1 className='text-3xl font-bold mt-5 mb-3'>{blog.title}</h1>
 				<div className='w-full'>
 					<section className='grid grid-cols-12 gap-6'>
 						<div className='col-span-12 md:col-span-9'>
@@ -129,9 +130,6 @@ export default function Page({
 
 					<div className='grid grid-cols-1 md:grid-cols-8 gap-6'>
 						<div className='md:col-span-6'>
-							<h1 className='text-3xl font-bold mt-5 mb-3'>
-								{blog.title}
-							</h1>
 							<p className='text-gray-500 text-sm mb-4'>
 								{blog.category?.name}
 							</p>

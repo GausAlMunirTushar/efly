@@ -169,7 +169,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 				<Link href='/'>
 					{isExpanded && (
 						<Image
-							src='/efly.png'
+							src='/bijoyair.png'
 							alt='Logo'
 							width={40}
 							height={40}
@@ -186,11 +186,10 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 						{item.href ? (
 							<Link
 								href={item.href}
-								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-[#0058A8] dark:hover:bg-bg_secondary hover:text-white  text-gray-600 dark:text-text-primary font-semibold ${
-									pathname === item.href
+								className={`flex items-center gap-2 p-2 rounded-md transition-all duration-300 hover:bg-[#0058A8] dark:hover:bg-bg_secondary hover:text-white  text-gray-600 dark:text-text-primary font-semibold ${pathname === item.href
 										? 'bg-[#0058A8] text-white dark:text-text-primary font-semibold'
 										: ''
-								}`}
+									}`}
 							>
 								{item.icon}
 								{isExpanded && <span>{item.title}</span>}

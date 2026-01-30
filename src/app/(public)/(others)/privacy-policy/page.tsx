@@ -14,11 +14,11 @@ const PrivacyPolicyPage = () => {
 						1. Introduction
 					</h2>
 					<p>
-						At efly, your privacy is our priority. This Privacy
+						At BijoyAir, your privacy is our priority. This Privacy
 						Policy explains how we collect, use, disclose, and
 						protect your information when you use our website,
 						mobile app, and related services. By accessing or using
-						efly, you agree to the practices outlined here.
+						BijoyAir, you agree to the practices outlined here.
 					</p>
 				</section>
 
@@ -135,7 +135,7 @@ const PrivacyPolicyPage = () => {
 						9. Children’s Privacy
 					</h2>
 					<p>
-						efly does not knowingly collect personal information
+						BijoyAir does not knowingly collect personal information
 						from children under the age of 13. If we become aware
 						that a child has provided us with personal data, we will
 						take steps to delete such information.
@@ -164,10 +164,10 @@ const PrivacyPolicyPage = () => {
 					<p className='mt-2'>
 						<strong>Email:</strong>{' '}
 						<a
-							href='mailto:support@efly.com'
+							href='mailto:support@bijoyair.com'
 							className='text-blue-600 underline'
 						>
-							support@efly.com
+							support@bijoyair.com
 						</a>
 					</p>
 				</section>

@@ -15,15 +15,15 @@ export async function generateMetadata({
 		const pkg = await getHolidayById(id)
 
 		return {
-			title: `${pkg.title} | eFly Travel`,
+			title: `${pkg.title} | bijoyAir Travel`,
 			description:
 				pkg.description ||
-				'Explore this exclusive holiday package on eFly.',
+				'Explore this exclusive holiday package on bijoyAir.',
 			openGraph: {
-				title: `${pkg.title} | eFly Travel`,
+				title: `${pkg.title} | bijoyAir Travel`,
 				description:
 					pkg.description ||
-					'Explore this exclusive holiday package on eFly.',
+					'Explore this exclusive holiday package on bijoyAir.',
 				images: [pkg.imageUrl],
 				type: 'website',
 				url: `${process.env.NEXT_PUBLIC_APP_URL}/holiday/${id}`
@@ -31,7 +31,7 @@ export async function generateMetadata({
 		}
 	} catch {
 		return {
-			title: 'Holiday Package | eFly Travel',
+			title: 'Holiday Package | bijoyAir Travel',
 			description: 'Explore our holiday packages.'
 		}
 	}

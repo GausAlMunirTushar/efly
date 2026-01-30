@@ -1,7 +1,7 @@
 import BlogList from '@/components/pages/front-pages/blog/BlogList'
 
 export const metadata = {
-	title: 'Blog - efly Travel',
+	title: 'Blog - bijoyair Travel',
 	description: 'Blog page'
 }
 export default function BlogPage() {

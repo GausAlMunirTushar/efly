@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
 			allow: '/',
 			disallow: '/private/'
 		},
-		sitemap: 'https://efly.com.bd/sitemap.xml'
+		sitemap: 'https://bijoyair.com.bd/sitemap.xml'
 	}
 }

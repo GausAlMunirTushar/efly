@@ -47,12 +47,12 @@ const AdminLogin = () => {
 			<div className='w-full max-w-sm bg-white dark:bg-bg_dark dark:text-text-primary p-6 rounded-lg shadow-md my-5'>
 				<div className='text-center'>
 					<img
-						src='/efly.png'
-						alt='eFly Logo'
+						src='/bijoyair.png'
+						alt='bijoyAir Logo'
 						className='py-4 h-20 mx-auto'
 					/>
 					<p className='text-gray-600 dark:text-text-secondary'>
-						Welcome to eFly! 👋
+						Welcome to bijoyAir! 👋
 					</p>
 					<p className='text-sm text-gray-500 dark:text-text-secondary'>
 						Please sign-in to your account and start the adventure

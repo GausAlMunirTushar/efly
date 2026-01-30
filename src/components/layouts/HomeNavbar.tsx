@@ -20,7 +20,7 @@ export default function HomeNavbar() {
 				{/* Logo */}
 				<Link href='/' className='flex items-center space-x-2'>
 					<img
-						src='/efly.png'
+						src='/bijoyair.png'
 						alt='Logo'
 						width={40}
 						height={40}

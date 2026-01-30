@@ -2,7 +2,7 @@ import Search from '@/components/pages/home/search/Search'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: `Best Holiday Package From Bangladesh | eFly Travel`,
+	title: `Best Holiday Package From Bangladesh | bijoyAir Travel`,
 	description:
 		'Explore affordable and authentic Umrah packages from Bangladesh including flights, hotels, and guided tours. Book your spiritual journey today!',
 	keywords: [
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 		'Best Umrah deals',
 		'Umrah 2025',
 		'Umrah travel packages',
-		'eFly Travel'
+		'bijoyAir Travel'
 	]
 }
 

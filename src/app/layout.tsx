@@ -17,9 +17,9 @@ const poppins = Poppins({
 })
 
 export const metadata = {
-	title: 'efly - We Are The New Travel Agency (OTA) in Your City',
+	title: 'BijoyAir - We Are The New Travel Agency (OTA) in Your City',
 	description:
-		' efly We Are The New Travel Agency (OTA) in Your City. We Are Committed To Make Your Travel Easier And More Comfortable With World Class Services. '
+		' BijoyAir We Are The New Travel Agency (OTA) in Your City. We Are Committed To Make Your Travel Easier And More Comfortable With World Class Services. '
 }
 
 interface LayoutProps {

@@ -13,7 +13,7 @@ const TermsAndConditionsPage = () => {
 						1. Introduction
 					</h2>
 					<p>
-						{`Welcome to efly! By using our website, mobile application,
+						{`Welcome to BijoyAir! By using our website, mobile application,
 					or any related services (collectively referred to as
 					"Platform"), you agree to the following terms and
 					conditions. Please read them carefully before continuing to
@@ -39,9 +39,9 @@ const TermsAndConditionsPage = () => {
 						3. Booking and Payment
 					</h2>
 					<p>
-						All bookings made through efly are subject to
+						All bookings made through BijoyAir are subject to
 						availability and confirmation from our partnered service
-						providers. You authorize efly to process payments via
+						providers. You authorize BijoyAir to process payments via
 						your selected payment method. Prices are inclusive of
 						applicable taxes unless otherwise stated.
 					</p>
@@ -54,7 +54,7 @@ const TermsAndConditionsPage = () => {
 					<p>
 						Any changes or cancellations to bookings must comply
 						with the policies of the respective service providers
-						(airlines, hotels, etc.). efly is not liable for any
+						(airlines, hotels, etc.). BijoyAir is not liable for any
 						additional fees incurred due to modifications or
 						cancellations.
 					</p>
@@ -78,8 +78,8 @@ const TermsAndConditionsPage = () => {
 						6. Intellectual Property
 					</h2>
 					<p>
-						All content on efly, including logos, text, graphics,
-						and software, is owned or licensed by efly and is
+						All content on BijoyAir, including logos, text, graphics,
+						and software, is owned or licensed by BijoyAir and is
 						protected under intellectual property laws. You may not
 						reproduce or redistribute any content without written
 						permission.
@@ -91,7 +91,7 @@ const TermsAndConditionsPage = () => {
 						7. Limitation of Liability
 					</h2>
 					<p>
-						efly acts as an intermediary between users and
+						BijoyAir acts as an intermediary between users and
 						third-party providers. We are not responsible for
 						service quality, cancellations, delays, or disputes. Our
 						liability is limited to the extent permitted by law.
@@ -103,9 +103,9 @@ const TermsAndConditionsPage = () => {
 						8. Privacy Policy
 					</h2>
 					<p>
-						Your use of efly is also governed by our Privacy Policy,
+						Your use of BijoyAir is also governed by our Privacy Policy,
 						which explains how we collect, store, and protect your
-						personal information. By using efly, you consent to our
+						personal information. By using BijoyAir, you consent to our
 						data practices.
 					</p>
 				</section>
@@ -115,7 +115,7 @@ const TermsAndConditionsPage = () => {
 						9. Termination
 					</h2>
 					<p>
-						efly reserves the right to suspend or terminate access
+						BijoyAir reserves the right to suspend or terminate access
 						to its services for users who violate these terms or
 						engage in suspicious or harmful activity.
 					</p>
@@ -140,10 +140,10 @@ const TermsAndConditionsPage = () => {
 						If you have any questions or concerns regarding these
 						Terms & Conditions, please contact our support team at{' '}
 						<a
-							href='mailto:support@efly.com'
+							href='mailto:support@bijoyair.com'
 							className='text-blue-600 underline'
 						>
-							support@efly.com
+							support@bijoyair.com
 						</a>
 						.
 					</p>

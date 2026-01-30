@@ -147,10 +147,10 @@ const Register: React.FC = () => {
 				aria-label='Registration form'
 			>
 				<img
-						src='/efly.png'
-						alt='eFly Logo'
-						className='py-4 h-20 mx-auto'
-					/>
+					src='/bijoyair.png'
+					alt='bijoyAir Logo'
+					className='py-4 h-20 mx-auto'
+				/>
 				<p className='text-gray-600 text-sm text-center mb-4'>
 					Create an account to get started
 				</p>
@@ -204,7 +204,7 @@ const Register: React.FC = () => {
 								value={formData.email}
 								required
 								autoComplete='email'
-								placeholder='mail@efly.com.bd'
+								placeholder='mail@bijoyair.com.bd'
 							/>
 							<Input
 								label='Phone Number'

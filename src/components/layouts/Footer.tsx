@@ -22,13 +22,13 @@ const Footer = () => {
 					<div className='flex flex-col items-start'>
 						<Link href='/' className='cursor-pointer'>
 							<img
-								src='/efly-white.svg'
-								alt='eFly'
+								src='/bijoyair-white.svg'
+								alt='bijoyAir'
 								className='h-10'
 							/>
 						</Link>
 						<p className='text-sm mt-2'>
-							efly - We Are The New Travel Agency (OTA) in Your
+							bijoyair - We Are The New Travel Agency (OTA) in Your
 							City. We Are Committed To Making Your Travel Easier
 							And More Comfortable With World-Class Services.
 						</p>
@@ -162,10 +162,10 @@ const Footer = () => {
 						<p>
 							Email:{' '}
 							<Link
-								href='mailto:help.efly@gmail.com'
+								href='mailto:help.bijoyair@gmail.com'
 								className='text-white'
 							>
-								help.efly@gmail.com
+								help.bijoyair@gmail.com
 							</Link>
 						</p>
 						<p>
@@ -194,7 +194,7 @@ const Footer = () => {
 					</div>
 
 					<div>
-						<h3 className='font-semibold'>efly Lounge (Dhaka)</h3>
+						<h3 className='font-semibold'>bijoyair Lounge (Dhaka)</h3>
 						<p>
 							Mohakhali DOHS, Road-30, House-437, 3rd
 							Floor, Dhaka 1206.
@@ -202,7 +202,7 @@ const Footer = () => {
 						<div className='flex items-center space-x-2 mt-2'>
 							<FaLocationDot className='text-white' />
 							<Link
-								href='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sefly%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'
+								href='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sbijoyair%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'
 								target='_blank'
 								className='text-white'
 							>
@@ -234,7 +234,7 @@ const Footer = () => {
 					<p className='mt-4 sm:mt-0'>
 						&copy; {new Date().getFullYear()}{' '}
 						<Link href='/' className='text-white underline'>
-							<strong>efly</strong>
+							<strong>bijoyair</strong>
 						</Link>
 						. All rights reserved./
 					</p>

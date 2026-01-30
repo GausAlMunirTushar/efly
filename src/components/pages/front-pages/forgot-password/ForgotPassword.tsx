@@ -44,8 +44,8 @@ const ForgotPassword = () => {
 		<div className='flex items-center justify-center bg-gray-100 dark:bg-bg_dark p-4'>
 			<div className='w-full max-w-sm bg-white dark:bg-bg_dark shadow rounded-lg p-6'>
 				<img
-					src='/efly.png'
-					alt='eFly Logo'
+					src='/bijoyair.png'
+					alt='bijoyAir Logo'
 					className='py-4 h-20 mx-auto'
 				/>
 				<p className='text-center text-sm text-gray-600 dark:text-gray-400 mt-2'>

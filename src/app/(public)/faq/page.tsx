@@ -23,11 +23,11 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: I have a debit card. May I use my debit card to
-							book a flight from efly?
+							book a flight from bijoyair?
 						</strong>
 						<br />
 						<b>প্রশ্ন:</b> আমার ডেবিট কার্ড আছে। আমি কি ডেবিট কার্ড
-						ব্যবহার করে efly থেকে ফ্লাইট বুক করতে পারব?
+						ব্যবহার করে bijoyair থেকে ফ্লাইট বুক করতে পারব?
 					</>
 				),
 				answer: (
@@ -40,7 +40,7 @@ const categories: FAQCategory[] = [
 						<p>
 							<b>উত্তর:</b> হ্যাঁ, আপনি আপনার লোকাল কিংবা
 							ইন্টারন্যাশনাল কার্ড, ডেবিট অথবা ক্রেডিট কার্ডই
-							ব্যবহার করে efly থেকে খুব সহজেই ফ্লাইট বুক করতে
+							ব্যবহার করে bijoyair থেকে খুব সহজেই ফ্লাইট বুক করতে
 							পারবেন।
 						</p>
 					</>
@@ -50,10 +50,10 @@ const categories: FAQCategory[] = [
 				question: (
 					<>
 						<strong>
-							Q. Can you book a domestic flight on efly?
+							Q. Can you book a domestic flight on bijoyair?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> আমি কি efly থেকে ডোমেস্টিক ফ্লাইট বুক
+						<b>প্রশ্ন:</b> আমি কি bijoyair থেকে ডোমেস্টিক ফ্লাইট বুক
 						করতে পারব?
 					</>
 				),
@@ -79,7 +79,7 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: Can I make the payment later for an online
-							booking on efly?
+							booking on bijoyair?
 						</strong>
 						<br />
 						<b>প্রশ্ন:</b> অনলাইন বুকিং -এর ক্ষেত্রে আমি কি পেমেন্ট
@@ -139,10 +139,10 @@ const categories: FAQCategory[] = [
 					<>
 						<strong>
 							Q: Will it cost any extra charge if I purchase
-							through a card from efly?
+							through a card from bijoyair?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> efly-এ কার্ডের মাধ্যমে বুকিং দিলে কি
+						<b>প্রশ্ন:</b> bijoyair-এ কার্ডের মাধ্যমে বুকিং দিলে কি
 						বাড়তি চার্জ পরিশোধ করতে হবে?
 					</>
 				),
@@ -152,13 +152,13 @@ const categories: FAQCategory[] = [
 							<strong>A:</strong> During an online or an offline
 							transaction there is a convenience fee that
 							customers have to pay. However, there is no extra
-							charge on anything you purchase from efly be it
+							charge on anything you purchase from bijoyair be it
 							online or offline.
 						</p>
 						<p>
 							<b>উত্তর:</b> অনলাইন বা অফলাইন বুকিংয়ের সময়
 							প্রতিটি কনজিউমারিং ফি আছে যা গ্রাহকদের দিতে হবে।
-							তবে, efly-এ থেকে, অনলাইন বা অফলাইন বুকিংয়ে, কিছু
+							তবে, bijoyair-এ থেকে, অনলাইন বা অফলাইন বুকিংয়ে, কিছু
 							কিনলে কোন অতিরিক্ত চার্জ নেই।
 						</p>
 					</>
@@ -167,23 +167,23 @@ const categories: FAQCategory[] = [
 			{
 				question: (
 					<>
-						<strong>Q: What is efly Convenience Fee?</strong>
+						<strong>Q: What is bijoyair Convenience Fee?</strong>
 						<br />
-						<b>প্রশ্ন:</b> efly কনভিনিয়েন্স ফি কী?
+						<b>প্রশ্ন:</b> bijoyair কনভিনিয়েন্স ফি কী?
 					</>
 				),
 				answer: (
 					<>
 						<p>
-							<strong>A:</strong> efly Convenience fee is the
+							<strong>A:</strong> bijoyair Convenience fee is the
 							charge that the customer needs to pay for the
 							support, convenience and service that he/she is
 							availing from the online platforms.
 						</p>
 						<p>
-							<b>উত্তর:</b> কাস্টমাররা efly থেকে অনলাইন, যেসব
+							<b>উত্তর:</b> কাস্টমাররা bijoyair থেকে অনলাইন, যেসব
 							সহযোগিতা, কনভিনিয়েন্স ও সেবা উপভোগ করেন, তার জন্য
-							প্রদেয় চার্জকে efly কনভিনিয়েন্স ফি বলা হয়।
+							প্রদেয় চার্জকে bijoyair কনভিনিয়েন্স ফি বলা হয়।
 						</p>
 					</>
 				)
@@ -192,20 +192,20 @@ const categories: FAQCategory[] = [
 				question: (
 					<>
 						<strong>
-							Q: Is the efly Convenience Fee refundable?
+							Q: Is the bijoyair Convenience Fee refundable?
 						</strong>
 						<br />
-						<b>প্রশ্ন:</b> efly কনভিনিয়েন্স ফি কী ফেরতযোগ্য?
+						<b>প্রশ্ন:</b> bijoyair কনভিনিয়েন্স ফি কী ফেরতযোগ্য?
 					</>
 				),
 				answer: (
 					<>
 						<p>
-							<strong>A:</strong> efly Convenience Fee is
+							<strong>A:</strong> bijoyair Convenience Fee is
 							non-refundable.
 						</p>
 						<p>
-							<b>উত্তর:</b> দুঃখিত, efly কনভিনিয়েন্স ফি ফেরতযোগ্য
+							<b>উত্তর:</b> দুঃখিত, bijoyair কনভিনিয়েন্স ফি ফেরতযোগ্য
 							নয়।
 						</p>
 					</>
@@ -264,11 +264,10 @@ const FAQPage = () => {
 							<button
 								key={id}
 								onClick={() => setActiveCategory(id)}
-								className={`text-left px-4 py-2 rounded border transition-colors ${
-									activeCategory === id
+								className={`text-left px-4 py-2 rounded border transition-colors ${activeCategory === id
 										? 'bg-[#0058A8] text-white border-blue-600'
 										: 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
-								}`}
+									}`}
 							>
 								{label}
 							</button>

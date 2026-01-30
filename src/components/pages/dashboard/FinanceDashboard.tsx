@@ -45,7 +45,7 @@ const FinanceDashboard = () => {
 
 	return (
 		<div className=' py-2 '>
-			<Title>eFly Dashboard</Title>
+			<Title>bijoyAir Dashboard</Title>
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-4'>
 				{/* Account Balance */}
 				<div className='bg-white box-shadow dark:bg-bg_dark p-6 rounded-lg shadow-md flex items-center gap-4'>
@@ -128,11 +128,10 @@ const FinanceDashboard = () => {
 								</p>
 							</div>
 							<span
-								className={`font-semibold ${
-									transaction.type === 'income'
+								className={`font-semibold ${transaction.type === 'income'
 										? 'text-green-500'
 										: 'text-red-500'
-								}`}
+									}`}
 							>
 								{transaction.type === 'income' ? '+' : '-'}$
 								{Math.abs(transaction.amount)}

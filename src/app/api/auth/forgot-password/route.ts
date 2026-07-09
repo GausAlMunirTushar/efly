@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 		await user.save()
 
 		// Send the reset token via email
-		const resetLink = `https://bijoyair.com.bd/reset-password?token=${resetToken}`
+		const resetLink = `https://efly.gausalmunir.site/reset-password?token=${resetToken}`
 
 		await sendEmail(
 			email,

@@ -39,7 +39,7 @@ const HomePage = () => {
 					Holiday Packages for You
 				</h2>
 				<p className='text-gray-600 '>
-					{`Plan your perfect escape with BijoyAir! Discover top holiday deals for unforgettable international adventures.`}
+					{`Plan your perfect escape with Efly! Discover top holiday deals for unforgettable international adventures.`}
 				</p>
 				<HolidayHomeSlider />
 			</section>
@@ -51,7 +51,7 @@ const HomePage = () => {
 					Visa for You
 				</h2>
 				<p className='text-gray-600 '>
-					{`Plan your perfect escape with BijoyAir! Discover top holiday deals for unforgettable international adventures.`}
+					{`Plan your perfect escape with Efly! Discover top holiday deals for unforgettable international adventures.`}
 				</p>
 				<VisaSlider />
 			</section>
@@ -63,7 +63,7 @@ const HomePage = () => {
 					Peaceful Umrah Journeys for You
 				</h2>
 				<p className='text-gray-600'>
-					Embark on your spiritual journey with BijoyAir. Find the best
+					Embark on your spiritual journey with Efly. Find the best
 					Umrah packages designed for comfort, convenience, and peace
 					of mind.
 				</p>

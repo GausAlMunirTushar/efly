@@ -45,7 +45,7 @@ const FinanceDashboard = () => {
 
 	return (
 		<div className=' py-2 '>
-			<Title>bijoyAir Dashboard</Title>
+			<Title>efly Dashboard</Title>
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-4'>
 				{/* Account Balance */}
 				<div className='bg-white box-shadow dark:bg-bg_dark p-6 rounded-lg shadow-md flex items-center gap-4'>

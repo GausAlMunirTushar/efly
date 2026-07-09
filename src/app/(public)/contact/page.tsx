@@ -124,13 +124,13 @@ const ContactPage = () => {
 					<div className='shadow-sm rounded-lg'>
 						<iframe
 							className='w-full h-72 rounded-lg mb-2'
-							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sbijoyair%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'
+							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.101651784053!2d90.39153047533684!3d23.779394278650727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7680ce4c53b%3A0x6e0e2a7b69ebef2b!2sefly%20TRAVEL%20AGENCY!5e0!3m2!1sen!2sbd!4v1749619600516!5m2!1sen!2sbd'
 							allowFullScreen
 							loading='lazy'
 						></iframe>
 						<div className='p-4'>
 							<h3 className='text-lg font-semibold mt-4'>
-								📍 bijoyAir Lounge (Dhaka):
+								📍 efly Lounge (Dhaka):
 							</h3>
 							<p>
 								Mohakhali DOHS, Road-30, House-437, 3rd Floor,
@@ -156,11 +156,11 @@ const ContactPage = () => {
 									+880 1400-054777
 								</Link>
 								<Link
-									href='mailto:help.bijoyair@gmail.com'
+									href='mailto:help@efly.gausalmunir.site'
 									className='flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition'
 								>
 									<FaEnvelope />
-									help.bijoyair@gmail.com
+									help@efly.gausalmunir.site
 								</Link>
 							</div>
 						</div>

@@ -1,4 +1,4 @@
-name: Deploy bijoyAir
+name: Deploy efly
 
 on:
     push:
@@ -28,7 +28,7 @@ jobs:
                       echo "Starting deployment..."
 
                       # Navigate to the project directory
-                      cd /var/www/bijoyair.com.bd || exit 1
+                      cd /var/www/efly.gausalmunir.site || exit 1
 
                       # Load NVM and set the correct Node/Yarn path
                       export NVM_DIR="$HOME/.nvm"
@@ -49,6 +49,6 @@ jobs:
                       yarn build || exit 1
 
                       # Restart with PM2
-                      pm2 restart bijoyair-app || pm2 start npm --name "bijoyair-app" -- start || exit 1
+                      pm2 restart efly-app || pm2 start npm --name "efly-app" -- start || exit 1
 
                       echo "✅ Deployment successful"

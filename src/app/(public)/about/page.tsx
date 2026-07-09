@@ -5,17 +5,17 @@ const AboutPage = () => {
 		<main>
 			<div className='flex items-center justify-center bg-[#0058A8] h-36'>
 				<h1 className='text-4xl font-bold text-center text-white mb-6'>
-					About BijoyAir
+					About Efly
 				</h1>
 			</div>
 			<div className='max-w-7xl mx-auto p-6'>
 				<section className='mb-6'>
 					<p className='text-lg'>
-						{`Welcome to BijoyAir — your one-stop digital
+						{`Welcome to Efly — your one-stop digital
 					travel platform designed to make booking flights, hotels,
 					holidays, visas, and more as seamless as possible. Whether
 					you're planning a family vacation, a business trip, or a
-					spiritual journey like Umrah, BijoyAir is here to help you fly
+					spiritual journey like Umrah, Efly is here to help you fly
 					smarter, stay better, and explore deeper.`}
 					</p>
 				</section>
@@ -23,7 +23,7 @@ const AboutPage = () => {
 				<section className='mb-6'>
 					<h2 className='text-xl font-semibold mb-2'>Our Mission</h2>
 					<p>
-						At BijoyAir, our mission is to simplify travel through
+						At Efly, our mission is to simplify travel through
 						technology. We believe everyone deserves a personalized,
 						stress-free travel experience powered by intelligent
 						tools and human-first design.
@@ -54,7 +54,7 @@ const AboutPage = () => {
 
 				<section className='mb-6'>
 					<h2 className='text-xl font-semibold mb-2'>
-						Why Choose BijoyAir?
+						Why Choose Efly?
 					</h2>
 					<ul className='list-disc ml-6 mt-2'>
 						<li>💡 Easy-to-use interface and smart filters</li>
@@ -71,7 +71,7 @@ const AboutPage = () => {
 					<h2 className='text-xl font-semibold mb-2'>Our Vision</h2>
 					<p>
 						We envision a world where technology bridges the gap
-						between people and destinations. With BijoyAir, we aim to be
+						between people and destinations. With Efly, we aim to be
 						more than just a travel platform — we strive to become
 						your trusted travel companion.
 					</p>
@@ -89,10 +89,10 @@ const AboutPage = () => {
 					<p className='mt-2'>
 						<strong>Email:</strong>{' '}
 						<a
-							href='mailto:contact@bijoyair.com'
+							href='mailto:contact@efly.gausalmunir.site'
 							className='text-blue-600 underline'
 						>
-							contact@bijoyair.com
+							contact@efly.gausalmunir.site
 						</a>
 					</p>
 				</section>

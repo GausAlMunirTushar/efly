@@ -169,7 +169,7 @@ export default function Sidebar({ isExpanded, setIsExpanded }: SidebarProps) {
 				<Link href='/'>
 					{isExpanded && (
 						<Image
-							src='/bijoyair.png'
+							src='/efly.png'
 							alt='Logo'
 							width={40}
 							height={40}

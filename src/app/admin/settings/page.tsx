@@ -117,7 +117,7 @@ const SettingsPage = () => {
 						error={error.about}
 						fullWidth
 						className='h-14'
-						placeholder='Enter a brief description about bijoyair'
+						placeholder='Enter a brief description about efly'
 					/>
 					<Input
 						label='Address'

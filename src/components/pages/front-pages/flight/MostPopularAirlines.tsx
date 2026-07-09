@@ -18,7 +18,7 @@ export default function MostPopularAirlines({
 					Most Popular Airlines
 				</h2>
 				<p className='text-gray-600 mb-10'>
-					Discover top airlines on bijoyair and seamlessly search any
+					Discover top airlines on efly and seamlessly search any
 					flight and get any online ticket instantly, granting you
 					effortless access to global travel.
 				</p>
